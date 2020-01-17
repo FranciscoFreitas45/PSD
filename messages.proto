@@ -13,23 +13,14 @@ message Message{
 message Create {
     optional string username=1;
     optional string password = 2;
-    enum type {
-        MANUFACTURER = 0;
-        IMPORTER = 1;
-    }
+    optional int32 type = 3;
 }
 
 message Login {
     optional string username=1;
     optional string password = 2;
-    enum status {
-        OK = 0;
-        NOTOK = 1;
-    }
-    enum type {
-        MANUFACTURER = 0;
-        IMPORTER = 1;
-    }
+    optional int32 type = 3;
+    optional int32 status = 4;
 }
 
 

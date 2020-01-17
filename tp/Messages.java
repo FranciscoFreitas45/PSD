@@ -1258,6 +1258,15 @@ public final class Messages {
      */
     com.google.protobuf.ByteString
         getPasswordBytes();
+
+    /**
+     * <code>optional int32 type = 3;</code>
+     */
+    boolean hasType();
+    /**
+     * <code>optional int32 type = 3;</code>
+     */
+    int getType();
   }
   /**
    * Protobuf type {@code tp.Create}
@@ -1312,6 +1321,11 @@ public final class Messages {
               password_ = bs;
               break;
             }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              type_ = input.readInt32();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -1342,96 +1356,6 @@ public final class Messages {
       return tp.Messages.internal_static_tp_Create_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               tp.Messages.Create.class, tp.Messages.Create.Builder.class);
-    }
-
-    /**
-     * Protobuf enum {@code tp.Create.type}
-     */
-    public enum type
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>MANUFACTURER = 0;</code>
-       */
-      MANUFACTURER(0),
-      /**
-       * <code>IMPORTER = 1;</code>
-       */
-      IMPORTER(1),
-      ;
-
-      /**
-       * <code>MANUFACTURER = 0;</code>
-       */
-      public static final int MANUFACTURER_VALUE = 0;
-      /**
-       * <code>IMPORTER = 1;</code>
-       */
-      public static final int IMPORTER_VALUE = 1;
-
-
-      public final int getNumber() {
-        return value;
-      }
-
-      /**
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static type valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static type forNumber(int value) {
-        switch (value) {
-          case 0: return MANUFACTURER;
-          case 1: return IMPORTER;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<type>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          type> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<type>() {
-              public type findValueByNumber(int number) {
-                return type.forNumber(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(ordinal());
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return tp.Messages.Create.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final type[] VALUES = values();
-
-      public static type valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int value;
-
-      private type(int value) {
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:tp.Create.type)
     }
 
     private int bitField0_;
@@ -1519,6 +1443,21 @@ public final class Messages {
       }
     }
 
+    public static final int TYPE_FIELD_NUMBER = 3;
+    private int type_;
+    /**
+     * <code>optional int32 type = 3;</code>
+     */
+    public boolean hasType() {
+      return ((bitField0_ & 0x00000004) != 0);
+    }
+    /**
+     * <code>optional int32 type = 3;</code>
+     */
+    public int getType() {
+      return type_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -1539,6 +1478,9 @@ public final class Messages {
       if (((bitField0_ & 0x00000002) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, password_);
       }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        output.writeInt32(3, type_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -1553,6 +1495,10 @@ public final class Messages {
       }
       if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, password_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, type_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1579,6 +1525,11 @@ public final class Messages {
         if (!getPassword()
             .equals(other.getPassword())) return false;
       }
+      if (hasType() != other.hasType()) return false;
+      if (hasType()) {
+        if (getType()
+            != other.getType()) return false;
+      }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -1597,6 +1548,10 @@ public final class Messages {
       if (hasPassword()) {
         hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
         hash = (53 * hash) + getPassword().hashCode();
+      }
+      if (hasType()) {
+        hash = (37 * hash) + TYPE_FIELD_NUMBER;
+        hash = (53 * hash) + getType();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -1735,6 +1690,8 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000001);
         password_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
+        type_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -1771,6 +1728,10 @@ public final class Messages {
           to_bitField0_ |= 0x00000002;
         }
         result.password_ = password_;
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.type_ = type_;
+          to_bitField0_ |= 0x00000004;
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1829,6 +1790,9 @@ public final class Messages {
           bitField0_ |= 0x00000002;
           password_ = other.password_;
           onChanged();
+        }
+        if (other.hasType()) {
+          setType(other.getType());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2011,6 +1975,38 @@ public final class Messages {
         onChanged();
         return this;
       }
+
+      private int type_ ;
+      /**
+       * <code>optional int32 type = 3;</code>
+       */
+      public boolean hasType() {
+        return ((bitField0_ & 0x00000004) != 0);
+      }
+      /**
+       * <code>optional int32 type = 3;</code>
+       */
+      public int getType() {
+        return type_;
+      }
+      /**
+       * <code>optional int32 type = 3;</code>
+       */
+      public Builder setType(int value) {
+        bitField0_ |= 0x00000004;
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 type = 3;</code>
+       */
+      public Builder clearType() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        type_ = 0;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -2095,6 +2091,24 @@ public final class Messages {
      */
     com.google.protobuf.ByteString
         getPasswordBytes();
+
+    /**
+     * <code>optional int32 type = 3;</code>
+     */
+    boolean hasType();
+    /**
+     * <code>optional int32 type = 3;</code>
+     */
+    int getType();
+
+    /**
+     * <code>optional int32 status = 4;</code>
+     */
+    boolean hasStatus();
+    /**
+     * <code>optional int32 status = 4;</code>
+     */
+    int getStatus();
   }
   /**
    * Protobuf type {@code tp.Login}
@@ -2149,6 +2163,16 @@ public final class Messages {
               password_ = bs;
               break;
             }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              type_ = input.readInt32();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              status_ = input.readInt32();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -2179,186 +2203,6 @@ public final class Messages {
       return tp.Messages.internal_static_tp_Login_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               tp.Messages.Login.class, tp.Messages.Login.Builder.class);
-    }
-
-    /**
-     * Protobuf enum {@code tp.Login.status}
-     */
-    public enum status
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>OK = 0;</code>
-       */
-      OK(0),
-      /**
-       * <code>NOTOK = 1;</code>
-       */
-      NOTOK(1),
-      ;
-
-      /**
-       * <code>OK = 0;</code>
-       */
-      public static final int OK_VALUE = 0;
-      /**
-       * <code>NOTOK = 1;</code>
-       */
-      public static final int NOTOK_VALUE = 1;
-
-
-      public final int getNumber() {
-        return value;
-      }
-
-      /**
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static status valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static status forNumber(int value) {
-        switch (value) {
-          case 0: return OK;
-          case 1: return NOTOK;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<status>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          status> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<status>() {
-              public status findValueByNumber(int number) {
-                return status.forNumber(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(ordinal());
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return tp.Messages.Login.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final status[] VALUES = values();
-
-      public static status valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int value;
-
-      private status(int value) {
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:tp.Login.status)
-    }
-
-    /**
-     * Protobuf enum {@code tp.Login.type}
-     */
-    public enum type
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>MANUFACTURER = 0;</code>
-       */
-      MANUFACTURER(0),
-      /**
-       * <code>IMPORTER = 1;</code>
-       */
-      IMPORTER(1),
-      ;
-
-      /**
-       * <code>MANUFACTURER = 0;</code>
-       */
-      public static final int MANUFACTURER_VALUE = 0;
-      /**
-       * <code>IMPORTER = 1;</code>
-       */
-      public static final int IMPORTER_VALUE = 1;
-
-
-      public final int getNumber() {
-        return value;
-      }
-
-      /**
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static type valueOf(int value) {
-        return forNumber(value);
-      }
-
-      public static type forNumber(int value) {
-        switch (value) {
-          case 0: return MANUFACTURER;
-          case 1: return IMPORTER;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<type>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          type> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<type>() {
-              public type findValueByNumber(int number) {
-                return type.forNumber(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(ordinal());
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return tp.Messages.Login.getDescriptor().getEnumTypes().get(1);
-      }
-
-      private static final type[] VALUES = values();
-
-      public static type valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int value;
-
-      private type(int value) {
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:tp.Login.type)
     }
 
     private int bitField0_;
@@ -2446,6 +2290,36 @@ public final class Messages {
       }
     }
 
+    public static final int TYPE_FIELD_NUMBER = 3;
+    private int type_;
+    /**
+     * <code>optional int32 type = 3;</code>
+     */
+    public boolean hasType() {
+      return ((bitField0_ & 0x00000004) != 0);
+    }
+    /**
+     * <code>optional int32 type = 3;</code>
+     */
+    public int getType() {
+      return type_;
+    }
+
+    public static final int STATUS_FIELD_NUMBER = 4;
+    private int status_;
+    /**
+     * <code>optional int32 status = 4;</code>
+     */
+    public boolean hasStatus() {
+      return ((bitField0_ & 0x00000008) != 0);
+    }
+    /**
+     * <code>optional int32 status = 4;</code>
+     */
+    public int getStatus() {
+      return status_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -2466,6 +2340,12 @@ public final class Messages {
       if (((bitField0_ & 0x00000002) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, password_);
       }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        output.writeInt32(3, type_);
+      }
+      if (((bitField0_ & 0x00000008) != 0)) {
+        output.writeInt32(4, status_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -2480,6 +2360,14 @@ public final class Messages {
       }
       if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, password_);
+      }
+      if (((bitField0_ & 0x00000004) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, type_);
+      }
+      if (((bitField0_ & 0x00000008) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, status_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2506,6 +2394,16 @@ public final class Messages {
         if (!getPassword()
             .equals(other.getPassword())) return false;
       }
+      if (hasType() != other.hasType()) return false;
+      if (hasType()) {
+        if (getType()
+            != other.getType()) return false;
+      }
+      if (hasStatus() != other.hasStatus()) return false;
+      if (hasStatus()) {
+        if (getStatus()
+            != other.getStatus()) return false;
+      }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -2524,6 +2422,14 @@ public final class Messages {
       if (hasPassword()) {
         hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
         hash = (53 * hash) + getPassword().hashCode();
+      }
+      if (hasType()) {
+        hash = (37 * hash) + TYPE_FIELD_NUMBER;
+        hash = (53 * hash) + getType();
+      }
+      if (hasStatus()) {
+        hash = (37 * hash) + STATUS_FIELD_NUMBER;
+        hash = (53 * hash) + getStatus();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -2662,6 +2568,10 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000001);
         password_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
+        type_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        status_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -2698,6 +2608,14 @@ public final class Messages {
           to_bitField0_ |= 0x00000002;
         }
         result.password_ = password_;
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.type_ = type_;
+          to_bitField0_ |= 0x00000004;
+        }
+        if (((from_bitField0_ & 0x00000008) != 0)) {
+          result.status_ = status_;
+          to_bitField0_ |= 0x00000008;
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2756,6 +2674,12 @@ public final class Messages {
           bitField0_ |= 0x00000002;
           password_ = other.password_;
           onChanged();
+        }
+        if (other.hasType()) {
+          setType(other.getType());
+        }
+        if (other.hasStatus()) {
+          setStatus(other.getStatus());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2935,6 +2859,70 @@ public final class Messages {
   }
   bitField0_ |= 0x00000002;
         password_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int type_ ;
+      /**
+       * <code>optional int32 type = 3;</code>
+       */
+      public boolean hasType() {
+        return ((bitField0_ & 0x00000004) != 0);
+      }
+      /**
+       * <code>optional int32 type = 3;</code>
+       */
+      public int getType() {
+        return type_;
+      }
+      /**
+       * <code>optional int32 type = 3;</code>
+       */
+      public Builder setType(int value) {
+        bitField0_ |= 0x00000004;
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 type = 3;</code>
+       */
+      public Builder clearType() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        type_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int status_ ;
+      /**
+       * <code>optional int32 status = 4;</code>
+       */
+      public boolean hasStatus() {
+        return ((bitField0_ & 0x00000008) != 0);
+      }
+      /**
+       * <code>optional int32 status = 4;</code>
+       */
+      public int getStatus() {
+        return status_;
+      }
+      /**
+       * <code>optional int32 status = 4;</code>
+       */
+      public Builder setStatus(int value) {
+        bitField0_ |= 0x00000008;
+        status_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 status = 4;</code>
+       */
+      public Builder clearStatus() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        status_ = 0;
         onChanged();
         return this;
       }
@@ -5307,19 +5295,17 @@ public final class Messages {
       "te\030\001 \001(\0132\n.tp.Create\022\030\n\005login\030\002 \001(\0132\t.tp" +
       ".Login\0220\n\021manufacturerOrder\030\003 \001(\0132\025.tp.M" +
       "anufacturerOrder\022(\n\rimporterOffer\030\004 \001(\0132" +
-      "\021.tp.ImporterOffer\"T\n\006Create\022\020\n\010username" +
-      "\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"&\n\004type\022\020\n\014MANU" +
-      "FACTURER\020\000\022\014\n\010IMPORTER\020\001\"p\n\005Login\022\020\n\010use" +
-      "rname\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"\033\n\006status\022" +
-      "\006\n\002OK\020\000\022\t\n\005NOTOK\020\001\"&\n\004type\022\020\n\014MANUFACTUR" +
-      "ER\020\000\022\014\n\010IMPORTER\020\001\"\250\001\n\021ManufacturerOrder" +
-      "\022\n\n\002id\030\001 \001(\003\022\024\n\014manufacturer\030\002 \001(\t\022\017\n\007pr" +
-      "oduct\030\003 \001(\t\022\023\n\013minQuantity\030\004 \001(\003\022\023\n\013maxQ" +
-      "uantity\030\005 \001(\003\022\021\n\tunitPrice\030\006 \001(\001\022\016\n\006acti" +
-      "ve\030\007 \001(\005\022\023\n\013negotiation\030\010 \001(\003\"g\n\rImporte" +
-      "rOffer\022\n\n\002id\030\001 \001(\003\022\024\n\014manufacturer\030\002 \001(\t" +
-      "\022\017\n\007product\030\003 \001(\t\022\020\n\010quantity\030\004 \001(\003\022\021\n\tu" +
-      "nitPrice\030\005 \001(\001"
+      "\021.tp.ImporterOffer\":\n\006Create\022\020\n\010username" +
+      "\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\014\n\004type\030\003 \001(\005\"I" +
+      "\n\005Login\022\020\n\010username\030\001 \001(\t\022\020\n\010password\030\002 " +
+      "\001(\t\022\014\n\004type\030\003 \001(\005\022\016\n\006status\030\004 \001(\005\"\250\001\n\021Ma" +
+      "nufacturerOrder\022\n\n\002id\030\001 \001(\003\022\024\n\014manufactu" +
+      "rer\030\002 \001(\t\022\017\n\007product\030\003 \001(\t\022\023\n\013minQuantit" +
+      "y\030\004 \001(\003\022\023\n\013maxQuantity\030\005 \001(\003\022\021\n\tunitPric" +
+      "e\030\006 \001(\001\022\016\n\006active\030\007 \001(\005\022\023\n\013negotiation\030\010" +
+      " \001(\003\"g\n\rImporterOffer\022\n\n\002id\030\001 \001(\003\022\024\n\014man" +
+      "ufacturer\030\002 \001(\t\022\017\n\007product\030\003 \001(\t\022\020\n\010quan" +
+      "tity\030\004 \001(\003\022\021\n\tunitPrice\030\005 \001(\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5344,13 +5330,13 @@ public final class Messages {
     internal_static_tp_Create_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_tp_Create_descriptor,
-        new java.lang.String[] { "Username", "Password", });
+        new java.lang.String[] { "Username", "Password", "Type", });
     internal_static_tp_Login_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_tp_Login_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_tp_Login_descriptor,
-        new java.lang.String[] { "Username", "Password", });
+        new java.lang.String[] { "Username", "Password", "Type", "Status", });
     internal_static_tp_ManufacturerOrder_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_tp_ManufacturerOrder_fieldAccessorTable = new
