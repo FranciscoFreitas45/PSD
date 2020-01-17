@@ -4,26 +4,21 @@ package tp;
 
 message Message{
     optional string type = 1;
-    optional Create create = 2;
-    optional Login login = 3;
+    optional User user = 2;
+    optional Response response = 3;
     optional ManufacturerOrder manufacturerOrder = 4;
     optional ImporterOffer importerOffer = 5;
 }
 
-
-message Create {
+message User {
     optional string username=1;
     optional string password = 2;
     optional int32 type = 3;
 }
 
-message Login {
-    optional string username=1;
-    optional string password = 2;
-    optional int32 type = 3;
-    optional int32 status = 4;
+message Response {
+    optional string response = 4;
 }
-
 
 message ManufacturerOrder {
     optional int64 id = 1;
