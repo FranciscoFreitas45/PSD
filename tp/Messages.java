@@ -19,54 +19,68 @@ public final class Messages {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .tp.Create create = 1;</code>
+     * <code>optional string type = 1;</code>
+     */
+    boolean hasType();
+    /**
+     * <code>optional string type = 1;</code>
+     */
+    java.lang.String getType();
+    /**
+     * <code>optional string type = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getTypeBytes();
+
+    /**
+     * <code>optional .tp.Create create = 2;</code>
      */
     boolean hasCreate();
     /**
-     * <code>optional .tp.Create create = 1;</code>
+     * <code>optional .tp.Create create = 2;</code>
      */
     tp.Messages.Create getCreate();
     /**
-     * <code>optional .tp.Create create = 1;</code>
+     * <code>optional .tp.Create create = 2;</code>
      */
     tp.Messages.CreateOrBuilder getCreateOrBuilder();
 
     /**
-     * <code>optional .tp.Login login = 2;</code>
+     * <code>optional .tp.Login login = 3;</code>
      */
     boolean hasLogin();
     /**
-     * <code>optional .tp.Login login = 2;</code>
+     * <code>optional .tp.Login login = 3;</code>
      */
     tp.Messages.Login getLogin();
     /**
-     * <code>optional .tp.Login login = 2;</code>
+     * <code>optional .tp.Login login = 3;</code>
      */
     tp.Messages.LoginOrBuilder getLoginOrBuilder();
 
     /**
-     * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+     * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
      */
     boolean hasManufacturerOrder();
     /**
-     * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+     * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
      */
     tp.Messages.ManufacturerOrder getManufacturerOrder();
     /**
-     * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+     * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
      */
     tp.Messages.ManufacturerOrderOrBuilder getManufacturerOrderOrBuilder();
 
     /**
-     * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+     * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
      */
     boolean hasImporterOffer();
     /**
-     * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+     * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
      */
     tp.Messages.ImporterOffer getImporterOffer();
     /**
-     * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+     * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
      */
     tp.Messages.ImporterOfferOrBuilder getImporterOfferOrBuilder();
   }
@@ -83,6 +97,7 @@ public final class Messages {
       super(builder);
     }
     private Message() {
+      type_ = "";
     }
 
     @java.lang.Override
@@ -110,8 +125,14 @@ public final class Messages {
               done = true;
               break;
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              type_ = bs;
+              break;
+            }
+            case 18: {
               tp.Messages.Create.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000001) != 0)) {
+              if (((bitField0_ & 0x00000002) != 0)) {
                 subBuilder = create_.toBuilder();
               }
               create_ = input.readMessage(tp.Messages.Create.PARSER, extensionRegistry);
@@ -119,12 +140,12 @@ public final class Messages {
                 subBuilder.mergeFrom(create_);
                 create_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000001;
+              bitField0_ |= 0x00000002;
               break;
             }
-            case 18: {
+            case 26: {
               tp.Messages.Login.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000002) != 0)) {
+              if (((bitField0_ & 0x00000004) != 0)) {
                 subBuilder = login_.toBuilder();
               }
               login_ = input.readMessage(tp.Messages.Login.PARSER, extensionRegistry);
@@ -132,12 +153,12 @@ public final class Messages {
                 subBuilder.mergeFrom(login_);
                 login_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000002;
+              bitField0_ |= 0x00000004;
               break;
             }
-            case 26: {
+            case 34: {
               tp.Messages.ManufacturerOrder.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000004) != 0)) {
+              if (((bitField0_ & 0x00000008) != 0)) {
                 subBuilder = manufacturerOrder_.toBuilder();
               }
               manufacturerOrder_ = input.readMessage(tp.Messages.ManufacturerOrder.PARSER, extensionRegistry);
@@ -145,12 +166,12 @@ public final class Messages {
                 subBuilder.mergeFrom(manufacturerOrder_);
                 manufacturerOrder_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000004;
+              bitField0_ |= 0x00000008;
               break;
             }
-            case 34: {
+            case 42: {
               tp.Messages.ImporterOffer.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000008) != 0)) {
+              if (((bitField0_ & 0x00000010) != 0)) {
                 subBuilder = importerOffer_.toBuilder();
               }
               importerOffer_ = input.readMessage(tp.Messages.ImporterOffer.PARSER, extensionRegistry);
@@ -158,7 +179,7 @@ public final class Messages {
                 subBuilder.mergeFrom(importerOffer_);
                 importerOffer_ = subBuilder.buildPartial();
               }
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000010;
               break;
             }
             default: {
@@ -194,85 +215,127 @@ public final class Messages {
     }
 
     private int bitField0_;
-    public static final int CREATE_FIELD_NUMBER = 1;
-    private tp.Messages.Create create_;
+    public static final int TYPE_FIELD_NUMBER = 1;
+    private volatile java.lang.Object type_;
     /**
-     * <code>optional .tp.Create create = 1;</code>
+     * <code>optional string type = 1;</code>
      */
-    public boolean hasCreate() {
+    public boolean hasType() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
-     * <code>optional .tp.Create create = 1;</code>
+     * <code>optional string type = 1;</code>
+     */
+    public java.lang.String getType() {
+      java.lang.Object ref = type_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          type_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string type = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTypeBytes() {
+      java.lang.Object ref = type_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        type_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CREATE_FIELD_NUMBER = 2;
+    private tp.Messages.Create create_;
+    /**
+     * <code>optional .tp.Create create = 2;</code>
+     */
+    public boolean hasCreate() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <code>optional .tp.Create create = 2;</code>
      */
     public tp.Messages.Create getCreate() {
       return create_ == null ? tp.Messages.Create.getDefaultInstance() : create_;
     }
     /**
-     * <code>optional .tp.Create create = 1;</code>
+     * <code>optional .tp.Create create = 2;</code>
      */
     public tp.Messages.CreateOrBuilder getCreateOrBuilder() {
       return create_ == null ? tp.Messages.Create.getDefaultInstance() : create_;
     }
 
-    public static final int LOGIN_FIELD_NUMBER = 2;
+    public static final int LOGIN_FIELD_NUMBER = 3;
     private tp.Messages.Login login_;
     /**
-     * <code>optional .tp.Login login = 2;</code>
+     * <code>optional .tp.Login login = 3;</code>
      */
     public boolean hasLogin() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000004) != 0);
     }
     /**
-     * <code>optional .tp.Login login = 2;</code>
+     * <code>optional .tp.Login login = 3;</code>
      */
     public tp.Messages.Login getLogin() {
       return login_ == null ? tp.Messages.Login.getDefaultInstance() : login_;
     }
     /**
-     * <code>optional .tp.Login login = 2;</code>
+     * <code>optional .tp.Login login = 3;</code>
      */
     public tp.Messages.LoginOrBuilder getLoginOrBuilder() {
       return login_ == null ? tp.Messages.Login.getDefaultInstance() : login_;
     }
 
-    public static final int MANUFACTURERORDER_FIELD_NUMBER = 3;
+    public static final int MANUFACTURERORDER_FIELD_NUMBER = 4;
     private tp.Messages.ManufacturerOrder manufacturerOrder_;
     /**
-     * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+     * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
      */
     public boolean hasManufacturerOrder() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000008) != 0);
     }
     /**
-     * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+     * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
      */
     public tp.Messages.ManufacturerOrder getManufacturerOrder() {
       return manufacturerOrder_ == null ? tp.Messages.ManufacturerOrder.getDefaultInstance() : manufacturerOrder_;
     }
     /**
-     * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+     * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
      */
     public tp.Messages.ManufacturerOrderOrBuilder getManufacturerOrderOrBuilder() {
       return manufacturerOrder_ == null ? tp.Messages.ManufacturerOrder.getDefaultInstance() : manufacturerOrder_;
     }
 
-    public static final int IMPORTEROFFER_FIELD_NUMBER = 4;
+    public static final int IMPORTEROFFER_FIELD_NUMBER = 5;
     private tp.Messages.ImporterOffer importerOffer_;
     /**
-     * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+     * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
      */
     public boolean hasImporterOffer() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000010) != 0);
     }
     /**
-     * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+     * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
      */
     public tp.Messages.ImporterOffer getImporterOffer() {
       return importerOffer_ == null ? tp.Messages.ImporterOffer.getDefaultInstance() : importerOffer_;
     }
     /**
-     * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+     * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
      */
     public tp.Messages.ImporterOfferOrBuilder getImporterOfferOrBuilder() {
       return importerOffer_ == null ? tp.Messages.ImporterOffer.getDefaultInstance() : importerOffer_;
@@ -293,16 +356,19 @@ public final class Messages {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(1, getCreate());
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
       }
       if (((bitField0_ & 0x00000002) != 0)) {
-        output.writeMessage(2, getLogin());
+        output.writeMessage(2, getCreate());
       }
       if (((bitField0_ & 0x00000004) != 0)) {
-        output.writeMessage(3, getManufacturerOrder());
+        output.writeMessage(3, getLogin());
       }
       if (((bitField0_ & 0x00000008) != 0)) {
-        output.writeMessage(4, getImporterOffer());
+        output.writeMessage(4, getManufacturerOrder());
+      }
+      if (((bitField0_ & 0x00000010) != 0)) {
+        output.writeMessage(5, getImporterOffer());
       }
       unknownFields.writeTo(output);
     }
@@ -314,20 +380,23 @@ public final class Messages {
 
       size = 0;
       if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getCreate());
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, type_);
       }
       if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getLogin());
+          .computeMessageSize(2, getCreate());
       }
       if (((bitField0_ & 0x00000004) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getManufacturerOrder());
+          .computeMessageSize(3, getLogin());
       }
       if (((bitField0_ & 0x00000008) != 0)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getImporterOffer());
+          .computeMessageSize(4, getManufacturerOrder());
+      }
+      if (((bitField0_ & 0x00000010) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, getImporterOffer());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -344,6 +413,11 @@ public final class Messages {
       }
       tp.Messages.Message other = (tp.Messages.Message) obj;
 
+      if (hasType() != other.hasType()) return false;
+      if (hasType()) {
+        if (!getType()
+            .equals(other.getType())) return false;
+      }
       if (hasCreate() != other.hasCreate()) return false;
       if (hasCreate()) {
         if (!getCreate()
@@ -375,6 +449,10 @@ public final class Messages {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasType()) {
+        hash = (37 * hash) + TYPE_FIELD_NUMBER;
+        hash = (53 * hash) + getType().hashCode();
+      }
       if (hasCreate()) {
         hash = (37 * hash) + CREATE_FIELD_NUMBER;
         hash = (53 * hash) + getCreate().hashCode();
@@ -528,30 +606,32 @@ public final class Messages {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        type_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
         if (createBuilder_ == null) {
           create_ = null;
         } else {
           createBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         if (loginBuilder_ == null) {
           login_ = null;
         } else {
           loginBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000004);
         if (manufacturerOrderBuilder_ == null) {
           manufacturerOrder_ = null;
         } else {
           manufacturerOrderBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         if (importerOfferBuilder_ == null) {
           importerOffer_ = null;
         } else {
           importerOfferBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -581,36 +661,40 @@ public final class Messages {
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) != 0)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.type_ = type_;
+        if (((from_bitField0_ & 0x00000002) != 0)) {
           if (createBuilder_ == null) {
             result.create_ = create_;
           } else {
             result.create_ = createBuilder_.build();
           }
-          to_bitField0_ |= 0x00000001;
+          to_bitField0_ |= 0x00000002;
         }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000004) != 0)) {
           if (loginBuilder_ == null) {
             result.login_ = login_;
           } else {
             result.login_ = loginBuilder_.build();
           }
-          to_bitField0_ |= 0x00000002;
+          to_bitField0_ |= 0x00000004;
         }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
+        if (((from_bitField0_ & 0x00000008) != 0)) {
           if (manufacturerOrderBuilder_ == null) {
             result.manufacturerOrder_ = manufacturerOrder_;
           } else {
             result.manufacturerOrder_ = manufacturerOrderBuilder_.build();
           }
-          to_bitField0_ |= 0x00000004;
+          to_bitField0_ |= 0x00000008;
         }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
+        if (((from_bitField0_ & 0x00000010) != 0)) {
           if (importerOfferBuilder_ == null) {
             result.importerOffer_ = importerOffer_;
           } else {
             result.importerOffer_ = importerOfferBuilder_.build();
           }
-          to_bitField0_ |= 0x00000008;
+          to_bitField0_ |= 0x00000010;
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -661,6 +745,11 @@ public final class Messages {
 
       public Builder mergeFrom(tp.Messages.Message other) {
         if (other == tp.Messages.Message.getDefaultInstance()) return this;
+        if (other.hasType()) {
+          bitField0_ |= 0x00000001;
+          type_ = other.type_;
+          onChanged();
+        }
         if (other.hasCreate()) {
           mergeCreate(other.getCreate());
         }
@@ -703,17 +792,93 @@ public final class Messages {
       }
       private int bitField0_;
 
+      private java.lang.Object type_ = "";
+      /**
+       * <code>optional string type = 1;</code>
+       */
+      public boolean hasType() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <code>optional string type = 1;</code>
+       */
+      public java.lang.String getType() {
+        java.lang.Object ref = type_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            type_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string type = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTypeBytes() {
+        java.lang.Object ref = type_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          type_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string type = 1;</code>
+       */
+      public Builder setType(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string type = 1;</code>
+       */
+      public Builder clearType() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        type_ = getDefaultInstance().getType();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string type = 1;</code>
+       */
+      public Builder setTypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        type_ = value;
+        onChanged();
+        return this;
+      }
+
       private tp.Messages.Create create_;
       private com.google.protobuf.SingleFieldBuilderV3<
           tp.Messages.Create, tp.Messages.Create.Builder, tp.Messages.CreateOrBuilder> createBuilder_;
       /**
-       * <code>optional .tp.Create create = 1;</code>
+       * <code>optional .tp.Create create = 2;</code>
        */
       public boolean hasCreate() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000002) != 0);
       }
       /**
-       * <code>optional .tp.Create create = 1;</code>
+       * <code>optional .tp.Create create = 2;</code>
        */
       public tp.Messages.Create getCreate() {
         if (createBuilder_ == null) {
@@ -723,7 +888,7 @@ public final class Messages {
         }
       }
       /**
-       * <code>optional .tp.Create create = 1;</code>
+       * <code>optional .tp.Create create = 2;</code>
        */
       public Builder setCreate(tp.Messages.Create value) {
         if (createBuilder_ == null) {
@@ -735,11 +900,11 @@ public final class Messages {
         } else {
           createBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
         return this;
       }
       /**
-       * <code>optional .tp.Create create = 1;</code>
+       * <code>optional .tp.Create create = 2;</code>
        */
       public Builder setCreate(
           tp.Messages.Create.Builder builderForValue) {
@@ -749,15 +914,15 @@ public final class Messages {
         } else {
           createBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
         return this;
       }
       /**
-       * <code>optional .tp.Create create = 1;</code>
+       * <code>optional .tp.Create create = 2;</code>
        */
       public Builder mergeCreate(tp.Messages.Create value) {
         if (createBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0) &&
+          if (((bitField0_ & 0x00000002) != 0) &&
               create_ != null &&
               create_ != tp.Messages.Create.getDefaultInstance()) {
             create_ =
@@ -769,11 +934,11 @@ public final class Messages {
         } else {
           createBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
         return this;
       }
       /**
-       * <code>optional .tp.Create create = 1;</code>
+       * <code>optional .tp.Create create = 2;</code>
        */
       public Builder clearCreate() {
         if (createBuilder_ == null) {
@@ -782,19 +947,19 @@ public final class Messages {
         } else {
           createBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
       /**
-       * <code>optional .tp.Create create = 1;</code>
+       * <code>optional .tp.Create create = 2;</code>
        */
       public tp.Messages.Create.Builder getCreateBuilder() {
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
         onChanged();
         return getCreateFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .tp.Create create = 1;</code>
+       * <code>optional .tp.Create create = 2;</code>
        */
       public tp.Messages.CreateOrBuilder getCreateOrBuilder() {
         if (createBuilder_ != null) {
@@ -805,7 +970,7 @@ public final class Messages {
         }
       }
       /**
-       * <code>optional .tp.Create create = 1;</code>
+       * <code>optional .tp.Create create = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           tp.Messages.Create, tp.Messages.Create.Builder, tp.Messages.CreateOrBuilder> 
@@ -825,13 +990,13 @@ public final class Messages {
       private com.google.protobuf.SingleFieldBuilderV3<
           tp.Messages.Login, tp.Messages.Login.Builder, tp.Messages.LoginOrBuilder> loginBuilder_;
       /**
-       * <code>optional .tp.Login login = 2;</code>
+       * <code>optional .tp.Login login = 3;</code>
        */
       public boolean hasLogin() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000004) != 0);
       }
       /**
-       * <code>optional .tp.Login login = 2;</code>
+       * <code>optional .tp.Login login = 3;</code>
        */
       public tp.Messages.Login getLogin() {
         if (loginBuilder_ == null) {
@@ -841,7 +1006,7 @@ public final class Messages {
         }
       }
       /**
-       * <code>optional .tp.Login login = 2;</code>
+       * <code>optional .tp.Login login = 3;</code>
        */
       public Builder setLogin(tp.Messages.Login value) {
         if (loginBuilder_ == null) {
@@ -853,11 +1018,11 @@ public final class Messages {
         } else {
           loginBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000004;
         return this;
       }
       /**
-       * <code>optional .tp.Login login = 2;</code>
+       * <code>optional .tp.Login login = 3;</code>
        */
       public Builder setLogin(
           tp.Messages.Login.Builder builderForValue) {
@@ -867,15 +1032,15 @@ public final class Messages {
         } else {
           loginBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000004;
         return this;
       }
       /**
-       * <code>optional .tp.Login login = 2;</code>
+       * <code>optional .tp.Login login = 3;</code>
        */
       public Builder mergeLogin(tp.Messages.Login value) {
         if (loginBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) != 0) &&
+          if (((bitField0_ & 0x00000004) != 0) &&
               login_ != null &&
               login_ != tp.Messages.Login.getDefaultInstance()) {
             login_ =
@@ -887,11 +1052,11 @@ public final class Messages {
         } else {
           loginBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000004;
         return this;
       }
       /**
-       * <code>optional .tp.Login login = 2;</code>
+       * <code>optional .tp.Login login = 3;</code>
        */
       public Builder clearLogin() {
         if (loginBuilder_ == null) {
@@ -900,19 +1065,19 @@ public final class Messages {
         } else {
           loginBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
       /**
-       * <code>optional .tp.Login login = 2;</code>
+       * <code>optional .tp.Login login = 3;</code>
        */
       public tp.Messages.Login.Builder getLoginBuilder() {
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000004;
         onChanged();
         return getLoginFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .tp.Login login = 2;</code>
+       * <code>optional .tp.Login login = 3;</code>
        */
       public tp.Messages.LoginOrBuilder getLoginOrBuilder() {
         if (loginBuilder_ != null) {
@@ -923,7 +1088,7 @@ public final class Messages {
         }
       }
       /**
-       * <code>optional .tp.Login login = 2;</code>
+       * <code>optional .tp.Login login = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           tp.Messages.Login, tp.Messages.Login.Builder, tp.Messages.LoginOrBuilder> 
@@ -943,13 +1108,13 @@ public final class Messages {
       private com.google.protobuf.SingleFieldBuilderV3<
           tp.Messages.ManufacturerOrder, tp.Messages.ManufacturerOrder.Builder, tp.Messages.ManufacturerOrderOrBuilder> manufacturerOrderBuilder_;
       /**
-       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
        */
       public boolean hasManufacturerOrder() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000008) != 0);
       }
       /**
-       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
        */
       public tp.Messages.ManufacturerOrder getManufacturerOrder() {
         if (manufacturerOrderBuilder_ == null) {
@@ -959,7 +1124,7 @@ public final class Messages {
         }
       }
       /**
-       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
        */
       public Builder setManufacturerOrder(tp.Messages.ManufacturerOrder value) {
         if (manufacturerOrderBuilder_ == null) {
@@ -971,11 +1136,11 @@ public final class Messages {
         } else {
           manufacturerOrderBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
-       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
        */
       public Builder setManufacturerOrder(
           tp.Messages.ManufacturerOrder.Builder builderForValue) {
@@ -985,15 +1150,15 @@ public final class Messages {
         } else {
           manufacturerOrderBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
-       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
        */
       public Builder mergeManufacturerOrder(tp.Messages.ManufacturerOrder value) {
         if (manufacturerOrderBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) != 0) &&
+          if (((bitField0_ & 0x00000008) != 0) &&
               manufacturerOrder_ != null &&
               manufacturerOrder_ != tp.Messages.ManufacturerOrder.getDefaultInstance()) {
             manufacturerOrder_ =
@@ -1005,11 +1170,11 @@ public final class Messages {
         } else {
           manufacturerOrderBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         return this;
       }
       /**
-       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
        */
       public Builder clearManufacturerOrder() {
         if (manufacturerOrderBuilder_ == null) {
@@ -1018,19 +1183,19 @@ public final class Messages {
         } else {
           manufacturerOrderBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
       /**
-       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
        */
       public tp.Messages.ManufacturerOrder.Builder getManufacturerOrderBuilder() {
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         onChanged();
         return getManufacturerOrderFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
        */
       public tp.Messages.ManufacturerOrderOrBuilder getManufacturerOrderOrBuilder() {
         if (manufacturerOrderBuilder_ != null) {
@@ -1041,7 +1206,7 @@ public final class Messages {
         }
       }
       /**
-       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 3;</code>
+       * <code>optional .tp.ManufacturerOrder manufacturerOrder = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           tp.Messages.ManufacturerOrder, tp.Messages.ManufacturerOrder.Builder, tp.Messages.ManufacturerOrderOrBuilder> 
@@ -1061,13 +1226,13 @@ public final class Messages {
       private com.google.protobuf.SingleFieldBuilderV3<
           tp.Messages.ImporterOffer, tp.Messages.ImporterOffer.Builder, tp.Messages.ImporterOfferOrBuilder> importerOfferBuilder_;
       /**
-       * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+       * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
        */
       public boolean hasImporterOffer() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return ((bitField0_ & 0x00000010) != 0);
       }
       /**
-       * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+       * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
        */
       public tp.Messages.ImporterOffer getImporterOffer() {
         if (importerOfferBuilder_ == null) {
@@ -1077,7 +1242,7 @@ public final class Messages {
         }
       }
       /**
-       * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+       * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
        */
       public Builder setImporterOffer(tp.Messages.ImporterOffer value) {
         if (importerOfferBuilder_ == null) {
@@ -1089,11 +1254,11 @@ public final class Messages {
         } else {
           importerOfferBuilder_.setMessage(value);
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
-       * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+       * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
        */
       public Builder setImporterOffer(
           tp.Messages.ImporterOffer.Builder builderForValue) {
@@ -1103,15 +1268,15 @@ public final class Messages {
         } else {
           importerOfferBuilder_.setMessage(builderForValue.build());
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
-       * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+       * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
        */
       public Builder mergeImporterOffer(tp.Messages.ImporterOffer value) {
         if (importerOfferBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) != 0) &&
+          if (((bitField0_ & 0x00000010) != 0) &&
               importerOffer_ != null &&
               importerOffer_ != tp.Messages.ImporterOffer.getDefaultInstance()) {
             importerOffer_ =
@@ -1123,11 +1288,11 @@ public final class Messages {
         } else {
           importerOfferBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         return this;
       }
       /**
-       * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+       * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
        */
       public Builder clearImporterOffer() {
         if (importerOfferBuilder_ == null) {
@@ -1136,19 +1301,19 @@ public final class Messages {
         } else {
           importerOfferBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
       /**
-       * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+       * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
        */
       public tp.Messages.ImporterOffer.Builder getImporterOfferBuilder() {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         onChanged();
         return getImporterOfferFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+       * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
        */
       public tp.Messages.ImporterOfferOrBuilder getImporterOfferOrBuilder() {
         if (importerOfferBuilder_ != null) {
@@ -1159,7 +1324,7 @@ public final class Messages {
         }
       }
       /**
-       * <code>optional .tp.ImporterOffer importerOffer = 4;</code>
+       * <code>optional .tp.ImporterOffer importerOffer = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           tp.Messages.ImporterOffer, tp.Messages.ImporterOffer.Builder, tp.Messages.ImporterOfferOrBuilder> 
@@ -5291,21 +5456,22 @@ public final class Messages {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016messages.proto\022\002tp\"\233\001\n\007Message\022\032\n\006crea" +
-      "te\030\001 \001(\0132\n.tp.Create\022\030\n\005login\030\002 \001(\0132\t.tp" +
-      ".Login\0220\n\021manufacturerOrder\030\003 \001(\0132\025.tp.M" +
-      "anufacturerOrder\022(\n\rimporterOffer\030\004 \001(\0132" +
-      "\021.tp.ImporterOffer\":\n\006Create\022\020\n\010username" +
-      "\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\014\n\004type\030\003 \001(\005\"I" +
-      "\n\005Login\022\020\n\010username\030\001 \001(\t\022\020\n\010password\030\002 " +
-      "\001(\t\022\014\n\004type\030\003 \001(\005\022\016\n\006status\030\004 \001(\005\"\250\001\n\021Ma" +
-      "nufacturerOrder\022\n\n\002id\030\001 \001(\003\022\024\n\014manufactu" +
-      "rer\030\002 \001(\t\022\017\n\007product\030\003 \001(\t\022\023\n\013minQuantit" +
-      "y\030\004 \001(\003\022\023\n\013maxQuantity\030\005 \001(\003\022\021\n\tunitPric" +
-      "e\030\006 \001(\001\022\016\n\006active\030\007 \001(\005\022\023\n\013negotiation\030\010" +
-      " \001(\003\"g\n\rImporterOffer\022\n\n\002id\030\001 \001(\003\022\024\n\014man" +
-      "ufacturer\030\002 \001(\t\022\017\n\007product\030\003 \001(\t\022\020\n\010quan" +
-      "tity\030\004 \001(\003\022\021\n\tunitPrice\030\005 \001(\001"
+      "\n\016messages.proto\022\002tp\"\251\001\n\007Message\022\014\n\004type" +
+      "\030\001 \001(\t\022\032\n\006create\030\002 \001(\0132\n.tp.Create\022\030\n\005lo" +
+      "gin\030\003 \001(\0132\t.tp.Login\0220\n\021manufacturerOrde" +
+      "r\030\004 \001(\0132\025.tp.ManufacturerOrder\022(\n\rimport" +
+      "erOffer\030\005 \001(\0132\021.tp.ImporterOffer\":\n\006Crea" +
+      "te\022\020\n\010username\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\014" +
+      "\n\004type\030\003 \001(\005\"I\n\005Login\022\020\n\010username\030\001 \001(\t\022" +
+      "\020\n\010password\030\002 \001(\t\022\014\n\004type\030\003 \001(\005\022\016\n\006statu" +
+      "s\030\004 \001(\005\"\250\001\n\021ManufacturerOrder\022\n\n\002id\030\001 \001(" +
+      "\003\022\024\n\014manufacturer\030\002 \001(\t\022\017\n\007product\030\003 \001(\t" +
+      "\022\023\n\013minQuantity\030\004 \001(\003\022\023\n\013maxQuantity\030\005 \001" +
+      "(\003\022\021\n\tunitPrice\030\006 \001(\001\022\016\n\006active\030\007 \001(\005\022\023\n" +
+      "\013negotiation\030\010 \001(\003\"g\n\rImporterOffer\022\n\n\002i" +
+      "d\030\001 \001(\003\022\024\n\014manufacturer\030\002 \001(\t\022\017\n\007product" +
+      "\030\003 \001(\t\022\020\n\010quantity\030\004 \001(\003\022\021\n\tunitPrice\030\005 " +
+      "\001(\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5324,7 +5490,7 @@ public final class Messages {
     internal_static_tp_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_tp_Message_descriptor,
-        new java.lang.String[] { "Create", "Login", "ManufacturerOrder", "ImporterOffer", });
+        new java.lang.String[] { "Type", "Create", "Login", "ManufacturerOrder", "ImporterOffer", });
     internal_static_tp_Create_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_tp_Create_fieldAccessorTable = new

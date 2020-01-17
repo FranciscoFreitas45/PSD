@@ -3,10 +3,11 @@ syntax = "proto2";
 package tp;
 
 message Message{
-    optional Create create = 1;
-    optional Login login = 2;
-    optional ManufacturerOrder manufacturerOrder = 3;
-    optional ImporterOffer importerOffer = 4;
+    optional string type = 1;
+    optional Create create = 2;
+    optional Login login = 3;
+    optional ManufacturerOrder manufacturerOrder = 4;
+    optional ImporterOffer importerOffer = 5;
 }
 
 
