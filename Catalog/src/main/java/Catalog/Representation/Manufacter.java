@@ -34,8 +34,6 @@ public class Manufacter {
     }
 
     public void addOrder(Order o){
-        long id = this.orders.size();
-        o.setId(id);
         this.orders.add(o);
     }
 

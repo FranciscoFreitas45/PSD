@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Path("/importer")
@@ -21,11 +22,13 @@ public class ImporterResource {
     private final String template;
     private volatile String defaultName;
     private final Map<String, Importader> importers;
+    private final AtomicLong counter;
 
     public ImporterResource(String template, String defaultName){
         this.template = template;
         this.defaultName = defaultName;
         this.importers = new ConcurrentHashMap<>();
+        this.counter =  new AtomicLong();
 
         this.importers.put("Golias",new Importader("Golias"));
         this.importers.put("MEGAMIND",new Importader("MEGAMIND"));
@@ -67,6 +70,8 @@ public class ImporterResource {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         else{
+            long id = counter.incrementAndGet();
+            offer.setId(id);
             i.addOffer(offer);
         }
         return Response.ok(offer).build();

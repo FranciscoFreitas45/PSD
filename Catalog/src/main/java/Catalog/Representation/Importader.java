@@ -28,8 +28,6 @@ public class Importader {
     }
 
     public void addOffer(Offer o){
-        long id = this.historic.size()+1;
-        o.setId(id);
         this.historic.add(o);
     }
 
