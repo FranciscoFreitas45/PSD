@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package tp;
+
+message ManufacturerOrder {
+    int64 id = 1;
+    string manufacturer = 2;
+    string product = 3;
+    int64 minQuantity = 4;
+    int64 maxQuantity = 5;
+    double unitPrice = 6;
+    int32 active = 7;
+    int64 negotiation  = 8;
+}
+
+message ImporterOffer {
+    int64 id = 1;
+    string manufacturer = 2;
+    string product = 3;
+    int64 quantity = 4;
+    double unitPrice = 5;
+}
