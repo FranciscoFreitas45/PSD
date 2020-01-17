@@ -1,10 +1,18 @@
-syntax = "proto3";
+syntax = "proto2";
 
 package tp;
 
+message Message{
+    optional Create create = 1;
+    optional Login login = 2;
+    optional ManufacturerOrder manufacturerOrder = 3;
+    optional ImporterOffer importerOffer = 4;
+}
+
+
 message Create {
-    string username=1;
-    string password = 2;
+    optional string username=1;
+    optional string password = 2;
     enum type {
         MANUFACTURER = 0;
         IMPORTER = 1;
@@ -12,8 +20,8 @@ message Create {
 }
 
 message Login {
-    string username=1;
-    string password = 2;
+    optional string username=1;
+    optional string password = 2;
     enum status {
         OK = 0;
         NOTOK = 1;
@@ -26,20 +34,20 @@ message Login {
 
 
 message ManufacturerOrder {
-    int64 id = 1;
-    string manufacturer = 2;
-    string product = 3;
-    int64 minQuantity = 4;
-    int64 maxQuantity = 5;
-    double unitPrice = 6;
-    int32 active = 7;
-    int64 negotiation  = 8;
+    optional int64 id = 1;
+    optional string manufacturer = 2;
+    optional string product = 3;
+    optional int64 minQuantity = 4;
+    optional int64 maxQuantity = 5;
+    optional double unitPrice = 6;
+    optional int32 active = 7;
+    optional int64 negotiation  = 8;
 }
 
 message ImporterOffer {
-    int64 id = 1;
-    string manufacturer = 2;
-    string product = 3;
-    int64 quantity = 4;
-    double unitPrice = 5;
+    optional int64 id = 1;
+    optional string manufacturer = 2;
+    optional string product = 3;
+    optional int64 quantity = 4;
+    optional double unitPrice = 5;
 }
