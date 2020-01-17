@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Path("/manufacter")
@@ -21,11 +22,15 @@ public class ManufacterResource {
     private final String template;
     private volatile String defaultName;
     private final Map<String, Manufacter> manufacters;
+    private final AtomicLong counterOrder;
+    private final AtomicLong counterHistoric;
 
     public ManufacterResource(String template, String defaultName){
         this.template = template;
         this.defaultName = defaultName;
         this.manufacters = new ConcurrentHashMap<>();
+        this.counterOrder = new AtomicLong();
+        this.counterHistoric = new AtomicLong();
 
         this.manufacters.put("MacDonalds",new Manufacter("McDonalds"));
         this.manufacters.put("IPO",new Manufacter("IPO"));
@@ -87,6 +92,8 @@ public class ManufacterResource {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         else{
+            long id = counterOrder.incrementAndGet();
+            order.setId(id);
             f.addOrder(order);
         }
         return Response.ok().build();
@@ -101,6 +108,8 @@ public class ManufacterResource {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         else{
+            long id = counterHistoric.incrementAndGet();
+            order.setId(id);
             f.addOrderHistoric(order);
         }
         return Response.ok().build();
