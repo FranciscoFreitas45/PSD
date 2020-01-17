@@ -2,6 +2,29 @@ syntax = "proto3";
 
 package tp;
 
+message Create {
+    string username=1;
+    string password = 2;
+    enum type {
+        MANUFACTURER = 0;
+        IMPORTER = 1;
+    }
+}
+
+message Login {
+    string username=1;
+    string password = 2;
+    enum status {
+        OK = 0;
+        NOTOK = 1;
+    }
+    enum type {
+        MANUFACTURER = 0;
+        IMPORTER = 1;
+    }
+}
+
+
 message ManufacturerOrder {
     int64 id = 1;
     string manufacturer = 2;
