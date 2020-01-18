@@ -1,6 +1,6 @@
+import com.google.gson.*;
 import com.google.protobuf.Message;
 import tp.Messages;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -215,18 +215,18 @@ public class Stub extends Thread {
 
     private void showHistoricImporter() throws IOException {
         String nameImporter = menu.readString("Importer: ");
-        String path="http://localhost:8080//manufacter/"+ nameImporter +"historic";
+        String path="http://localhost:8080/importer/"+ nameImporter +"/historic";
         consumeApiRest(path);
     }
 
     private void showHistoricManufacturer() throws IOException {
         String nameManufacturer = menu.readString("Manufacturer: ");
-        String path="http://localhost:8080/manufacter/"+ nameManufacturer +"historic";
+        String path="http://localhost:8080/manufacturer/"+ nameManufacturer +"/historic";
         consumeApiRest(path);
     }
 
     private void showManufacturer() throws IOException {
-        String path = "http://localhost:8080/manufacter";
+        String path = "http://localhost:8080/manufacturer";
         consumeApiRest(path);
     }
 
@@ -247,7 +247,18 @@ public class Stub extends Thread {
         }
         in.close();
 
-        System.out.println(reply.toString());
+        System.out.println(toPrettyFormat(reply.toString()));
+    }
+
+
+    public static String toPrettyFormat(String jsonString) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonParser jp = new JsonParser();
+        JsonElement je = jp.parse(jsonString);
+        String prettyJsonString = gson.toJson(je);
+        return prettyJsonString;
+
+
     }
 
     private static String listOptions(List<String> options) {
