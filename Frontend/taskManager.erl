@@ -11,7 +11,7 @@ taskhandler(MapNego,Noffer) ->
             Orderi = maps:get(manufacturerOrder,Msg),
             Orderf = maps:put(id,Noffer,Orderi),
             Msgn = maps:put(manufacturerOrder,Orderf,Msg),
-            Pid = spawn(fun() -> io:format("New order ~n",[]) end),
+            Pid = spawn(fun() -> task:start(Msgn) end),
             taskhandler(maps:put(Noffer,Pid,MapNego),Noffer+1);
         {lookup,Id,Pid} ->
             PidResult = maps:get(Id,MapNego),

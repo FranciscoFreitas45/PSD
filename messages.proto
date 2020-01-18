@@ -1,42 +1,42 @@
-syntax = "proto2";
+syntax = "proto3";
 
 package tp;
 
 message Message{
-    optional string type = 1;
-    optional User user = 2;
-    optional Response response = 3;
-    optional ManufacturerOrder manufacturerOrder = 4;
-    optional ImporterOffer importerOffer = 5;
+     string type = 1;
+     User user = 2;
+     Response response = 3;
+     ManufacturerOrder manufacturerOrder = 4;
+     ImporterOffer importerOffer = 5;
 }
 
 message User {
-    optional string username=1;
-    optional string password = 2;
-    optional int32 type = 3;
+     string username=1;
+     string password = 2;
+     int32 type = 3;
 }
 
 message Response {
-    optional int32 status = 1;
-    optional string response = 2;
+     int32 status = 1;
+     string response = 2;
 }
 
 message ManufacturerOrder {
-    optional int64 id = 1;
-    optional string manufacturer = 2;
-    optional string product = 3;
-    optional int64 minQuantity = 4;
-    optional int64 maxQuantity = 5;
-    optional double unitPrice = 6;
-    optional int32 active = 7;
-    optional int64 negotiation  = 8;
+     int64 id = 1;
+     string manufacturer = 2;
+     string product = 3;
+     int64 minQuantity = 4;
+     int64 maxQuantity = 5;
+     double unitPrice = 6;
+     int32 active = 7;
+     int64 negotiation  = 8;
 }
 
 message ImporterOffer {
-    optional int64 id = 1;
-    optional string manufacturer = 2;
-    optional string product = 3;
-    optional int64 quantity = 4;
-    optional double unitPrice = 5;
-    optional int64 idorder = 6;
+     int64 id = 1;
+     string manufacturer = 2;
+     string product = 3;
+     int64 quantity = 4;
+     double unitPrice = 5;
+     int64 idorder = 6;
 }

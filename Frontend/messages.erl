@@ -65,7 +65,8 @@
        }.
 
 -type 'Response'() ::
-      #{response                => iodata()         % = 4
+      #{status                  => integer(),       % = 1, 32 bits
+        response                => iodata()         % = 2
        }.
 
 -type 'ManufacturerOrder'() ::
@@ -84,7 +85,8 @@
         manufacturer            => iodata(),        % = 2
         product                 => iodata(),        % = 3
         quantity                => integer(),       % = 4, 32 bits
-        unitPrice               => float() | integer() | infinity | '-infinity' | nan % = 5
+        unitPrice               => float() | integer() | infinity | '-infinity' | nan, % = 5
+        idorder                 => integer()        % = 6, 32 bits
        }.
 
 -export_type(['Message'/0, 'User'/0, 'Response'/0, 'ManufacturerOrder'/0, 'ImporterOffer'/0]).
@@ -125,7 +127,11 @@ encode_msg_Message(#{} = M, Bin, TrUserData) ->
 	   #{type := F1} ->
 	       begin
 		 TrF1 = id(F1, TrUserData),
-		 e_type_string(TrF1, <<Bin/binary, 10>>, TrUserData)
+		 case is_empty_string(TrF1) of
+		   true -> Bin;
+		   false ->
+		       e_type_string(TrF1, <<Bin/binary, 10>>, TrUserData)
+		 end
 	       end;
 	   _ -> Bin
 	 end,
@@ -133,8 +139,11 @@ encode_msg_Message(#{} = M, Bin, TrUserData) ->
 	   #{user := F2} ->
 	       begin
 		 TrF2 = id(F2, TrUserData),
-		 e_mfield_Message_user(TrF2, <<B1/binary, 18>>,
-				       TrUserData)
+		 if TrF2 =:= undefined -> B1;
+		    true ->
+			e_mfield_Message_user(TrF2, <<B1/binary, 18>>,
+					      TrUserData)
+		 end
 	       end;
 	   _ -> B1
 	 end,
@@ -142,8 +151,11 @@ encode_msg_Message(#{} = M, Bin, TrUserData) ->
 	   #{response := F3} ->
 	       begin
 		 TrF3 = id(F3, TrUserData),
-		 e_mfield_Message_response(TrF3, <<B2/binary, 26>>,
-					   TrUserData)
+		 if TrF3 =:= undefined -> B2;
+		    true ->
+			e_mfield_Message_response(TrF3, <<B2/binary, 26>>,
+						  TrUserData)
+		 end
 	       end;
 	   _ -> B2
 	 end,
@@ -151,9 +163,12 @@ encode_msg_Message(#{} = M, Bin, TrUserData) ->
 	   #{manufacturerOrder := F4} ->
 	       begin
 		 TrF4 = id(F4, TrUserData),
-		 e_mfield_Message_manufacturerOrder(TrF4,
-						    <<B3/binary, 34>>,
-						    TrUserData)
+		 if TrF4 =:= undefined -> B3;
+		    true ->
+			e_mfield_Message_manufacturerOrder(TrF4,
+							   <<B3/binary, 34>>,
+							   TrUserData)
+		 end
 	       end;
 	   _ -> B3
 	 end,
@@ -161,8 +176,11 @@ encode_msg_Message(#{} = M, Bin, TrUserData) ->
       #{importerOffer := F5} ->
 	  begin
 	    TrF5 = id(F5, TrUserData),
-	    e_mfield_Message_importerOffer(TrF5, <<B4/binary, 42>>,
-					   TrUserData)
+	    if TrF5 =:= undefined -> B4;
+	       true ->
+		   e_mfield_Message_importerOffer(TrF5, <<B4/binary, 42>>,
+						  TrUserData)
+	    end
 	  end;
       _ -> B4
     end.
@@ -176,7 +194,11 @@ encode_msg_User(#{} = M, Bin, TrUserData) ->
 	   #{username := F1} ->
 	       begin
 		 TrF1 = id(F1, TrUserData),
-		 e_type_string(TrF1, <<Bin/binary, 10>>, TrUserData)
+		 case is_empty_string(TrF1) of
+		   true -> Bin;
+		   false ->
+		       e_type_string(TrF1, <<Bin/binary, 10>>, TrUserData)
+		 end
 	       end;
 	   _ -> Bin
 	 end,
@@ -184,7 +206,11 @@ encode_msg_User(#{} = M, Bin, TrUserData) ->
 	   #{password := F2} ->
 	       begin
 		 TrF2 = id(F2, TrUserData),
-		 e_type_string(TrF2, <<B1/binary, 18>>, TrUserData)
+		 case is_empty_string(TrF2) of
+		   true -> B1;
+		   false ->
+		       e_type_string(TrF2, <<B1/binary, 18>>, TrUserData)
+		 end
 	       end;
 	   _ -> B1
 	 end,
@@ -192,7 +218,10 @@ encode_msg_User(#{} = M, Bin, TrUserData) ->
       #{type := F3} ->
 	  begin
 	    TrF3 = id(F3, TrUserData),
-	    e_type_int32(TrF3, <<B2/binary, 24>>, TrUserData)
+	    if TrF3 =:= 0 -> B2;
+	       true ->
+		   e_type_int32(TrF3, <<B2/binary, 24>>, TrUserData)
+	    end
 	  end;
       _ -> B2
     end.
@@ -202,13 +231,28 @@ encode_msg_Response(Msg, TrUserData) ->
 
 
 encode_msg_Response(#{} = M, Bin, TrUserData) ->
+    B1 = case M of
+	   #{status := F1} ->
+	       begin
+		 TrF1 = id(F1, TrUserData),
+		 if TrF1 =:= 0 -> Bin;
+		    true ->
+			e_type_int32(TrF1, <<Bin/binary, 8>>, TrUserData)
+		 end
+	       end;
+	   _ -> Bin
+	 end,
     case M of
-      #{response := F1} ->
+      #{response := F2} ->
 	  begin
-	    TrF1 = id(F1, TrUserData),
-	    e_type_string(TrF1, <<Bin/binary, 34>>, TrUserData)
+	    TrF2 = id(F2, TrUserData),
+	    case is_empty_string(TrF2) of
+	      true -> B1;
+	      false ->
+		  e_type_string(TrF2, <<B1/binary, 18>>, TrUserData)
+	    end
 	  end;
-      _ -> Bin
+      _ -> B1
     end.
 
 encode_msg_ManufacturerOrder(Msg, TrUserData) ->
@@ -221,7 +265,10 @@ encode_msg_ManufacturerOrder(#{} = M, Bin,
 	   #{id := F1} ->
 	       begin
 		 TrF1 = id(F1, TrUserData),
-		 e_type_int64(TrF1, <<Bin/binary, 8>>, TrUserData)
+		 if TrF1 =:= 0 -> Bin;
+		    true ->
+			e_type_int64(TrF1, <<Bin/binary, 8>>, TrUserData)
+		 end
 	       end;
 	   _ -> Bin
 	 end,
@@ -229,7 +276,11 @@ encode_msg_ManufacturerOrder(#{} = M, Bin,
 	   #{manufacturer := F2} ->
 	       begin
 		 TrF2 = id(F2, TrUserData),
-		 e_type_string(TrF2, <<B1/binary, 18>>, TrUserData)
+		 case is_empty_string(TrF2) of
+		   true -> B1;
+		   false ->
+		       e_type_string(TrF2, <<B1/binary, 18>>, TrUserData)
+		 end
 	       end;
 	   _ -> B1
 	 end,
@@ -237,7 +288,11 @@ encode_msg_ManufacturerOrder(#{} = M, Bin,
 	   #{product := F3} ->
 	       begin
 		 TrF3 = id(F3, TrUserData),
-		 e_type_string(TrF3, <<B2/binary, 26>>, TrUserData)
+		 case is_empty_string(TrF3) of
+		   true -> B2;
+		   false ->
+		       e_type_string(TrF3, <<B2/binary, 26>>, TrUserData)
+		 end
 	       end;
 	   _ -> B2
 	 end,
@@ -245,7 +300,10 @@ encode_msg_ManufacturerOrder(#{} = M, Bin,
 	   #{minQuantity := F4} ->
 	       begin
 		 TrF4 = id(F4, TrUserData),
-		 e_type_int64(TrF4, <<B3/binary, 32>>, TrUserData)
+		 if TrF4 =:= 0 -> B3;
+		    true ->
+			e_type_int64(TrF4, <<B3/binary, 32>>, TrUserData)
+		 end
 	       end;
 	   _ -> B3
 	 end,
@@ -253,7 +311,10 @@ encode_msg_ManufacturerOrder(#{} = M, Bin,
 	   #{maxQuantity := F5} ->
 	       begin
 		 TrF5 = id(F5, TrUserData),
-		 e_type_int64(TrF5, <<B4/binary, 40>>, TrUserData)
+		 if TrF5 =:= 0 -> B4;
+		    true ->
+			e_type_int64(TrF5, <<B4/binary, 40>>, TrUserData)
+		 end
 	       end;
 	   _ -> B4
 	 end,
@@ -261,7 +322,10 @@ encode_msg_ManufacturerOrder(#{} = M, Bin,
 	   #{unitPrice := F6} ->
 	       begin
 		 TrF6 = id(F6, TrUserData),
-		 e_type_double(TrF6, <<B5/binary, 49>>, TrUserData)
+		 if TrF6 =:= 0.0 -> B5;
+		    true ->
+			e_type_double(TrF6, <<B5/binary, 49>>, TrUserData)
+		 end
 	       end;
 	   _ -> B5
 	 end,
@@ -269,7 +333,10 @@ encode_msg_ManufacturerOrder(#{} = M, Bin,
 	   #{active := F7} ->
 	       begin
 		 TrF7 = id(F7, TrUserData),
-		 e_type_int32(TrF7, <<B6/binary, 56>>, TrUserData)
+		 if TrF7 =:= 0 -> B6;
+		    true ->
+			e_type_int32(TrF7, <<B6/binary, 56>>, TrUserData)
+		 end
 	       end;
 	   _ -> B6
 	 end,
@@ -277,7 +344,10 @@ encode_msg_ManufacturerOrder(#{} = M, Bin,
       #{negotiation := F8} ->
 	  begin
 	    TrF8 = id(F8, TrUserData),
-	    e_type_int64(TrF8, <<B7/binary, 64>>, TrUserData)
+	    if TrF8 =:= 0 -> B7;
+	       true ->
+		   e_type_int64(TrF8, <<B7/binary, 64>>, TrUserData)
+	    end
 	  end;
       _ -> B7
     end.
@@ -291,7 +361,10 @@ encode_msg_ImporterOffer(#{} = M, Bin, TrUserData) ->
 	   #{id := F1} ->
 	       begin
 		 TrF1 = id(F1, TrUserData),
-		 e_type_int64(TrF1, <<Bin/binary, 8>>, TrUserData)
+		 if TrF1 =:= 0 -> Bin;
+		    true ->
+			e_type_int64(TrF1, <<Bin/binary, 8>>, TrUserData)
+		 end
 	       end;
 	   _ -> Bin
 	 end,
@@ -299,7 +372,11 @@ encode_msg_ImporterOffer(#{} = M, Bin, TrUserData) ->
 	   #{manufacturer := F2} ->
 	       begin
 		 TrF2 = id(F2, TrUserData),
-		 e_type_string(TrF2, <<B1/binary, 18>>, TrUserData)
+		 case is_empty_string(TrF2) of
+		   true -> B1;
+		   false ->
+		       e_type_string(TrF2, <<B1/binary, 18>>, TrUserData)
+		 end
 	       end;
 	   _ -> B1
 	 end,
@@ -307,7 +384,11 @@ encode_msg_ImporterOffer(#{} = M, Bin, TrUserData) ->
 	   #{product := F3} ->
 	       begin
 		 TrF3 = id(F3, TrUserData),
-		 e_type_string(TrF3, <<B2/binary, 26>>, TrUserData)
+		 case is_empty_string(TrF3) of
+		   true -> B2;
+		   false ->
+		       e_type_string(TrF3, <<B2/binary, 26>>, TrUserData)
+		 end
 	       end;
 	   _ -> B2
 	 end,
@@ -315,17 +396,34 @@ encode_msg_ImporterOffer(#{} = M, Bin, TrUserData) ->
 	   #{quantity := F4} ->
 	       begin
 		 TrF4 = id(F4, TrUserData),
-		 e_type_int64(TrF4, <<B3/binary, 32>>, TrUserData)
+		 if TrF4 =:= 0 -> B3;
+		    true ->
+			e_type_int64(TrF4, <<B3/binary, 32>>, TrUserData)
+		 end
 	       end;
 	   _ -> B3
 	 end,
+    B5 = case M of
+	   #{unitPrice := F5} ->
+	       begin
+		 TrF5 = id(F5, TrUserData),
+		 if TrF5 =:= 0.0 -> B4;
+		    true ->
+			e_type_double(TrF5, <<B4/binary, 41>>, TrUserData)
+		 end
+	       end;
+	   _ -> B4
+	 end,
     case M of
-      #{unitPrice := F5} ->
+      #{idorder := F6} ->
 	  begin
-	    TrF5 = id(F5, TrUserData),
-	    e_type_double(TrF5, <<B4/binary, 41>>, TrUserData)
+	    TrF6 = id(F6, TrUserData),
+	    if TrF6 =:= 0 -> B5;
+	       true ->
+		   e_type_int64(TrF6, <<B5/binary, 48>>, TrUserData)
+	    end
 	  end;
-      _ -> B4
+      _ -> B5
     end.
 
 e_mfield_Message_user(Msg, Bin, TrUserData) ->
@@ -443,6 +541,25 @@ e_varint(N, Bin) ->
     Bin2 = <<Bin/binary, (N band 127 bor 128)>>,
     e_varint(N bsr 7, Bin2).
 
+is_empty_string("") -> true;
+is_empty_string(<<>>) -> true;
+is_empty_string(L) when is_list(L) ->
+    not string_has_chars(L);
+is_empty_string(B) when is_binary(B) -> false.
+
+string_has_chars([C | _]) when is_integer(C) -> true;
+string_has_chars([H | T]) ->
+    case string_has_chars(H) of
+      true -> true;
+      false -> string_has_chars(T)
+    end;
+string_has_chars(B)
+    when is_binary(B), byte_size(B) =/= 0 ->
+    true;
+string_has_chars(C) when is_integer(C) -> true;
+string_has_chars(<<>>) -> false;
+string_has_chars([]) -> false.
+
 
 decode_msg(Bin, MsgName) when is_binary(Bin) ->
     decode_msg(Bin, MsgName, []).
@@ -483,8 +600,7 @@ decode_msg_2_doit('ImporterOffer', Bin, TrUserData) ->
 
 decode_msg_Message(Bin, TrUserData) ->
     dfp_read_field_def_Message(Bin, 0, 0,
-			       id('$undef', TrUserData),
-			       id('$undef', TrUserData),
+			       id([], TrUserData), id('$undef', TrUserData),
 			       id('$undef', TrUserData),
 			       id('$undef', TrUserData),
 			       id('$undef', TrUserData), TrUserData).
@@ -511,21 +627,18 @@ dfp_read_field_def_Message(<<42, Rest/binary>>, Z1, Z2,
 				  F@_3, F@_4, F@_5, TrUserData);
 dfp_read_field_def_Message(<<>>, 0, 0, F@_1, F@_2, F@_3,
 			   F@_4, F@_5, _) ->
-    S1 = #{},
-    S2 = if F@_1 == '$undef' -> S1;
-	    true -> S1#{type => F@_1}
+    S1 = #{type => F@_1},
+    S2 = if F@_2 == '$undef' -> S1;
+	    true -> S1#{user => F@_2}
 	 end,
-    S3 = if F@_2 == '$undef' -> S2;
-	    true -> S2#{user => F@_2}
+    S3 = if F@_3 == '$undef' -> S2;
+	    true -> S2#{response => F@_3}
 	 end,
-    S4 = if F@_3 == '$undef' -> S3;
-	    true -> S3#{response => F@_3}
+    S4 = if F@_4 == '$undef' -> S3;
+	    true -> S3#{manufacturerOrder => F@_4}
 	 end,
-    S5 = if F@_4 == '$undef' -> S4;
-	    true -> S4#{manufacturerOrder => F@_4}
-	 end,
-    if F@_5 == '$undef' -> S5;
-       true -> S5#{importerOffer => F@_5}
+    if F@_5 == '$undef' -> S4;
+       true -> S4#{importerOffer => F@_5}
     end;
 dfp_read_field_def_Message(Other, Z1, Z2, F@_1, F@_2,
 			   F@_3, F@_4, F@_5, TrUserData) ->
@@ -577,21 +690,18 @@ dg_read_field_def_Message(<<0:1, X:7, Rest/binary>>, N,
     end;
 dg_read_field_def_Message(<<>>, 0, 0, F@_1, F@_2, F@_3,
 			  F@_4, F@_5, _) ->
-    S1 = #{},
-    S2 = if F@_1 == '$undef' -> S1;
-	    true -> S1#{type => F@_1}
+    S1 = #{type => F@_1},
+    S2 = if F@_2 == '$undef' -> S1;
+	    true -> S1#{user => F@_2}
 	 end,
-    S3 = if F@_2 == '$undef' -> S2;
-	    true -> S2#{user => F@_2}
+    S3 = if F@_3 == '$undef' -> S2;
+	    true -> S2#{response => F@_3}
 	 end,
-    S4 = if F@_3 == '$undef' -> S3;
-	    true -> S3#{response => F@_3}
+    S4 = if F@_4 == '$undef' -> S3;
+	    true -> S3#{manufacturerOrder => F@_4}
 	 end,
-    S5 = if F@_4 == '$undef' -> S4;
-	    true -> S4#{manufacturerOrder => F@_4}
-	 end,
-    if F@_5 == '$undef' -> S5;
-       true -> S5#{importerOffer => F@_5}
+    if F@_5 == '$undef' -> S4;
+       true -> S4#{importerOffer => F@_5}
     end.
 
 d_field_Message_type(<<1:1, X:7, Rest/binary>>, N, Acc,
@@ -747,9 +857,8 @@ skip_64_Message(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
 			       F@_3, F@_4, F@_5, TrUserData).
 
 decode_msg_User(Bin, TrUserData) ->
-    dfp_read_field_def_User(Bin, 0, 0,
-			    id('$undef', TrUserData), id('$undef', TrUserData),
-			    id('$undef', TrUserData), TrUserData).
+    dfp_read_field_def_User(Bin, 0, 0, id([], TrUserData),
+			    id([], TrUserData), id(0, TrUserData), TrUserData).
 
 dfp_read_field_def_User(<<10, Rest/binary>>, Z1, Z2,
 			F@_1, F@_2, F@_3, TrUserData) ->
@@ -765,16 +874,7 @@ dfp_read_field_def_User(<<24, Rest/binary>>, Z1, Z2,
 		      TrUserData);
 dfp_read_field_def_User(<<>>, 0, 0, F@_1, F@_2, F@_3,
 			_) ->
-    S1 = #{},
-    S2 = if F@_1 == '$undef' -> S1;
-	    true -> S1#{username => F@_1}
-	 end,
-    S3 = if F@_2 == '$undef' -> S2;
-	    true -> S2#{password => F@_2}
-	 end,
-    if F@_3 == '$undef' -> S3;
-       true -> S3#{type => F@_3}
-    end;
+    #{username => F@_1, password => F@_2, type => F@_3};
 dfp_read_field_def_User(Other, Z1, Z2, F@_1, F@_2, F@_3,
 			TrUserData) ->
     dg_read_field_def_User(Other, Z1, Z2, F@_1, F@_2, F@_3,
@@ -817,16 +917,7 @@ dg_read_field_def_User(<<0:1, X:7, Rest/binary>>, N,
     end;
 dg_read_field_def_User(<<>>, 0, 0, F@_1, F@_2, F@_3,
 		       _) ->
-    S1 = #{},
-    S2 = if F@_1 == '$undef' -> S1;
-	    true -> S1#{username => F@_1}
-	 end,
-    S3 = if F@_2 == '$undef' -> S2;
-	    true -> S2#{password => F@_2}
-	 end,
-    if F@_3 == '$undef' -> S3;
-       true -> S3#{type => F@_3}
-    end.
+    #{username => F@_1, password => F@_2, type => F@_3}.
 
 d_field_User_username(<<1:1, X:7, Rest/binary>>, N, Acc,
 		      F@_1, F@_2, F@_3, TrUserData)
@@ -917,59 +1008,83 @@ skip_64_User(<<_:64, Rest/binary>>, Z1, Z2, F@_1, F@_2,
 
 decode_msg_Response(Bin, TrUserData) ->
     dfp_read_field_def_Response(Bin, 0, 0,
-				id('$undef', TrUserData), TrUserData).
+				id(0, TrUserData), id([], TrUserData),
+				TrUserData).
 
-dfp_read_field_def_Response(<<34, Rest/binary>>, Z1, Z2,
-			    F@_1, TrUserData) ->
-    d_field_Response_response(Rest, Z1, Z2, F@_1,
+dfp_read_field_def_Response(<<8, Rest/binary>>, Z1, Z2,
+			    F@_1, F@_2, TrUserData) ->
+    d_field_Response_status(Rest, Z1, Z2, F@_1, F@_2,
+			    TrUserData);
+dfp_read_field_def_Response(<<18, Rest/binary>>, Z1, Z2,
+			    F@_1, F@_2, TrUserData) ->
+    d_field_Response_response(Rest, Z1, Z2, F@_1, F@_2,
 			      TrUserData);
-dfp_read_field_def_Response(<<>>, 0, 0, F@_1, _) ->
-    S1 = #{},
-    if F@_1 == '$undef' -> S1;
-       true -> S1#{response => F@_1}
-    end;
-dfp_read_field_def_Response(Other, Z1, Z2, F@_1,
+dfp_read_field_def_Response(<<>>, 0, 0, F@_1, F@_2,
+			    _) ->
+    #{status => F@_1, response => F@_2};
+dfp_read_field_def_Response(Other, Z1, Z2, F@_1, F@_2,
 			    TrUserData) ->
-    dg_read_field_def_Response(Other, Z1, Z2, F@_1,
+    dg_read_field_def_Response(Other, Z1, Z2, F@_1, F@_2,
 			       TrUserData).
 
 dg_read_field_def_Response(<<1:1, X:7, Rest/binary>>, N,
-			   Acc, F@_1, TrUserData)
+			   Acc, F@_1, F@_2, TrUserData)
     when N < 32 - 7 ->
     dg_read_field_def_Response(Rest, N + 7, X bsl N + Acc,
-			       F@_1, TrUserData);
+			       F@_1, F@_2, TrUserData);
 dg_read_field_def_Response(<<0:1, X:7, Rest/binary>>, N,
-			   Acc, F@_1, TrUserData) ->
+			   Acc, F@_1, F@_2, TrUserData) ->
     Key = X bsl N + Acc,
     case Key of
-      34 ->
-	  d_field_Response_response(Rest, 0, 0, F@_1, TrUserData);
+      8 ->
+	  d_field_Response_status(Rest, 0, 0, F@_1, F@_2,
+				  TrUserData);
+      18 ->
+	  d_field_Response_response(Rest, 0, 0, F@_1, F@_2,
+				    TrUserData);
       _ ->
 	  case Key band 7 of
-	    0 -> skip_varint_Response(Rest, 0, 0, F@_1, TrUserData);
-	    1 -> skip_64_Response(Rest, 0, 0, F@_1, TrUserData);
+	    0 ->
+		skip_varint_Response(Rest, 0, 0, F@_1, F@_2,
+				     TrUserData);
+	    1 ->
+		skip_64_Response(Rest, 0, 0, F@_1, F@_2, TrUserData);
 	    2 ->
-		skip_length_delimited_Response(Rest, 0, 0, F@_1,
+		skip_length_delimited_Response(Rest, 0, 0, F@_1, F@_2,
 					       TrUserData);
 	    3 ->
-		skip_group_Response(Rest, Key bsr 3, 0, F@_1,
+		skip_group_Response(Rest, Key bsr 3, 0, F@_1, F@_2,
 				    TrUserData);
-	    5 -> skip_32_Response(Rest, 0, 0, F@_1, TrUserData)
+	    5 ->
+		skip_32_Response(Rest, 0, 0, F@_1, F@_2, TrUserData)
 	  end
     end;
-dg_read_field_def_Response(<<>>, 0, 0, F@_1, _) ->
-    S1 = #{},
-    if F@_1 == '$undef' -> S1;
-       true -> S1#{response => F@_1}
-    end.
+dg_read_field_def_Response(<<>>, 0, 0, F@_1, F@_2, _) ->
+    #{status => F@_1, response => F@_2}.
+
+d_field_Response_status(<<1:1, X:7, Rest/binary>>, N,
+			Acc, F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    d_field_Response_status(Rest, N + 7, X bsl N + Acc,
+			    F@_1, F@_2, TrUserData);
+d_field_Response_status(<<0:1, X:7, Rest/binary>>, N,
+			Acc, _, F@_2, TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:32/signed-native>> = <<(X bsl N +
+							    Acc):32/unsigned-native>>,
+			    id(Res, TrUserData)
+			  end,
+			  Rest},
+    dfp_read_field_def_Response(RestF, 0, 0, NewFValue,
+				F@_2, TrUserData).
 
 d_field_Response_response(<<1:1, X:7, Rest/binary>>, N,
-			  Acc, F@_1, TrUserData)
+			  Acc, F@_1, F@_2, TrUserData)
     when N < 57 ->
     d_field_Response_response(Rest, N + 7, X bsl N + Acc,
-			      F@_1, TrUserData);
+			      F@_1, F@_2, TrUserData);
 d_field_Response_response(<<0:1, X:7, Rest/binary>>, N,
-			  Acc, _, TrUserData) ->
+			  Acc, F@_1, _, TrUserData) ->
     {NewFValue, RestF} = begin
 			   Len = X bsl N + Acc,
 			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
@@ -977,56 +1092,55 @@ d_field_Response_response(<<0:1, X:7, Rest/binary>>, N,
 			       TrUserData),
 			    Rest2}
 			 end,
-    dfp_read_field_def_Response(RestF, 0, 0, NewFValue,
-				TrUserData).
+    dfp_read_field_def_Response(RestF, 0, 0, F@_1,
+				NewFValue, TrUserData).
 
 skip_varint_Response(<<1:1, _:7, Rest/binary>>, Z1, Z2,
-		     F@_1, TrUserData) ->
-    skip_varint_Response(Rest, Z1, Z2, F@_1, TrUserData);
+		     F@_1, F@_2, TrUserData) ->
+    skip_varint_Response(Rest, Z1, Z2, F@_1, F@_2,
+			 TrUserData);
 skip_varint_Response(<<0:1, _:7, Rest/binary>>, Z1, Z2,
-		     F@_1, TrUserData) ->
-    dfp_read_field_def_Response(Rest, Z1, Z2, F@_1,
+		     F@_1, F@_2, TrUserData) ->
+    dfp_read_field_def_Response(Rest, Z1, Z2, F@_1, F@_2,
 				TrUserData).
 
 skip_length_delimited_Response(<<1:1, X:7,
 				 Rest/binary>>,
-			       N, Acc, F@_1, TrUserData)
+			       N, Acc, F@_1, F@_2, TrUserData)
     when N < 57 ->
     skip_length_delimited_Response(Rest, N + 7,
-				   X bsl N + Acc, F@_1, TrUserData);
+				   X bsl N + Acc, F@_1, F@_2, TrUserData);
 skip_length_delimited_Response(<<0:1, X:7,
 				 Rest/binary>>,
-			       N, Acc, F@_1, TrUserData) ->
+			       N, Acc, F@_1, F@_2, TrUserData) ->
     Length = X bsl N + Acc,
     <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_Response(Rest2, 0, 0, F@_1,
+    dfp_read_field_def_Response(Rest2, 0, 0, F@_1, F@_2,
 				TrUserData).
 
-skip_group_Response(Bin, FNum, Z2, F@_1, TrUserData) ->
+skip_group_Response(Bin, FNum, Z2, F@_1, F@_2,
+		    TrUserData) ->
     {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_Response(Rest, 0, Z2, F@_1,
+    dfp_read_field_def_Response(Rest, 0, Z2, F@_1, F@_2,
 				TrUserData).
 
 skip_32_Response(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
-		 TrUserData) ->
-    dfp_read_field_def_Response(Rest, Z1, Z2, F@_1,
+		 F@_2, TrUserData) ->
+    dfp_read_field_def_Response(Rest, Z1, Z2, F@_1, F@_2,
 				TrUserData).
 
 skip_64_Response(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
-		 TrUserData) ->
-    dfp_read_field_def_Response(Rest, Z1, Z2, F@_1,
+		 F@_2, TrUserData) ->
+    dfp_read_field_def_Response(Rest, Z1, Z2, F@_1, F@_2,
 				TrUserData).
 
 decode_msg_ManufacturerOrder(Bin, TrUserData) ->
     dfp_read_field_def_ManufacturerOrder(Bin, 0, 0,
-					 id('$undef', TrUserData),
-					 id('$undef', TrUserData),
-					 id('$undef', TrUserData),
-					 id('$undef', TrUserData),
-					 id('$undef', TrUserData),
-					 id('$undef', TrUserData),
-					 id('$undef', TrUserData),
-					 id('$undef', TrUserData), TrUserData).
+					 id(0, TrUserData), id([], TrUserData),
+					 id([], TrUserData), id(0, TrUserData),
+					 id(0, TrUserData), id(0.0, TrUserData),
+					 id(0, TrUserData), id(0, TrUserData),
+					 TrUserData).
 
 dfp_read_field_def_ManufacturerOrder(<<8, Rest/binary>>,
 				     Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
@@ -1086,31 +1200,9 @@ dfp_read_field_def_ManufacturerOrder(<<64,
 dfp_read_field_def_ManufacturerOrder(<<>>, 0, 0, F@_1,
 				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 				     _) ->
-    S1 = #{},
-    S2 = if F@_1 == '$undef' -> S1;
-	    true -> S1#{id => F@_1}
-	 end,
-    S3 = if F@_2 == '$undef' -> S2;
-	    true -> S2#{manufacturer => F@_2}
-	 end,
-    S4 = if F@_3 == '$undef' -> S3;
-	    true -> S3#{product => F@_3}
-	 end,
-    S5 = if F@_4 == '$undef' -> S4;
-	    true -> S4#{minQuantity => F@_4}
-	 end,
-    S6 = if F@_5 == '$undef' -> S5;
-	    true -> S5#{maxQuantity => F@_5}
-	 end,
-    S7 = if F@_6 == '$undef' -> S6;
-	    true -> S6#{unitPrice => F@_6}
-	 end,
-    S8 = if F@_7 == '$undef' -> S7;
-	    true -> S7#{active => F@_7}
-	 end,
-    if F@_8 == '$undef' -> S8;
-       true -> S8#{negotiation => F@_8}
-    end;
+    #{id => F@_1, manufacturer => F@_2, product => F@_3,
+      minQuantity => F@_4, maxQuantity => F@_5,
+      unitPrice => F@_6, active => F@_7, negotiation => F@_8};
 dfp_read_field_def_ManufacturerOrder(Other, Z1, Z2,
 				     F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
 				     F@_8, TrUserData) ->
@@ -1192,31 +1284,9 @@ dg_read_field_def_ManufacturerOrder(<<0:1, X:7,
 dg_read_field_def_ManufacturerOrder(<<>>, 0, 0, F@_1,
 				    F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 				    _) ->
-    S1 = #{},
-    S2 = if F@_1 == '$undef' -> S1;
-	    true -> S1#{id => F@_1}
-	 end,
-    S3 = if F@_2 == '$undef' -> S2;
-	    true -> S2#{manufacturer => F@_2}
-	 end,
-    S4 = if F@_3 == '$undef' -> S3;
-	    true -> S3#{product => F@_3}
-	 end,
-    S5 = if F@_4 == '$undef' -> S4;
-	    true -> S4#{minQuantity => F@_4}
-	 end,
-    S6 = if F@_5 == '$undef' -> S5;
-	    true -> S5#{maxQuantity => F@_5}
-	 end,
-    S7 = if F@_6 == '$undef' -> S6;
-	    true -> S6#{unitPrice => F@_6}
-	 end,
-    S8 = if F@_7 == '$undef' -> S7;
-	    true -> S7#{active => F@_7}
-	 end,
-    if F@_8 == '$undef' -> S8;
-       true -> S8#{negotiation => F@_8}
-    end.
+    #{id => F@_1, manufacturer => F@_2, product => F@_3,
+      minQuantity => F@_4, maxQuantity => F@_5,
+      unitPrice => F@_6, active => F@_7, negotiation => F@_8}.
 
 d_field_ManufacturerOrder_id(<<1:1, X:7, Rest/binary>>,
 			     N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
@@ -1461,136 +1531,116 @@ skip_64_ManufacturerOrder(<<_:64, Rest/binary>>, Z1, Z2,
 
 decode_msg_ImporterOffer(Bin, TrUserData) ->
     dfp_read_field_def_ImporterOffer(Bin, 0, 0,
-				     id('$undef', TrUserData),
-				     id('$undef', TrUserData),
-				     id('$undef', TrUserData),
-				     id('$undef', TrUserData),
-				     id('$undef', TrUserData), TrUserData).
+				     id(0, TrUserData), id([], TrUserData),
+				     id([], TrUserData), id(0, TrUserData),
+				     id(0.0, TrUserData), id(0, TrUserData),
+				     TrUserData).
 
 dfp_read_field_def_ImporterOffer(<<8, Rest/binary>>, Z1,
-				 Z2, F@_1, F@_2, F@_3, F@_4, F@_5,
+				 Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
 				 TrUserData) ->
     d_field_ImporterOffer_id(Rest, Z1, Z2, F@_1, F@_2, F@_3,
-			     F@_4, F@_5, TrUserData);
+			     F@_4, F@_5, F@_6, TrUserData);
 dfp_read_field_def_ImporterOffer(<<18, Rest/binary>>,
-				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5,
+				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
 				 TrUserData) ->
     d_field_ImporterOffer_manufacturer(Rest, Z1, Z2, F@_1,
-				       F@_2, F@_3, F@_4, F@_5, TrUserData);
+				       F@_2, F@_3, F@_4, F@_5, F@_6,
+				       TrUserData);
 dfp_read_field_def_ImporterOffer(<<26, Rest/binary>>,
-				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5,
+				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
 				 TrUserData) ->
     d_field_ImporterOffer_product(Rest, Z1, Z2, F@_1, F@_2,
-				  F@_3, F@_4, F@_5, TrUserData);
+				  F@_3, F@_4, F@_5, F@_6, TrUserData);
 dfp_read_field_def_ImporterOffer(<<32, Rest/binary>>,
-				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5,
+				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
 				 TrUserData) ->
     d_field_ImporterOffer_quantity(Rest, Z1, Z2, F@_1, F@_2,
-				   F@_3, F@_4, F@_5, TrUserData);
+				   F@_3, F@_4, F@_5, F@_6, TrUserData);
 dfp_read_field_def_ImporterOffer(<<41, Rest/binary>>,
-				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5,
+				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
 				 TrUserData) ->
     d_field_ImporterOffer_unitPrice(Rest, Z1, Z2, F@_1,
-				    F@_2, F@_3, F@_4, F@_5, TrUserData);
+				    F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData);
+dfp_read_field_def_ImporterOffer(<<48, Rest/binary>>,
+				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				 TrUserData) ->
+    d_field_ImporterOffer_idorder(Rest, Z1, Z2, F@_1, F@_2,
+				  F@_3, F@_4, F@_5, F@_6, TrUserData);
 dfp_read_field_def_ImporterOffer(<<>>, 0, 0, F@_1, F@_2,
-				 F@_3, F@_4, F@_5, _) ->
-    S1 = #{},
-    S2 = if F@_1 == '$undef' -> S1;
-	    true -> S1#{id => F@_1}
-	 end,
-    S3 = if F@_2 == '$undef' -> S2;
-	    true -> S2#{manufacturer => F@_2}
-	 end,
-    S4 = if F@_3 == '$undef' -> S3;
-	    true -> S3#{product => F@_3}
-	 end,
-    S5 = if F@_4 == '$undef' -> S4;
-	    true -> S4#{quantity => F@_4}
-	 end,
-    if F@_5 == '$undef' -> S5;
-       true -> S5#{unitPrice => F@_5}
-    end;
+				 F@_3, F@_4, F@_5, F@_6, _) ->
+    #{id => F@_1, manufacturer => F@_2, product => F@_3,
+      quantity => F@_4, unitPrice => F@_5, idorder => F@_6};
 dfp_read_field_def_ImporterOffer(Other, Z1, Z2, F@_1,
-				 F@_2, F@_3, F@_4, F@_5, TrUserData) ->
+				 F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData) ->
     dg_read_field_def_ImporterOffer(Other, Z1, Z2, F@_1,
-				    F@_2, F@_3, F@_4, F@_5, TrUserData).
+				    F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData).
 
 dg_read_field_def_ImporterOffer(<<1:1, X:7,
 				  Rest/binary>>,
-				N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
 				TrUserData)
     when N < 32 - 7 ->
     dg_read_field_def_ImporterOffer(Rest, N + 7,
 				    X bsl N + Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
-				    TrUserData);
+				    F@_6, TrUserData);
 dg_read_field_def_ImporterOffer(<<0:1, X:7,
 				  Rest/binary>>,
-				N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
 				TrUserData) ->
     Key = X bsl N + Acc,
     case Key of
       8 ->
 	  d_field_ImporterOffer_id(Rest, 0, 0, F@_1, F@_2, F@_3,
-				   F@_4, F@_5, TrUserData);
+				   F@_4, F@_5, F@_6, TrUserData);
       18 ->
 	  d_field_ImporterOffer_manufacturer(Rest, 0, 0, F@_1,
-					     F@_2, F@_3, F@_4, F@_5,
+					     F@_2, F@_3, F@_4, F@_5, F@_6,
 					     TrUserData);
       26 ->
 	  d_field_ImporterOffer_product(Rest, 0, 0, F@_1, F@_2,
-					F@_3, F@_4, F@_5, TrUserData);
+					F@_3, F@_4, F@_5, F@_6, TrUserData);
       32 ->
 	  d_field_ImporterOffer_quantity(Rest, 0, 0, F@_1, F@_2,
-					 F@_3, F@_4, F@_5, TrUserData);
+					 F@_3, F@_4, F@_5, F@_6, TrUserData);
       41 ->
 	  d_field_ImporterOffer_unitPrice(Rest, 0, 0, F@_1, F@_2,
-					  F@_3, F@_4, F@_5, TrUserData);
+					  F@_3, F@_4, F@_5, F@_6, TrUserData);
+      48 ->
+	  d_field_ImporterOffer_idorder(Rest, 0, 0, F@_1, F@_2,
+					F@_3, F@_4, F@_5, F@_6, TrUserData);
       _ ->
 	  case Key band 7 of
 	    0 ->
 		skip_varint_ImporterOffer(Rest, 0, 0, F@_1, F@_2, F@_3,
-					  F@_4, F@_5, TrUserData);
+					  F@_4, F@_5, F@_6, TrUserData);
 	    1 ->
 		skip_64_ImporterOffer(Rest, 0, 0, F@_1, F@_2, F@_3,
-				      F@_4, F@_5, TrUserData);
+				      F@_4, F@_5, F@_6, TrUserData);
 	    2 ->
 		skip_length_delimited_ImporterOffer(Rest, 0, 0, F@_1,
 						    F@_2, F@_3, F@_4, F@_5,
-						    TrUserData);
+						    F@_6, TrUserData);
 	    3 ->
 		skip_group_ImporterOffer(Rest, Key bsr 3, 0, F@_1, F@_2,
-					 F@_3, F@_4, F@_5, TrUserData);
+					 F@_3, F@_4, F@_5, F@_6, TrUserData);
 	    5 ->
 		skip_32_ImporterOffer(Rest, 0, 0, F@_1, F@_2, F@_3,
-				      F@_4, F@_5, TrUserData)
+				      F@_4, F@_5, F@_6, TrUserData)
 	  end
     end;
 dg_read_field_def_ImporterOffer(<<>>, 0, 0, F@_1, F@_2,
-				F@_3, F@_4, F@_5, _) ->
-    S1 = #{},
-    S2 = if F@_1 == '$undef' -> S1;
-	    true -> S1#{id => F@_1}
-	 end,
-    S3 = if F@_2 == '$undef' -> S2;
-	    true -> S2#{manufacturer => F@_2}
-	 end,
-    S4 = if F@_3 == '$undef' -> S3;
-	    true -> S3#{product => F@_3}
-	 end,
-    S5 = if F@_4 == '$undef' -> S4;
-	    true -> S4#{quantity => F@_4}
-	 end,
-    if F@_5 == '$undef' -> S5;
-       true -> S5#{unitPrice => F@_5}
-    end.
+				F@_3, F@_4, F@_5, F@_6, _) ->
+    #{id => F@_1, manufacturer => F@_2, product => F@_3,
+      quantity => F@_4, unitPrice => F@_5, idorder => F@_6}.
 
 d_field_ImporterOffer_id(<<1:1, X:7, Rest/binary>>, N,
-			 Acc, F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData)
+			 Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData)
     when N < 57 ->
     d_field_ImporterOffer_id(Rest, N + 7, X bsl N + Acc,
-			     F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData);
+			     F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData);
 d_field_ImporterOffer_id(<<0:1, X:7, Rest/binary>>, N,
-			 Acc, _, F@_2, F@_3, F@_4, F@_5, TrUserData) ->
+			 Acc, _, F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData) ->
     {NewFValue, RestF} = {begin
 			    <<Res:64/signed-native>> = <<(X bsl N +
 							    Acc):64/unsigned-native>>,
@@ -1598,19 +1648,19 @@ d_field_ImporterOffer_id(<<0:1, X:7, Rest/binary>>, N,
 			  end,
 			  Rest},
     dfp_read_field_def_ImporterOffer(RestF, 0, 0, NewFValue,
-				     F@_2, F@_3, F@_4, F@_5, TrUserData).
+				     F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData).
 
 d_field_ImporterOffer_manufacturer(<<1:1, X:7,
 				     Rest/binary>>,
-				   N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				   N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
 				   TrUserData)
     when N < 57 ->
     d_field_ImporterOffer_manufacturer(Rest, N + 7,
 				       X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-				       F@_5, TrUserData);
+				       F@_5, F@_6, TrUserData);
 d_field_ImporterOffer_manufacturer(<<0:1, X:7,
 				     Rest/binary>>,
-				   N, Acc, F@_1, _, F@_3, F@_4, F@_5,
+				   N, Acc, F@_1, _, F@_3, F@_4, F@_5, F@_6,
 				   TrUserData) ->
     {NewFValue, RestF} = begin
 			   Len = X bsl N + Acc,
@@ -1620,16 +1670,19 @@ d_field_ImporterOffer_manufacturer(<<0:1, X:7,
 			    Rest2}
 			 end,
     dfp_read_field_def_ImporterOffer(RestF, 0, 0, F@_1,
-				     NewFValue, F@_3, F@_4, F@_5, TrUserData).
+				     NewFValue, F@_3, F@_4, F@_5, F@_6,
+				     TrUserData).
 
 d_field_ImporterOffer_product(<<1:1, X:7, Rest/binary>>,
-			      N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData)
+			      N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+			      TrUserData)
     when N < 57 ->
     d_field_ImporterOffer_product(Rest, N + 7,
 				  X bsl N + Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
-				  TrUserData);
+				  F@_6, TrUserData);
 d_field_ImporterOffer_product(<<0:1, X:7, Rest/binary>>,
-			      N, Acc, F@_1, F@_2, _, F@_4, F@_5, TrUserData) ->
+			      N, Acc, F@_1, F@_2, _, F@_4, F@_5, F@_6,
+			      TrUserData) ->
     {NewFValue, RestF} = begin
 			   Len = X bsl N + Acc,
 			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
@@ -1638,18 +1691,21 @@ d_field_ImporterOffer_product(<<0:1, X:7, Rest/binary>>,
 			    Rest2}
 			 end,
     dfp_read_field_def_ImporterOffer(RestF, 0, 0, F@_1,
-				     F@_2, NewFValue, F@_4, F@_5, TrUserData).
+				     F@_2, NewFValue, F@_4, F@_5, F@_6,
+				     TrUserData).
 
 d_field_ImporterOffer_quantity(<<1:1, X:7,
 				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData)
+			       N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+			       TrUserData)
     when N < 57 ->
     d_field_ImporterOffer_quantity(Rest, N + 7,
 				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
-				   TrUserData);
+				   F@_6, TrUserData);
 d_field_ImporterOffer_quantity(<<0:1, X:7,
 				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, F@_3, _, F@_5, TrUserData) ->
+			       N, Acc, F@_1, F@_2, F@_3, _, F@_5, F@_6,
+			       TrUserData) ->
     {NewFValue, RestF} = {begin
 			    <<Res:64/signed-native>> = <<(X bsl N +
 							    Acc):64/unsigned-native>>,
@@ -1657,78 +1713,100 @@ d_field_ImporterOffer_quantity(<<0:1, X:7,
 			  end,
 			  Rest},
     dfp_read_field_def_ImporterOffer(RestF, 0, 0, F@_1,
-				     F@_2, F@_3, NewFValue, F@_5, TrUserData).
+				     F@_2, F@_3, NewFValue, F@_5, F@_6,
+				     TrUserData).
 
 d_field_ImporterOffer_unitPrice(<<0:48, 240, 127,
 				  Rest/binary>>,
-				Z1, Z2, F@_1, F@_2, F@_3, F@_4, _,
+				Z1, Z2, F@_1, F@_2, F@_3, F@_4, _, F@_6,
 				TrUserData) ->
     dfp_read_field_def_ImporterOffer(Rest, Z1, Z2, F@_1,
 				     F@_2, F@_3, F@_4, id(infinity, TrUserData),
-				     TrUserData);
+				     F@_6, TrUserData);
 d_field_ImporterOffer_unitPrice(<<0:48, 240, 255,
 				  Rest/binary>>,
-				Z1, Z2, F@_1, F@_2, F@_3, F@_4, _,
+				Z1, Z2, F@_1, F@_2, F@_3, F@_4, _, F@_6,
 				TrUserData) ->
     dfp_read_field_def_ImporterOffer(Rest, Z1, Z2, F@_1,
 				     F@_2, F@_3, F@_4,
-				     id('-infinity', TrUserData), TrUserData);
+				     id('-infinity', TrUserData), F@_6,
+				     TrUserData);
 d_field_ImporterOffer_unitPrice(<<_:48, 15:4, _:4, _:1,
 				  127:7, Rest/binary>>,
-				Z1, Z2, F@_1, F@_2, F@_3, F@_4, _,
+				Z1, Z2, F@_1, F@_2, F@_3, F@_4, _, F@_6,
 				TrUserData) ->
     dfp_read_field_def_ImporterOffer(Rest, Z1, Z2, F@_1,
 				     F@_2, F@_3, F@_4, id(nan, TrUserData),
-				     TrUserData);
+				     F@_6, TrUserData);
 d_field_ImporterOffer_unitPrice(<<Value:64/little-float,
 				  Rest/binary>>,
-				Z1, Z2, F@_1, F@_2, F@_3, F@_4, _,
+				Z1, Z2, F@_1, F@_2, F@_3, F@_4, _, F@_6,
 				TrUserData) ->
     dfp_read_field_def_ImporterOffer(Rest, Z1, Z2, F@_1,
 				     F@_2, F@_3, F@_4, id(Value, TrUserData),
+				     F@_6, TrUserData).
+
+d_field_ImporterOffer_idorder(<<1:1, X:7, Rest/binary>>,
+			      N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+			      TrUserData)
+    when N < 57 ->
+    d_field_ImporterOffer_idorder(Rest, N + 7,
+				  X bsl N + Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				  F@_6, TrUserData);
+d_field_ImporterOffer_idorder(<<0:1, X:7, Rest/binary>>,
+			      N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, _,
+			      TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
+			    id(Res, TrUserData)
+			  end,
+			  Rest},
+    dfp_read_field_def_ImporterOffer(RestF, 0, 0, F@_1,
+				     F@_2, F@_3, F@_4, F@_5, NewFValue,
 				     TrUserData).
 
 skip_varint_ImporterOffer(<<1:1, _:7, Rest/binary>>, Z1,
-			  Z2, F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData) ->
+			  Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData) ->
     skip_varint_ImporterOffer(Rest, Z1, Z2, F@_1, F@_2,
-			      F@_3, F@_4, F@_5, TrUserData);
+			      F@_3, F@_4, F@_5, F@_6, TrUserData);
 skip_varint_ImporterOffer(<<0:1, _:7, Rest/binary>>, Z1,
-			  Z2, F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData) ->
+			  Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData) ->
     dfp_read_field_def_ImporterOffer(Rest, Z1, Z2, F@_1,
-				     F@_2, F@_3, F@_4, F@_5, TrUserData).
+				     F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData).
 
 skip_length_delimited_ImporterOffer(<<1:1, X:7,
 				      Rest/binary>>,
-				    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
 				    TrUserData)
     when N < 57 ->
     skip_length_delimited_ImporterOffer(Rest, N + 7,
 					X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-					F@_5, TrUserData);
+					F@_5, F@_6, TrUserData);
 skip_length_delimited_ImporterOffer(<<0:1, X:7,
 				      Rest/binary>>,
-				    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
 				    TrUserData) ->
     Length = X bsl N + Acc,
     <<_:Length/binary, Rest2/binary>> = Rest,
     dfp_read_field_def_ImporterOffer(Rest2, 0, 0, F@_1,
-				     F@_2, F@_3, F@_4, F@_5, TrUserData).
+				     F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData).
 
 skip_group_ImporterOffer(Bin, FNum, Z2, F@_1, F@_2,
-			 F@_3, F@_4, F@_5, TrUserData) ->
+			 F@_3, F@_4, F@_5, F@_6, TrUserData) ->
     {_, Rest} = read_group(Bin, FNum),
     dfp_read_field_def_ImporterOffer(Rest, 0, Z2, F@_1,
-				     F@_2, F@_3, F@_4, F@_5, TrUserData).
+				     F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData).
 
 skip_32_ImporterOffer(<<_:32, Rest/binary>>, Z1, Z2,
-		      F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData) ->
+		      F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData) ->
     dfp_read_field_def_ImporterOffer(Rest, Z1, Z2, F@_1,
-				     F@_2, F@_3, F@_4, F@_5, TrUserData).
+				     F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData).
 
 skip_64_ImporterOffer(<<_:64, Rest/binary>>, Z1, Z2,
-		      F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData) ->
+		      F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData) ->
     dfp_read_field_def_ImporterOffer(Rest, Z1, Z2, F@_1,
-				     F@_2, F@_3, F@_4, F@_5, TrUserData).
+				     F@_2, F@_3, F@_4, F@_5, F@_6, TrUserData).
 
 read_group(Bin, FieldNum) ->
     {NumBytes, EndTagLen} = read_gr_b(Bin, 0, 0, 0, 0, FieldNum),
@@ -1881,12 +1959,17 @@ merge_msg_User(PMsg, NMsg, _) ->
 -compile({nowarn_unused_function,merge_msg_Response/3}).
 merge_msg_Response(PMsg, NMsg, _) ->
     S1 = #{},
+    S2 = case {PMsg, NMsg} of
+	   {_, #{status := NFstatus}} -> S1#{status => NFstatus};
+	   {#{status := PFstatus}, _} -> S1#{status => PFstatus};
+	   _ -> S1
+	 end,
     case {PMsg, NMsg} of
       {_, #{response := NFresponse}} ->
-	  S1#{response => NFresponse};
+	  S2#{response => NFresponse};
       {#{response := PFresponse}, _} ->
-	  S1#{response => PFresponse};
-      _ -> S1
+	  S2#{response => PFresponse};
+      _ -> S2
     end.
 
 -compile({nowarn_unused_function,merge_msg_ManufacturerOrder/3}).
@@ -1974,12 +2057,19 @@ merge_msg_ImporterOffer(PMsg, NMsg, _) ->
 	       S4#{quantity => PFquantity};
 	   _ -> S4
 	 end,
+    S6 = case {PMsg, NMsg} of
+	   {_, #{unitPrice := NFunitPrice}} ->
+	       S5#{unitPrice => NFunitPrice};
+	   {#{unitPrice := PFunitPrice}, _} ->
+	       S5#{unitPrice => PFunitPrice};
+	   _ -> S5
+	 end,
     case {PMsg, NMsg} of
-      {_, #{unitPrice := NFunitPrice}} ->
-	  S5#{unitPrice => NFunitPrice};
-      {#{unitPrice := PFunitPrice}, _} ->
-	  S5#{unitPrice => PFunitPrice};
-      _ -> S5
+      {_, #{idorder := NFidorder}} ->
+	  S6#{idorder => NFidorder};
+      {#{idorder := PFidorder}, _} ->
+	  S6#{idorder => PFidorder};
+      _ -> S6
     end.
 
 
@@ -2085,11 +2175,17 @@ v_msg_User(X, Path, _TrUserData) ->
 -dialyzer({nowarn_function,v_msg_Response/3}).
 v_msg_Response(#{} = M, Path, TrUserData) ->
     case M of
-      #{response := F1} ->
-	  v_type_string(F1, [response | Path], TrUserData);
+      #{status := F1} ->
+	  v_type_int32(F1, [status | Path], TrUserData);
       _ -> ok
     end,
-    lists:foreach(fun (response) -> ok;
+    case M of
+      #{response := F2} ->
+	  v_type_string(F2, [response | Path], TrUserData);
+      _ -> ok
+    end,
+    lists:foreach(fun (status) -> ok;
+		      (response) -> ok;
 		      (OtherKey) ->
 			  mk_type_error({extraneous_key, OtherKey}, M, Path)
 		  end,
@@ -2195,11 +2291,17 @@ v_msg_ImporterOffer(#{} = M, Path, TrUserData) ->
 	  v_type_double(F5, [unitPrice | Path], TrUserData);
       _ -> ok
     end,
+    case M of
+      #{idorder := F6} ->
+	  v_type_int64(F6, [idorder | Path], TrUserData);
+      _ -> ok
+    end,
     lists:foreach(fun (id) -> ok;
 		      (manufacturer) -> ok;
 		      (product) -> ok;
 		      (quantity) -> ok;
 		      (unitPrice) -> ok;
+		      (idorder) -> ok;
 		      (OtherKey) ->
 			  mk_type_error({extraneous_key, OtherKey}, M, Path)
 		  end,
@@ -2331,7 +2433,9 @@ get_msg_defs() ->
        #{name => type, fnum => 3, rnum => 4, type => int32,
 	 occurrence => optional, opts => []}]},
      {{msg, 'Response'},
-      [#{name => response, fnum => 4, rnum => 2,
+      [#{name => status, fnum => 1, rnum => 2, type => int32,
+	 occurrence => optional, opts => []},
+       #{name => response, fnum => 2, rnum => 3,
 	 type => string, occurrence => optional, opts => []}]},
      {{msg, 'ManufacturerOrder'},
       [#{name => id, fnum => 1, rnum => 2, type => int64,
@@ -2360,7 +2464,9 @@ get_msg_defs() ->
        #{name => quantity, fnum => 4, rnum => 5, type => int64,
 	 occurrence => optional, opts => []},
        #{name => unitPrice, fnum => 5, rnum => 6,
-	 type => double, occurrence => optional, opts => []}]}].
+	 type => double, occurrence => optional, opts => []},
+       #{name => idorder, fnum => 6, rnum => 7, type => int64,
+	 occurrence => optional, opts => []}]}].
 
 
 get_msg_names() ->
@@ -2414,7 +2520,9 @@ find_msg_def('User') ->
      #{name => type, fnum => 3, rnum => 4, type => int32,
        occurrence => optional, opts => []}];
 find_msg_def('Response') ->
-    [#{name => response, fnum => 4, rnum => 2,
+    [#{name => status, fnum => 1, rnum => 2, type => int32,
+       occurrence => optional, opts => []},
+     #{name => response, fnum => 2, rnum => 3,
        type => string, occurrence => optional, opts => []}];
 find_msg_def('ManufacturerOrder') ->
     [#{name => id, fnum => 1, rnum => 2, type => int64,
@@ -2443,7 +2551,9 @@ find_msg_def('ImporterOffer') ->
      #{name => quantity, fnum => 4, rnum => 5, type => int64,
        occurrence => optional, opts => []},
      #{name => unitPrice, fnum => 5, rnum => 6,
-       type => double, occurrence => optional, opts => []}];
+       type => double, occurrence => optional, opts => []},
+     #{name => idorder, fnum => 6, rnum => 7, type => int64,
+       occurrence => optional, opts => []}];
 find_msg_def(_) -> error.
 
 
