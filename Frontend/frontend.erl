@@ -27,7 +27,7 @@ authenticate(Sock) ->
                     io:format("Msg Reg ~n",[]),
                     Type = maps:get(type,User),
                     case loginManager:createAccount(Name,Pass,Type) of
-                        {signedup,Type} ->
+                        signedup ->
                             ReplyBin = messages:encode_msg(#{type => "RESPONSE", response => #{status => 1, response => "REGISTED"}}, 'Message'),
                             gen_tcp:send(Sock, ReplyBin),
                             io:format("Msg Sent ~n",[]),

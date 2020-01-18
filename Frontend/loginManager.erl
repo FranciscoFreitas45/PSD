@@ -23,7 +23,7 @@ manage(Map) ->
         {create,User,Pass,Type,Pid} ->
             case maps:find(User,Map) of
                 error ->
-                    Pid ! {?MODULE,{signedup,Type}},
+                    Pid ! {?MODULE,signedup},
                     io:format("New user ~n",[]),
                     manage(maps:put(User,{Pass,false,Type},Map));
                 _ -> 
