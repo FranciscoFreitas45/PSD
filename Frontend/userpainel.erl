@@ -8,12 +8,15 @@ start(Sock,Name) ->
             Msg = messages:decode_msg(Bin,'Message'),
             case maps:get(type,Msg) of
                 "OFFER" ->
+                    Offer = maps:get(importerOffer,Msg),
+                    IdOrder = maps:get(idorder,Offer),
+                    PidWorkerFE = taskManager:lookup(IdOrder),
+                    PidWorkerFE ! {offer,Msg,self()},
                     start(Sock,Name);
                 "ORDER" ->
                     taskManager:sendOrder(Msg),
                     start(Sock,Name)
             end;
         {tcp_closed, _} ->
-			loginManager:logout(Name)
-
+			loginManager:logOut(Name)
     end.
