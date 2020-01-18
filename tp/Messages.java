@@ -2230,15 +2230,24 @@ public final class Messages {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string response = 4;</code>
+     * <code>optional int32 status = 1;</code>
+     */
+    boolean hasStatus();
+    /**
+     * <code>optional int32 status = 1;</code>
+     */
+    int getStatus();
+
+    /**
+     * <code>optional string response = 2;</code>
      */
     boolean hasResponse();
     /**
-     * <code>optional string response = 4;</code>
+     * <code>optional string response = 2;</code>
      */
     java.lang.String getResponse();
     /**
-     * <code>optional string response = 4;</code>
+     * <code>optional string response = 2;</code>
      */
     com.google.protobuf.ByteString
         getResponseBytes();
@@ -2283,9 +2292,14 @@ public final class Messages {
             case 0:
               done = true;
               break;
-            case 34: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+            case 8: {
               bitField0_ |= 0x00000001;
+              status_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
               response_ = bs;
               break;
             }
@@ -2322,16 +2336,31 @@ public final class Messages {
     }
 
     private int bitField0_;
-    public static final int RESPONSE_FIELD_NUMBER = 4;
-    private volatile java.lang.Object response_;
+    public static final int STATUS_FIELD_NUMBER = 1;
+    private int status_;
     /**
-     * <code>optional string response = 4;</code>
+     * <code>optional int32 status = 1;</code>
      */
-    public boolean hasResponse() {
+    public boolean hasStatus() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
-     * <code>optional string response = 4;</code>
+     * <code>optional int32 status = 1;</code>
+     */
+    public int getStatus() {
+      return status_;
+    }
+
+    public static final int RESPONSE_FIELD_NUMBER = 2;
+    private volatile java.lang.Object response_;
+    /**
+     * <code>optional string response = 2;</code>
+     */
+    public boolean hasResponse() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <code>optional string response = 2;</code>
      */
     public java.lang.String getResponse() {
       java.lang.Object ref = response_;
@@ -2348,7 +2377,7 @@ public final class Messages {
       }
     }
     /**
-     * <code>optional string response = 4;</code>
+     * <code>optional string response = 2;</code>
      */
     public com.google.protobuf.ByteString
         getResponseBytes() {
@@ -2379,7 +2408,10 @@ public final class Messages {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (((bitField0_ & 0x00000001) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, response_);
+        output.writeInt32(1, status_);
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, response_);
       }
       unknownFields.writeTo(output);
     }
@@ -2391,7 +2423,11 @@ public final class Messages {
 
       size = 0;
       if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, response_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, status_);
+      }
+      if (((bitField0_ & 0x00000002) != 0)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, response_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2408,6 +2444,11 @@ public final class Messages {
       }
       tp.Messages.Response other = (tp.Messages.Response) obj;
 
+      if (hasStatus() != other.hasStatus()) return false;
+      if (hasStatus()) {
+        if (getStatus()
+            != other.getStatus()) return false;
+      }
       if (hasResponse() != other.hasResponse()) return false;
       if (hasResponse()) {
         if (!getResponse()
@@ -2424,6 +2465,10 @@ public final class Messages {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasStatus()) {
+        hash = (37 * hash) + STATUS_FIELD_NUMBER;
+        hash = (53 * hash) + getStatus();
+      }
       if (hasResponse()) {
         hash = (37 * hash) + RESPONSE_FIELD_NUMBER;
         hash = (53 * hash) + getResponse().hashCode();
@@ -2561,8 +2606,10 @@ public final class Messages {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        response_ = "";
+        status_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
+        response_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -2592,7 +2639,11 @@ public final class Messages {
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.status_ = status_;
           to_bitField0_ |= 0x00000001;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          to_bitField0_ |= 0x00000002;
         }
         result.response_ = response_;
         result.bitField0_ = to_bitField0_;
@@ -2644,8 +2695,11 @@ public final class Messages {
 
       public Builder mergeFrom(tp.Messages.Response other) {
         if (other == tp.Messages.Response.getDefaultInstance()) return this;
+        if (other.hasStatus()) {
+          setStatus(other.getStatus());
+        }
         if (other.hasResponse()) {
-          bitField0_ |= 0x00000001;
+          bitField0_ |= 0x00000002;
           response_ = other.response_;
           onChanged();
         }
@@ -2679,15 +2733,47 @@ public final class Messages {
       }
       private int bitField0_;
 
-      private java.lang.Object response_ = "";
+      private int status_ ;
       /**
-       * <code>optional string response = 4;</code>
+       * <code>optional int32 status = 1;</code>
        */
-      public boolean hasResponse() {
+      public boolean hasStatus() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
-       * <code>optional string response = 4;</code>
+       * <code>optional int32 status = 1;</code>
+       */
+      public int getStatus() {
+        return status_;
+      }
+      /**
+       * <code>optional int32 status = 1;</code>
+       */
+      public Builder setStatus(int value) {
+        bitField0_ |= 0x00000001;
+        status_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 status = 1;</code>
+       */
+      public Builder clearStatus() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        status_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object response_ = "";
+      /**
+       * <code>optional string response = 2;</code>
+       */
+      public boolean hasResponse() {
+        return ((bitField0_ & 0x00000002) != 0);
+      }
+      /**
+       * <code>optional string response = 2;</code>
        */
       public java.lang.String getResponse() {
         java.lang.Object ref = response_;
@@ -2704,7 +2790,7 @@ public final class Messages {
         }
       }
       /**
-       * <code>optional string response = 4;</code>
+       * <code>optional string response = 2;</code>
        */
       public com.google.protobuf.ByteString
           getResponseBytes() {
@@ -2720,36 +2806,36 @@ public final class Messages {
         }
       }
       /**
-       * <code>optional string response = 4;</code>
+       * <code>optional string response = 2;</code>
        */
       public Builder setResponse(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000001;
+  bitField0_ |= 0x00000002;
         response_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string response = 4;</code>
+       * <code>optional string response = 2;</code>
        */
       public Builder clearResponse() {
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         response_ = getDefaultInstance().getResponse();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string response = 4;</code>
+       * <code>optional string response = 2;</code>
        */
       public Builder setResponseBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000001;
+  bitField0_ |= 0x00000002;
         response_ = value;
         onChanged();
         return this;
@@ -4134,6 +4220,15 @@ public final class Messages {
      * <code>optional double unitPrice = 5;</code>
      */
     double getUnitPrice();
+
+    /**
+     * <code>optional int64 idorder = 6;</code>
+     */
+    boolean hasIdorder();
+    /**
+     * <code>optional int64 idorder = 6;</code>
+     */
+    long getIdorder();
   }
   /**
    * Protobuf type {@code tp.ImporterOffer}
@@ -4201,6 +4296,11 @@ public final class Messages {
             case 41: {
               bitField0_ |= 0x00000010;
               unitPrice_ = input.readDouble();
+              break;
+            }
+            case 48: {
+              bitField0_ |= 0x00000020;
+              idorder_ = input.readInt64();
               break;
             }
             default: {
@@ -4365,6 +4465,21 @@ public final class Messages {
       return unitPrice_;
     }
 
+    public static final int IDORDER_FIELD_NUMBER = 6;
+    private long idorder_;
+    /**
+     * <code>optional int64 idorder = 6;</code>
+     */
+    public boolean hasIdorder() {
+      return ((bitField0_ & 0x00000020) != 0);
+    }
+    /**
+     * <code>optional int64 idorder = 6;</code>
+     */
+    public long getIdorder() {
+      return idorder_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -4394,6 +4509,9 @@ public final class Messages {
       if (((bitField0_ & 0x00000010) != 0)) {
         output.writeDouble(5, unitPrice_);
       }
+      if (((bitField0_ & 0x00000020) != 0)) {
+        output.writeInt64(6, idorder_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -4420,6 +4538,10 @@ public final class Messages {
       if (((bitField0_ & 0x00000010) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeDoubleSize(5, unitPrice_);
+      }
+      if (((bitField0_ & 0x00000020) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(6, idorder_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4462,6 +4584,11 @@ public final class Messages {
             != java.lang.Double.doubleToLongBits(
                 other.getUnitPrice())) return false;
       }
+      if (hasIdorder() != other.hasIdorder()) return false;
+      if (hasIdorder()) {
+        if (getIdorder()
+            != other.getIdorder()) return false;
+      }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -4495,6 +4622,11 @@ public final class Messages {
         hash = (37 * hash) + UNITPRICE_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
             java.lang.Double.doubleToLongBits(getUnitPrice()));
+      }
+      if (hasIdorder()) {
+        hash = (37 * hash) + IDORDER_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+            getIdorder());
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -4639,6 +4771,8 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000008);
         unitPrice_ = 0D;
         bitField0_ = (bitField0_ & ~0x00000010);
+        idorder_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -4686,6 +4820,10 @@ public final class Messages {
         if (((from_bitField0_ & 0x00000010) != 0)) {
           result.unitPrice_ = unitPrice_;
           to_bitField0_ |= 0x00000010;
+        }
+        if (((from_bitField0_ & 0x00000020) != 0)) {
+          result.idorder_ = idorder_;
+          to_bitField0_ |= 0x00000020;
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -4754,6 +4892,9 @@ public final class Messages {
         }
         if (other.hasUnitPrice()) {
           setUnitPrice(other.getUnitPrice());
+        }
+        if (other.hasIdorder()) {
+          setIdorder(other.getIdorder());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -5032,6 +5173,38 @@ public final class Messages {
         onChanged();
         return this;
       }
+
+      private long idorder_ ;
+      /**
+       * <code>optional int64 idorder = 6;</code>
+       */
+      public boolean hasIdorder() {
+        return ((bitField0_ & 0x00000020) != 0);
+      }
+      /**
+       * <code>optional int64 idorder = 6;</code>
+       */
+      public long getIdorder() {
+        return idorder_;
+      }
+      /**
+       * <code>optional int64 idorder = 6;</code>
+       */
+      public Builder setIdorder(long value) {
+        bitField0_ |= 0x00000020;
+        idorder_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 idorder = 6;</code>
+       */
+      public Builder clearIdorder() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        idorder_ = 0L;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -5125,14 +5298,15 @@ public final class Messages {
       "der\030\004 \001(\0132\025.tp.ManufacturerOrder\022(\n\rimpo" +
       "rterOffer\030\005 \001(\0132\021.tp.ImporterOffer\"8\n\004Us" +
       "er\022\020\n\010username\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\014" +
-      "\n\004type\030\003 \001(\005\"\034\n\010Response\022\020\n\010response\030\004 \001" +
-      "(\t\"\250\001\n\021ManufacturerOrder\022\n\n\002id\030\001 \001(\003\022\024\n\014" +
-      "manufacturer\030\002 \001(\t\022\017\n\007product\030\003 \001(\t\022\023\n\013m" +
-      "inQuantity\030\004 \001(\003\022\023\n\013maxQuantity\030\005 \001(\003\022\021\n" +
-      "\tunitPrice\030\006 \001(\001\022\016\n\006active\030\007 \001(\005\022\023\n\013nego" +
-      "tiation\030\010 \001(\003\"g\n\rImporterOffer\022\n\n\002id\030\001 \001" +
-      "(\003\022\024\n\014manufacturer\030\002 \001(\t\022\017\n\007product\030\003 \001(" +
-      "\t\022\020\n\010quantity\030\004 \001(\003\022\021\n\tunitPrice\030\005 \001(\001"
+      "\n\004type\030\003 \001(\005\",\n\010Response\022\016\n\006status\030\001 \001(\005" +
+      "\022\020\n\010response\030\002 \001(\t\"\250\001\n\021ManufacturerOrder" +
+      "\022\n\n\002id\030\001 \001(\003\022\024\n\014manufacturer\030\002 \001(\t\022\017\n\007pr" +
+      "oduct\030\003 \001(\t\022\023\n\013minQuantity\030\004 \001(\003\022\023\n\013maxQ" +
+      "uantity\030\005 \001(\003\022\021\n\tunitPrice\030\006 \001(\001\022\016\n\006acti" +
+      "ve\030\007 \001(\005\022\023\n\013negotiation\030\010 \001(\003\"x\n\rImporte" +
+      "rOffer\022\n\n\002id\030\001 \001(\003\022\024\n\014manufacturer\030\002 \001(\t" +
+      "\022\017\n\007product\030\003 \001(\t\022\020\n\010quantity\030\004 \001(\003\022\021\n\tu" +
+      "nitPrice\030\005 \001(\001\022\017\n\007idorder\030\006 \001(\003"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5163,7 +5337,7 @@ public final class Messages {
     internal_static_tp_Response_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_tp_Response_descriptor,
-        new java.lang.String[] { "Response", });
+        new java.lang.String[] { "Status", "Response", });
     internal_static_tp_ManufacturerOrder_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_tp_ManufacturerOrder_fieldAccessorTable = new
@@ -5175,7 +5349,7 @@ public final class Messages {
     internal_static_tp_ImporterOffer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_tp_ImporterOffer_descriptor,
-        new java.lang.String[] { "Id", "Manufacturer", "Product", "Quantity", "UnitPrice", });
+        new java.lang.String[] { "Id", "Manufacturer", "Product", "Quantity", "UnitPrice", "Idorder", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
