@@ -10,7 +10,7 @@ start(Sock,Name) ->
                 "OFFER" ->
                     Offer = maps:get(importerOffer,Msg),
                     IdOrder = maps:get(idorder,Offer),
-                    PidWorkerFE = taskManager:lookup(IdOrder),
+                    {_,PidWorkerFE} = taskManager:lookup(IdOrder),
                     PidWorkerFE ! {offer,Msg,self()},
                     start(Sock,Name);
                 "ORDER" ->
