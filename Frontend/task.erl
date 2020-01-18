@@ -18,7 +18,7 @@ handleRequest(SockPush,SockPub,N) ->
         {offer,Msg,Pid} ->
             io:format("Msg Reg ~n",[]);
         {close,Pid} ->
-            
+            io:format("Msg Reg ~n",[])    
     end.
 
 

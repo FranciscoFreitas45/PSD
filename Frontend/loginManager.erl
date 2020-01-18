@@ -15,8 +15,7 @@ logIn(User,Pass) ->
     reply().
 
 logOut(User) ->
-    ?MODULE ! {logout,User,self()},
-    reply().
+    ?MODULE ! {logout,User,self()}.
 
 manage(Map) ->
     receive
@@ -40,13 +39,11 @@ manage(Map) ->
                     Pid ! {?MODULE,error},
                     manage(Map)
             end;
-        {logout,User,Pid} ->
+        {logout,User,_} ->
             case maps:find(User,Map) of
                 {ok,{Pass,_,Type}} ->
-                    Pid ! {?MODULE,{loggedOut,Type}},
                     manage(maps:put(User,{Pass,false,Type},Map));
                 _ ->
-                    Pid ! {?MODULE,error},
                     manage(Map)
             end
     end.

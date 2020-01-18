@@ -12,7 +12,8 @@ taskhandler(MapNego,Noffer) ->
             Orderf = maps:put(id,Noffer,Orderi),
             Msgn = maps:put(manufacturerOrder,Orderf,Msg),
             Pid = spawn(fun() -> task:start(Msgn) end),
-            taskhandler(maps:put(Noffer,Pid,MapNego),Noffer+1);
+            N = Noffer+1,
+            taskhandler(maps:put(Noffer,Pid,MapNego),N);
         {lookup,Id,Pid} ->
             PidResult = maps:get(Id,MapNego),
             Pid ! {lookup,PidResult},
