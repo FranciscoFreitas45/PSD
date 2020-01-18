@@ -4,6 +4,7 @@
 
 server(Port) ->
     loginManager:start(),
+    taskManager:start(),
     {ok, LSock} = gen_tcp:listen(Port, [binary,{packet, 0}, {reuseaddr, true}, {active, true}]),
     acceptor(LSock).
 
@@ -16,12 +17,14 @@ acceptor(LSock) ->
 authenticate(Sock) ->
     receive
         {tcp, Sock, Bin} ->
+            io:format("Msg arrived ~n",[]),
             Msg = messages:decode_msg(Bin,'Message'),
             User = maps:get(user,Msg),
             Name = maps:get(username,User),
             Pass = maps:get(password,User),
             case maps:get(type,Msg) of
                 "REGISTER" ->
+                    io:format("Msg Reg ~n",[]),
                     Type = maps:get(type,User),
                     case loginManager:createAccount(Name,Pass,Type) of
                         {signedup,Type} ->
@@ -34,6 +37,7 @@ authenticate(Sock) ->
                             authenticate(Sock)
                     end;
                 "LOGIN" ->
+                    io:format("Msg Reg ~n",[]),
                     case loginManager:logIn(Name,Pass) of
                         {loggedIn,Type} ->
                             ReplyBin = messages:encode_msg(#{type => "RESPONSE", response => #{status => 1, response => integer_to_list(Type)}}, 'Message'),

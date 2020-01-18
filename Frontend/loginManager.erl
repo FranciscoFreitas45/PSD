@@ -24,6 +24,7 @@ manage(Map) ->
             case maps:find(User,Map) of
                 error ->
                     Pid ! {?MODULE,{signedup,Type}},
+                    io:format("New user ~n",[]),
                     manage(maps:put(User,{Pass,false,Type},Map));
                 _ -> 
                     Pid ! {?MODULE,fail},
@@ -33,6 +34,7 @@ manage(Map) ->
             case maps:find(User,Map) of
                 {ok,{Pass,_,Type}} ->
                     Pid ! {?MODULE,{loggedIn,Type}},
+                    io:format("New user logged in ~n",[]),
                     manage(maps:put(User,{Pass,Pid,Type},Map));
                 _ ->
                     Pid ! {?MODULE,error},

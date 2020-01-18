@@ -10,6 +10,7 @@ start(Sock,Name) ->
                 "OFFER" ->
                     start(Sock,Name);
                 "ORDER" ->
+                    taskManager:sendOrder(Msg),
                     start(Sock,Name)
             end;
         {tcp_closed, _} ->
