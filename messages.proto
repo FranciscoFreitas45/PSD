@@ -38,4 +38,5 @@ message ImporterOffer {
     optional string product = 3;
     optional int64 quantity = 4;
     optional double unitPrice = 5;
+    optional int64 idorder = 1;
 }
