@@ -15,7 +15,7 @@ logIn(User,Pass) ->
     reply().
 
 logOut(User) ->
-    ?MODULE ! {login,User,self()},
+    ?MODULE ! {logout,User,self()},
     reply().
 
 manage(Map) ->

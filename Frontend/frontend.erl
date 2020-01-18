@@ -30,10 +30,12 @@ authenticate(Sock) ->
                         {signedup,Type} ->
                             ReplyBin = messages:encode_msg(#{type => "RESPONSE", response => #{status => 1, response => "REGISTED"}}, 'Message'),
                             gen_tcp:send(Sock, ReplyBin),
+                            io:format("Msg Sent ~n",[]),
                             authenticate(Sock);
                         fail ->
                             ReplyBin = messages:encode_msg(#{type => "RESPONSE", response => #{status => 0, response => "USER NAME ALREADY USED"}}, 'Message'),
                             gen_tcp:send(Sock, ReplyBin),
+                            io:format("Msg Sent ~n",[]),
                             authenticate(Sock)
                     end;
                 "LOGIN" ->
