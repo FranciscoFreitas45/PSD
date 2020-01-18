@@ -16,6 +16,7 @@ import org.zeromq.ZMQ;
             Reader reader = new Reader(cli,info);
             Stub stub = new Stub(cli,info);
             stub.start();
+            reader.start();
 
 
 
