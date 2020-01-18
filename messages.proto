@@ -17,7 +17,8 @@ message User {
 }
 
 message Response {
-    optional string response = 4;
+    optional int32 status = 1;
+    optional string response = 2;
 }
 
 message ManufacturerOrder {
