@@ -7,7 +7,7 @@ start() ->
 
 taskhandler(MapNego,Noffer) ->
     receive
-        {order,Msg,Pid} ->
+        {order,Msg,_} ->
             Orderi = maps:get(manufacturerOrder,Msg),
             Orderf = maps:put(id,Noffer,Orderi),
             Msgn = maps:put(manufacturerOrder,Orderf,Msg),
@@ -16,7 +16,7 @@ taskhandler(MapNego,Noffer) ->
             taskhandler(maps:put(Noffer,Pid,MapNego),N);
         {lookup,Id,Pid} ->
             PidResult = maps:get(Id,MapNego),
-            Pid ! {lookup,PidResult},
+            Pid ! {lookup,PidResult,self()},
             taskhandler(MapNego,Noffer)
     end.
 
@@ -26,9 +26,7 @@ sendOrder(Msg) ->
 
 lookup(Id) ->
     ?MODULE ! {lookup,Id,self()},
-    reply().
-
-reply()->
     receive
-        {?MODULE,rep} -> rep
+        {lookup,PidResult,_} -> 
+            PidResult
     end.
