@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Stub extends Thread {
     private final static String MENU_SEPARATOR = "-";
-    private final static Integer MANUFACTER = 1;
+    private final static Integer MANUFACTURER = 1;
     private final static Integer IMPORTER = 2;
 
 
@@ -50,10 +50,8 @@ public class Stub extends Thread {
                         break;
                 }
 
-                if (option == 2 && status == 0)// caso seja logout e esta no menu inicial
+                if ((option == 2 && status == 0) || (option == 5 && status > 0))// sair em caso de Exit ou Logout
                     break;
-                if(option == 5 && status <0 )
-                        this.client.setLogged(false);
 
             }catch(Exception e) { }
         }
@@ -66,13 +64,13 @@ public class Stub extends Thread {
         String show;
         int status; // para saber que handler de menus usar
         if(this.client.isLogged()){
-            if(this.client.getType()==MANUFACTER) {
+            if(this.client.getType()==IMPORTER) {
                 show = listOptions(menu.getMainMenuImporterOptions());
-                status=1;// handler para menu de MANUFACTER
+                status=2;// handler para menu de MANUFACTER
             }
             else {
                 show = listOptions(menu.getMainMenuManufacterOptions());
-                status=2;//handler para menu de IMPORTER
+                status=1;//handler para menu de IMPORTER
             }
         }
         else {
@@ -215,14 +213,16 @@ public class Stub extends Thread {
 
 
 
-    private void showHistoricImporter(){
+    private void showHistoricImporter() throws IOException {
         String nameImporter = menu.readString("Importer: ");
         String path="http://localhost:8080//manufacter/"+ nameImporter +"historic";
+        consumeApiRest(path);
     }
 
-    private void showHistoricManufacturer(){
+    private void showHistoricManufacturer() throws IOException {
         String nameManufacturer = menu.readString("Manufacturer: ");
-        String path="http://localhost:8080//manufacter/"+ nameManufacturer +"historic";
+        String path="http://localhost:8080/manufacter/"+ nameManufacturer +"historic";
+        consumeApiRest(path);
     }
 
     private void showManufacturer() throws IOException {
@@ -238,8 +238,6 @@ public class Stub extends Thread {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
 
-        int response = con.getResponseCode();
-
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuffer reply = new StringBuffer();
@@ -248,14 +246,7 @@ public class Stub extends Thread {
             reply.append(inputLine);
         }
         in.close();
-		/*
-		JSONArray jsonCompanies = new JSONArray(reply.toString());
-		for (int i = 0; i < jsonCompanies.length(); i++) {
-			JSONObject object = jsonCompanies.getJSONObject(i);
-			String company = object.toString();
-			System.out.println(" " + company);
-		}
-		*/
+
         System.out.println(reply.toString());
     }
 

@@ -9,6 +9,8 @@ import tp.Messages;
 
 
 public class Reader extends Thread {
+    private final static Integer MANUFACTURER = 1;
+    private final static Integer IMPORTER = 2;
     private Socket cliSocket;
     private InputStream is;
     private InfoCliente info;
@@ -20,19 +22,25 @@ public class Reader extends Thread {
     }
 
     public void run() {
-        String  content;
-        Message m;
+        String  response;
+        Messages.Message m;
         Integer status;
         while(((m = readMessage()) != null)) {
-
-            content = readResponse(m);
-
+            response = readResponse(m);
             status= readStatus(m);
+
+            System.out.println(m.getResponse().toString());
+
             if(status==1){
                 info.setLogged(true);
             }
+            if(response.equals("2")){
+                info.setType(IMPORTER);
+            }
+            else info.setType(MANUFACTURER);
+
             info.awake();
-            System.out.println(content);
+
 
         }
 
@@ -41,19 +49,19 @@ public class Reader extends Thread {
     }
 
 
-    private String readResponse(Message m) {
-        return ((Messages.Message)m).getResponse().getResponse();
+    private String readResponse(Messages.Message m) {
+        return m.getResponse().getResponse();
     }
 
-    private Integer readStatus(Message m){
-        return ((Messages.Message)m).getResponse().getStatus();
+    private Integer readStatus(Messages.Message m){
+        return m.getResponse().getStatus();
     }
 
 
 
 
-    private Message readMessage() {
-        Message m = null;
+    private Messages.Message readMessage() {
+        Messages.Message m = null;
 
         try {
             byte[] msg = recvMsg(is);
@@ -66,7 +74,6 @@ public class Reader extends Thread {
 
     private static byte[] recvMsg(InputStream inpustream) {
         try {
-
             byte len[] = new byte[4096];
             int count = inpustream.read(len);
             byte[] temp = new byte[count];
