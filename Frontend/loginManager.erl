@@ -53,5 +53,5 @@ manage(Map) ->
 
 reply()->
     receive
-        {?MODULE,rep} -> rep
+        {?MODULE,Rep} -> Rep
     end.
