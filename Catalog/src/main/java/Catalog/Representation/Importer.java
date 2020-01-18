@@ -2,20 +2,20 @@ package Catalog.Representation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
-public class Importader {
+public class Importer {
     private String name;
-    private Set<Offer> historic;
+    private Map<Long,Offer> offers;
+    private Map<Long,Offer> historic;
 
-    public Importader(String name) {
+    public Importer(String name) {
         this.name = name;
-        this.historic = new HashSet<>();
+        this.historic = new HashMap<>();
+        this.offers = new HashMap<>();
     }
 
-    public Importader(){}
+    public Importer(){}
 
     @JsonProperty
     public String getName() {
@@ -23,21 +23,30 @@ public class Importader {
     }
 
     @JsonProperty
-    public Set<Offer> getOffers() {
+    public Map<Long,Offer> getOffers() {
+        return offers;
+    }
+
+    @JsonProperty
+    public Map<Long,Offer> getHistoric() {
         return historic;
     }
 
+
+
     public void addOffer(Offer o){
-        this.historic.add(o);
+        this.offers.put(o.getId(),o);
     }
 
-    public Offer getOrder(Long id){
-        Offer offer = null;
-        Iterator<Offer> it = this.historic.iterator();
-        while(it.hasNext()){
-            if(it.next().getId()==id)
-                offer=it.next();
-        }
-        return offer;
+    public Offer getOffer(Long id){
+        return this.offers.get(id);
+
+    }
+
+    public void addOfferHistoric(Long id){
+        Offer offer = this.offers.get(id);
+        this.historic.put(offer.getId(),offer);
+        this.offers.remove(id);
+
     }
 }

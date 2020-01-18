@@ -9,7 +9,6 @@ public class Order {
     private Long minQuantity;
     private Long maxQuantity;
     private double unitPrice;
-    private Integer active ;
     private Long negotiation;
 
 
@@ -26,7 +25,6 @@ public class Order {
         this.maxQuantity = maxQuanity;
         this.unitPrice = unitPrice;
         this.negotiation=negotiation;
-        this.active= 0;
     }
     @JsonProperty
     public String getManufacturer() {
@@ -55,10 +53,6 @@ public class Order {
         return id;
     }
     @JsonProperty
-    public Integer getActive(){
-        return active;
-    }
-    @JsonProperty
     public Long getNegotiation() {
         return negotiation;
     }
@@ -67,9 +61,6 @@ public class Order {
         this.id = id;
     }
 
-    public void setAcabou(Integer active){
-        this.active=active;
-    }
 
 
 
