@@ -43,9 +43,10 @@ public class Importer {
     }
 
 
-    public void addOfferHistoric(Long idOffer,Long idOrder){
+    public void addOfferHistoric(Long idOffer,Long idOrder,String state){
         Tuple<Long, Long> tuple = new Tuple<>(idOrder,idOffer);
         Offer offer = this.offers.get(tuple.toString());
+        offer.setState(Integer.parseInt(state));
         this.historic.put(tuple.toString(),offer);
         this.offers.remove(tuple.toString());
 

@@ -31,8 +31,9 @@ public class PullManufacturer extends Thread {
     ZMQ.Socket push;
     private Timer timer;
     private int len_Key;
+    private Notifier note;
 
-    public PullManufacturer(ZMQ.Socket pull, ZMQ.Socket sub,ZMQ.Socket push) {
+    public PullManufacturer(ZMQ.Socket pull, ZMQ.Socket sub,ZMQ.Socket push,Notifier note) {
         this.pull = pull;
         this.sub = sub;
         this.push = push;
@@ -40,6 +41,7 @@ public class PullManufacturer extends Thread {
         this.order = null;
         this.timer = new Timer();
         this.len_Key = 0;
+        this.note = note;
 
 
     }
@@ -53,7 +55,7 @@ public class PullManufacturer extends Thread {
         this.offers.add(off);
         String jsonInputString = createJsonOffer(off,"0");
         postAPI("http://localhost:8080/importer/offer/"+off.getImporter(),jsonInputString);
-
+        note.notify(off);
     }
 
 
@@ -65,6 +67,7 @@ public class PullManufacturer extends Thread {
                 System.out.println("RECEBI ORDEM");
                 m = Messages.Message.parseFrom(recv);
                 Messages.ManufacturerOrder manu = m.getManufacturerOrder();
+                note.notify(manu);
                 System.out.println(manu.toString());
                 String key = String.valueOf(manu.getId()) + ":";
                 sub.subscribe(key.getBytes());

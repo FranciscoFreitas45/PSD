@@ -4,6 +4,8 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import org.zeromq.ZMQ;
 import tp.Messages;
 
+import java.io.IOException;
+
 public class SubImporters extends Thread {
 
     private PullManufacturer pull;
@@ -24,6 +26,8 @@ public class SubImporters extends Thread {
         }
 
         } catch (InvalidProtocolBufferException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

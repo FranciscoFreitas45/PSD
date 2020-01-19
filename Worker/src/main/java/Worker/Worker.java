@@ -24,9 +24,9 @@ public class Worker extends Thread {
         push.connect("tcp://localhost:" + 12349);
         pull.connect("tcp://localhost:" + 12348);
         subSocket.connect("tcp://localhost:" + 12346);
+        Notifier note = new Notifier(context);
 
-
-        PullManufacturer pullManufacturer = new PullManufacturer(pull, subSocket,push);
+        PullManufacturer pullManufacturer = new PullManufacturer(pull, subSocket,push,note);
         SubImporters subImporters = new SubImporters(pullManufacturer, subSocket);
         pullManufacturer.start();
         subImporters.start();

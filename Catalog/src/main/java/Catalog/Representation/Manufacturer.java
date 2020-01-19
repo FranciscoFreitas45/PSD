@@ -45,6 +45,7 @@ public class Manufacturer {
 
     public void addOrderHistoric(Long id){
         Order order = this.orders.get(id);
+        order.setState(0);
         this.historic.put(order.getid(),order);
         this.orders.remove(id);
 

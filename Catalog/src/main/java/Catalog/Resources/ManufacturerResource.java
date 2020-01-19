@@ -86,7 +86,9 @@ public class ManufacturerResource {
     public Response postOrder(@PathParam("nameFab") String name,@NotNull @Valid Order order){
         Manufacturer f = this.manufacters.get(name);
         if (f == null){
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            Manufacturer new_f = new Manufacturer(name);
+            new_f.addOrder(order);
+            this.manufacters.put(name,new_f);
         }
         else{
             f.addOrder(order);

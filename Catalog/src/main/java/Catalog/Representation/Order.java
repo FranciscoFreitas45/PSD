@@ -66,6 +66,9 @@ public class Order {
     }
 
 
+    public void setState(int state){
+        this.state=state;
+    }
 
 
 }
