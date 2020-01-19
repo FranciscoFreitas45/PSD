@@ -52,6 +52,9 @@ public class Reader extends Thread {
 
                 }
             }
+    else {
+            System.out.println(response);
+        }
 
     }
 

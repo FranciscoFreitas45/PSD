@@ -56,7 +56,6 @@ public class PullManufacturer extends Thread {
         String jsonInputString = createJsonOffer(off,"0");
         postAPI("http://localhost:8080/importer/offer/"+off.getImporter(),jsonInputString);
         note.notify(off);
-        System.out.println("Recebi oferta para id : "+off.getIdorder());
     }
 
 
@@ -65,11 +64,9 @@ public class PullManufacturer extends Thread {
         Messages.Message m = null;
         try {
             while ((recv = pull.recv()) != null) {
-                System.out.println("RECEBI ORDEM");
                 m = Messages.Message.parseFrom(recv);
                 Messages.ManufacturerOrder manu = m.getManufacturerOrder();
                 note.notify(manu);
-                System.out.println(manu.toString());
                 String key = String.valueOf(manu.getId()) + ":";
                 sub.subscribe(key.getBytes());
                 this.len_Key = key.getBytes().length;
@@ -95,11 +92,9 @@ public class PullManufacturer extends Thread {
         Messages.Reply.Builder message = createReply();
         Messages.ImporterOffer offerImporter;
         if(isQuantityEnough(this.offers)){
-            System.out.println("passei no enough");
+
             long MaxquantityOrder = order.getMaxQuantity();
             long sumQuantity=0;
-            System.out.println(MaxquantityOrder);
-            System.out.println(this.offers.toString());
             while(MaxquantityOrder > sumQuantity && !this.offers.isEmpty()){
                 ImporterOffer offer = this.offers.poll();
 
@@ -109,7 +104,6 @@ public class PullManufacturer extends Thread {
                     if(sumQuantity > MaxquantityOrder){//caso ultrapassa o maximo ignora
 
                         sumQuantity -=offer.getQuantity();
-                        System.out.println("ENTREI NO CASO DE MAXquantity > sumQuantity  no loop");
                         offerImporter=setState(offer,2);
                         putAPI("http://localhost:8080/importer/historic/",offer.getImporter(),Long.toString(offer.getId()),Long.toString(order.getId()),"2");
 
@@ -127,7 +121,6 @@ public class PullManufacturer extends Thread {
             while(!this.offers.isEmpty()){
                 ImporterOffer offer = this.offers.poll();
                 if(offer!= null) {
-                    System.out.println("ENTREI NO CASO DE MAXquantity > sumQuantity ");
                     offerImporter=setState(offer,2);
                     putAPI("http://localhost:8080/importer/historic/",offer.getImporter(),Long.toString(offer.getId()),Long.toString(order.getId()),"2");
 
@@ -140,7 +133,6 @@ public class PullManufacturer extends Thread {
             while(!this.offers.isEmpty()){
                 ImporterOffer offer = this.offers.poll();
                 if(offer!= null) {
-                    System.out.println("ENTREI NO CASO DE falha o enough ");
                     offerImporter =setState(offer,2);
                     putAPI("http://localhost:8080/importer/historic/",offer.getImporter(),Long.toString(offer.getId()),Long.toString(order.getId()),"2");
                     message.addOffers(offerImporter);
@@ -209,7 +201,6 @@ public class PullManufacturer extends Thread {
         else
         pathPut = path+name+"/"+idOffer;
 
-        System.out.println(pathPut);
 
         HttpPut request = new HttpPut(pathPut);
         httpClient.execute(request);
