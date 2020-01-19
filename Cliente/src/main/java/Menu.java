@@ -17,11 +17,11 @@ public class Menu {
 
 
     public List<String> getMainMenuImporterOptions(){
-        return new ArrayList<>(Arrays.asList("Make offer","Show manufacter","Negotiation in course","Show historic manufacter","Show hsitoric importer", "Logout"));
+        return new ArrayList<>(Arrays.asList("Make offer","Show manufacturer","Negotiation in course","Show historic manufacturer","Show hsitoric importer", "Logout"));
     }
 
     public List<String> getMainMenuManufacterOptions(){
-        return new ArrayList<>(Arrays.asList("Make order","Show manufacter","Negotiation in course","Show historic manufacter","Show hsitoric importer","Logout"));
+        return new ArrayList<>(Arrays.asList("Make order","Show manufacturer","Negotiation in course","Show historic manufacturer","Show hsitoric importer","Logout"));
     }
 
 
