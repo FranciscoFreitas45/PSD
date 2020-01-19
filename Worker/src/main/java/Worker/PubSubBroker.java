@@ -11,8 +11,8 @@ public class PubSubBroker {
         ZMQ.Context context = ZMQ.context(1);
         ZMQ.Socket pubs = context.socket(SocketType.XSUB);
         ZMQ.Socket subs = context.socket(SocketType.XPUB);
-        pubs.bind("tcp://*:"+12345);
-        subs.bind("tcp://*:"+12346);
+        pubs.bind("tcp://*:"+args[0]);
+        subs.bind("tcp://*:"+args[1]);
         new Proxy(context, pubs, subs).poll();
     }
 }

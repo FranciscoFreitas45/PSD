@@ -21,14 +21,16 @@ public class Stub extends Thread {
     private InputStream is;
     private OutputStream os;
     private Menu menu;
+    private Readify r;
 
-    Stub(Socket cliSocket, InfoCliente client) throws IOException {
+    Stub(Socket cliSocket, InfoCliente client,Readify r) throws IOException {
         this.cliSocket = cliSocket;
         this.client = client;
         this.is = cliSocket.getInputStream();
         this.os = cliSocket.getOutputStream();
         this.out = new PrintWriter(os, true);
         this.menu= new Menu();
+        this.r = r;
     }
 
     public void run() {
@@ -50,7 +52,7 @@ public class Stub extends Thread {
                         break;
                 }
 
-                if ((option == 2 && status == 0) || (option == 5 && status > 0))// sair em caso de Exit ou Logout
+                if ((option == 2 && status == 0) || (option == 5 && status == 1) || (option == 7 && status == 2))// sair em caso de Exit ou Logout
                     break;
 
             }catch(Exception e) { }
@@ -127,6 +129,16 @@ public class Stub extends Thread {
 
     }
 
+    public void subscribeManufactor(){
+        String manu = menu.readString("Manufactor to sub:");
+        this.r.subscribe(manu+"|");
+    }
+
+    public void unsubscribeManufactor(){
+        String manu = menu.readString("Manufactor to unsub:");
+        this.r.unsubscribe(manu+"|");
+    }
+
 
     public int read_menu_output_Importer() throws  IOException{
             int option = this.menu.readInt("");
@@ -149,6 +161,12 @@ public class Stub extends Thread {
                     break;
 
                 case 5:
+                    subscribeManufactor();
+                    break;
+                case 6:
+                    unsubscribeManufactor();
+                    break;
+                case 7:
                     break;
             }
             return option;
@@ -210,6 +228,9 @@ public class Stub extends Thread {
         Messages.ImporterOffer c = Messages.ImporterOffer.newBuilder().setImporter("Ola").setProduct(product).setQuantity(quantity)
                                    .setUnitPrice(unitPrice).setIdorder(idOrder).build();
         Message req = Messages.Message.newBuilder().setType("OFFER").setImporterOffer(c).build();
+
+        this.r.subscribe("ORDER" + idOrder + "|");
+
         byte[] result = req.toByteArray();
         os.write(result);
     }

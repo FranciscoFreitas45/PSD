@@ -10,6 +10,7 @@ public class WorkerTest {
         ZMQ.Socket pull = context.socket(SocketType.PULL);
         ZMQ.Socket subSocket = context.socket(SocketType.SUB);
         ZMQ.Socket push = context.socket(SocketType.PUSH);
+        Notifier note = new Notifier(context);
 
         push.connect("tcp://localhost:" + 12349);
         pull.connect("tcp://localhost:" + 12348);
@@ -31,6 +32,7 @@ public class WorkerTest {
             String key = String.valueOf(manu.getId()) + ":";
             subSocket.subscribe(key.getBytes());
             int len = key.getBytes().length;
+            note.notify(manu);
 
 
             System.out.println("Message 2");
@@ -40,6 +42,7 @@ public class WorkerTest {
             m = Messages.Message.parseFrom(recv_real);
             Messages.ImporterOffer offer = m.getImporterOffer();
             offer = offer.toBuilder().setStateValue(2).build();
+            note.notify(offer);
             System.out.println(offer.toString());
 
             System.out.println("Message 2");
@@ -49,7 +52,8 @@ public class WorkerTest {
             m = Messages.Message.parseFrom(recv_real);
             Messages.ImporterOffer offer1 = m.getImporterOffer();
             offer1 = offer1.toBuilder().setStateValue(1).build();
-            System.out.println(offer.toString());
+            note.notify(offer1);
+            System.out.println(offer1.toString());
 
             /**
             System.out.println("Message 3");

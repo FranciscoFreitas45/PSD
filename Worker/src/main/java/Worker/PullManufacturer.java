@@ -147,15 +147,6 @@ public class PullManufacturer extends Thread {
         return r;
 
     }
-
-
-    private void PostOrder() throws MalformedURLException {
-        URL url = new URL ("https://localhost:8080/manufacturer/order/"+order.getManufacturer());
-        con.setRequestMethod("POST");
-
-
-    }
-
     private Comparator<Messages.ImporterOffer> comparePrice = Comparator.comparingDouble((ImporterOffer o) -> o.getUnitPrice() * o.getQuantity());
 
 

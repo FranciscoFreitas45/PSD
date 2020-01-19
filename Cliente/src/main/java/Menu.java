@@ -17,7 +17,7 @@ public class Menu {
 
 
     public List<String> getMainMenuImporterOptions(){
-        return new ArrayList<>(Arrays.asList("Make offer","Show manufacter","Negotiation in course","Show historic manufacter","Show hsitoric importer", "Logout"));
+        return new ArrayList<>(Arrays.asList("Make offer","Show manufacter","Negotiation in course","Show historic manufacter","Show historic importer", "Subscribe", "Unsubscribe" ,"Logout"));
     }
 
     public List<String> getMainMenuManufacterOptions(){

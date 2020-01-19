@@ -14,7 +14,10 @@ import org.zeromq.ZMQ;
             Socket cli = new Socket(args[0], server_port);
             InfoCliente info = new InfoCliente(2);
             Reader reader = new Reader(cli,info);
-            Stub stub = new Stub(cli,info);
+            Readify read = new Readify();
+            Stub stub = new Stub(cli,info,read);
+
+            new Thread(read).start();
             stub.start();
             reader.start();
 
