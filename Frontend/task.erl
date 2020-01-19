@@ -29,12 +29,14 @@ handleRequest(N) ->
 
 handleRequest(SockPush,SockPub,Context,N,Key,Order) ->
     receive
-        {offer,Msg,_} ->
+        {offer,Msg,Pid} ->
             N1 = N + 1,
             Offer = maps:get(importerOffer,Msg),
+            Prod = maps:get(product,Order),
+            Offer2 = maps:put(product,Prod,Offer),
             case verifyprice(Order,Offer) of
                 true ->
-                    OfferReady = maps:update(id,N,Offer),
+                    OfferReady = maps:update(id,N,Offer2),
                     MsgN = maps:update(importerOffer,OfferReady,Msg),
                     Env = build_envelope(Key,messages:encode_msg(MsgN,'Message')),
                     erlzmq:send(SockPub,Env),
@@ -42,6 +44,7 @@ handleRequest(SockPush,SockPub,Context,N,Key,Order) ->
                     handleRequest(SockPush,SockPub,Context,N1,Key,Order);
                 _ ->
                     io:format("Offer não passa o valor min ~n",[]),
+                    Pid ! {error,Offer2,self()},
                     handleRequest(SockPush,SockPub,Context,N,Key,Order)
             end;
         {close,_} ->

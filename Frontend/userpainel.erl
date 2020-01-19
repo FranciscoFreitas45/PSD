@@ -51,7 +51,13 @@ start(Sock,Name) ->
                     Str = "FINISHED ORDER:" ++ integer_to_list(IdOrder) ++ " PROD: " ++ Prod,
                     sendReply(Str,Sock,"Importer"),
                     start(Sock,Name)
-            end
+            end;
+        {error,Offer,_} ->
+            IdOrder = maps:get(idorder,Offer),
+            Prod = maps:get(product,Offer),
+            Str = "CANCELED ORDER:" ++ integer_to_list(IdOrder) ++ " PROD: " ++ Prod ++ " BELOW MIN PRICE",
+            sendReply(Str,Sock,"Importer"),
+            start(Sock,Name)
     end.
 
 

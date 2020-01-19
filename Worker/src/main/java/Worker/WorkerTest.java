@@ -14,13 +14,14 @@ public class WorkerTest {
         push.connect("tcp://localhost:" + 12349);
         pull.connect("tcp://localhost:" + 12348);
         subSocket.connect("tcp://localhost:"+12346);
-        
+
+        /*
         Worker worker = new Worker(pull,subSocket);
         SubImporters subImporters = new SubImporters(worker,subSocket);
         worker.start();
-        subImporters.start();
+        subImporters.start();*/
 
- /*       Messages.Message m = null;
+        Messages.Message m = null;
         try{
             byte [] recv = pull.recv();
             System.out.println("Message 1");
@@ -48,13 +49,14 @@ public class WorkerTest {
             Messages.ImporterOffer offer1 = m.getImporterOffer();
             System.out.println(offer.toString());
 
+            /**
             System.out.println("Message 3");
             recv = subSocket.recv();
             recv_real = new byte[recv.length-len];
             System.arraycopy(recv,len,recv_real,0,recv.length-len);
             m = Messages.Message.parseFrom(recv_real);
             Messages.ImporterOffer offer2 = m.getImporterOffer();
-            System.out.println(offer.toString());
+            System.out.println(offer.toString());*/
 
 
 
@@ -63,7 +65,7 @@ public class WorkerTest {
                     .setId(manu.getId())
                     .setManufacturer(manu.getManufacturer())
                     .setProduct(manu.getProduct())
-                    .setResValue(1)
+                    .setResValue(0)
                     .setProfit((long)100.0)
                     .addOffers(offer)
                     .addOffers(offer1)
@@ -74,7 +76,7 @@ public class WorkerTest {
         }
         catch (Exception e){
             e.printStackTrace();
-        }*/
+        }
     }
 
 }

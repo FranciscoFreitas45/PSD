@@ -47,6 +47,8 @@ public class Reader extends Thread {
                         break;
                     case "REGISTED":
                         break;
+                    default:
+                        System.out.println(response);
 
                 }
             }
