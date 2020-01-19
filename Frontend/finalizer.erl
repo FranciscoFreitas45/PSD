@@ -14,7 +14,7 @@ finalize(Sock) ->
             io:format("Reply arrived ~n",[]),
             Msg = messages:decode_msg(Bin,'Message'),
             Reply = maps:get(reply,Msg),
-            IdOrder = map:get(id,Reply),
+            IdOrder = maps:get(id,Reply),
             PidOrder = taskManager:lookup(IdOrder), % pid com a task
             PidOrder ! {close,self()}, % acabar com a task;
             Userbids = maps:get(offers,Reply),

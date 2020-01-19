@@ -32,12 +32,18 @@ handleRequest(SockPush,SockPub,Context,N,Key,Order) ->
         {offer,Msg,_} ->
             N1 = N + 1,
             Offer = maps:get(importerOffer,Msg),
-            OfferReady = maps:update(id,N,Offer),
-            MsgN = maps:update(importerOffer,OfferReady,Msg),
-            Env = build_envelope(Key,messages:encode_msg(MsgN,'Message')),
-            erlzmq:send(SockPub,Env),
-            io:format("Offer enviada ~n",[]),
-            handleRequest(SockPush,SockPub,Context,N1,Key,Order);
+            case verifyprice(Order,Offer) of
+                true ->
+                    OfferReady = maps:update(id,N,Offer),
+                    MsgN = maps:update(importerOffer,OfferReady,Msg),
+                    Env = build_envelope(Key,messages:encode_msg(MsgN,'Message')),
+                    erlzmq:send(SockPub,Env),
+                    io:format("Offer enviada ~n",[]),
+                    handleRequest(SockPush,SockPub,Context,N1,Key,Order);
+                _ ->
+                    io:format("Offer não passa o valor min ~n",[]),
+                    handleRequest(SockPush,SockPub,Context,N,Key,Order)
+            end;
         {close,_} ->
             erlzmq:close(SockPub),
             erlzmq:close(SockPub),
@@ -45,6 +51,10 @@ handleRequest(SockPush,SockPub,Context,N,Key,Order) ->
             io:format("Order Completed ~n",[])    
     end.
 
+verifyprice(Order,Offer) ->
+    Min = maps:get(unitPrice,Order),
+    Val = maps:get(unitPrice,Offer),
+    Val >= Min.
 
 genKey(Id) ->
     Str = string:concat(integer_to_list(Id),":"),

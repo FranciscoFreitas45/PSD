@@ -16,7 +16,10 @@ start(Sock,Name) ->
                     PidWorkerFE ! {offer,Msgn,self()},
                     start(Sock,Name);
                 "ORDER" ->
-                    taskManager:sendOrder(Msg),
+                    Order = maps:get(manufacturerOrder,Msg),
+                    Order2 = maps:put(manufacturer,Name,Order),
+                    Msgn = maps:put(manufacturerOrder,Order2,Msg),
+                    taskManager:sendOrder(Msgn),
                     start(Sock,Name)
             end;
         {tcp_closed, _} ->
@@ -26,11 +29,11 @@ start(Sock,Name) ->
             IdOrder = maps:get(id,Reply),
             Prod = maps:get(product,Reply),
             case Status of
-                "CANCELED" ->
+                'CANCELED' ->
                     Str = "CANCELED ORDER:" ++ integer_to_list(IdOrder) ++ " PROD: " ++ Prod,
                     sendReply(Str,Sock,"Manifactor"),
                     start(Sock,Name);
-                "FINISHED" ->
+                'FINISHED' ->
                     Profit = maps:get(profit,Reply),
                     Str = "FINISHED ORDER:" ++ integer_to_list(IdOrder) ++ " PROD: " ++ Prod ++ " PROFIT:" ++ integer_to_list(Profit),
                     sendReply(Str,Sock,"Manifactor"),
@@ -40,12 +43,14 @@ start(Sock,Name) ->
             IdOrder = maps:get(idorder,H),
             Prod = maps:get(product,H),
             case Status of
-                "CANCELED" ->
+                'CANCELED' ->
                     Str = "CANCELED ORDER:" ++ integer_to_list(IdOrder) ++ " PROD: " ++ Prod,
-                    sendReply(Str,Sock,"Importer");
-                "FINISHED" ->
+                    sendReply(Str,Sock,"Importer"),
+                    start(Sock,Name);
+                'FINISHED' ->
                     Str = "FINISHED ORDER:" ++ integer_to_list(IdOrder) ++ " PROD: " ++ Prod,
-                    sendReply(Str,Sock,"Importer")
+                    sendReply(Str,Sock,"Importer"),
+                    start(Sock,Name)
             end
     end.
 
