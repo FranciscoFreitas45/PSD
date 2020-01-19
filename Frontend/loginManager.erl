@@ -41,6 +41,7 @@ manage(Map) ->
                 {ok,{Pass,_,Type}} ->
                     Pid ! {?MODULE,{loggedIn,Type}},
                     io:format("New user logged in ~n",[]),
+                    io:format("New ~p ~n",[Map]),
                     manage(maps:put(User,{Pass,Pid,Type},Map));
                 _ ->
                     Pid ! {?MODULE,error},
@@ -55,7 +56,8 @@ manage(Map) ->
             end;
         {lookup,User,Pid} ->
             {_,Upid,_} = maps:get(User,Map),
-            Pid ! {lookup,Upid,self()}
+            Pid ! {lookup,Upid,self()},
+            manage(Map)
     end.
 
 reply()->
