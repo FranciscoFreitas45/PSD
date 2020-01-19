@@ -40,6 +40,12 @@ message ImporterOffer {
      int64 quantity = 4;
      double unitPrice = 5;
      int64 idorder = 6;
+     enum State {
+          EMITTED = 0;
+          ACCEPTED = 1;
+          DECLINED = 2;
+     }
+     State state = 7;
 }
 
 message Reply {

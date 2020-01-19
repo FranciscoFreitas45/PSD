@@ -4175,6 +4175,17 @@ public final class Messages {
      * @return The idorder.
      */
     long getIdorder();
+
+    /**
+     * <code>.tp.ImporterOffer.State state = 7;</code>
+     * @return The enum numeric value on the wire for state.
+     */
+    int getStateValue();
+    /**
+     * <code>.tp.ImporterOffer.State state = 7;</code>
+     * @return The state.
+     */
+    tp.Messages.ImporterOffer.State getState();
   }
   /**
    * Protobuf type {@code tp.ImporterOffer}
@@ -4191,6 +4202,7 @@ public final class Messages {
     private ImporterOffer() {
       importer_ = "";
       product_ = "";
+      state_ = 0;
     }
 
     @java.lang.Override
@@ -4255,6 +4267,12 @@ public final class Messages {
               idorder_ = input.readInt64();
               break;
             }
+            case 56: {
+              int rawValue = input.readEnum();
+
+              state_ = rawValue;
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -4285,6 +4303,119 @@ public final class Messages {
       return tp.Messages.internal_static_tp_ImporterOffer_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               tp.Messages.ImporterOffer.class, tp.Messages.ImporterOffer.Builder.class);
+    }
+
+    /**
+     * Protobuf enum {@code tp.ImporterOffer.State}
+     */
+    public enum State
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>EMITTED = 0;</code>
+       */
+      EMITTED(0),
+      /**
+       * <code>ACCEPTED = 1;</code>
+       */
+      ACCEPTED(1),
+      /**
+       * <code>DECLINED = 2;</code>
+       */
+      DECLINED(2),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>EMITTED = 0;</code>
+       */
+      public static final int EMITTED_VALUE = 0;
+      /**
+       * <code>ACCEPTED = 1;</code>
+       */
+      public static final int ACCEPTED_VALUE = 1;
+      /**
+       * <code>DECLINED = 2;</code>
+       */
+      public static final int DECLINED_VALUE = 2;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static State valueOf(int value) {
+        return forNumber(value);
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       */
+      public static State forNumber(int value) {
+        switch (value) {
+          case 0: return EMITTED;
+          case 1: return ACCEPTED;
+          case 2: return DECLINED;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<State>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          State> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<State>() {
+              public State findValueByNumber(int number) {
+                return State.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return tp.Messages.ImporterOffer.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final State[] VALUES = values();
+
+      public static State valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private State(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:tp.ImporterOffer.State)
     }
 
     public static final int ID_FIELD_NUMBER = 1;
@@ -4399,6 +4530,25 @@ public final class Messages {
       return idorder_;
     }
 
+    public static final int STATE_FIELD_NUMBER = 7;
+    private int state_;
+    /**
+     * <code>.tp.ImporterOffer.State state = 7;</code>
+     * @return The enum numeric value on the wire for state.
+     */
+    public int getStateValue() {
+      return state_;
+    }
+    /**
+     * <code>.tp.ImporterOffer.State state = 7;</code>
+     * @return The state.
+     */
+    public tp.Messages.ImporterOffer.State getState() {
+      @SuppressWarnings("deprecation")
+      tp.Messages.ImporterOffer.State result = tp.Messages.ImporterOffer.State.valueOf(state_);
+      return result == null ? tp.Messages.ImporterOffer.State.UNRECOGNIZED : result;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -4431,6 +4581,9 @@ public final class Messages {
       if (idorder_ != 0L) {
         output.writeInt64(6, idorder_);
       }
+      if (state_ != tp.Messages.ImporterOffer.State.EMITTED.getNumber()) {
+        output.writeEnum(7, state_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -4462,6 +4615,10 @@ public final class Messages {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(6, idorder_);
       }
+      if (state_ != tp.Messages.ImporterOffer.State.EMITTED.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(7, state_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -4490,6 +4647,7 @@ public final class Messages {
               other.getUnitPrice())) return false;
       if (getIdorder()
           != other.getIdorder()) return false;
+      if (state_ != other.state_) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -4517,6 +4675,8 @@ public final class Messages {
       hash = (37 * hash) + IDORDER_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getIdorder());
+      hash = (37 * hash) + STATE_FIELD_NUMBER;
+      hash = (53 * hash) + state_;
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4662,6 +4822,8 @@ public final class Messages {
 
         idorder_ = 0L;
 
+        state_ = 0;
+
         return this;
       }
 
@@ -4694,6 +4856,7 @@ public final class Messages {
         result.quantity_ = quantity_;
         result.unitPrice_ = unitPrice_;
         result.idorder_ = idorder_;
+        result.state_ = state_;
         onBuilt();
         return result;
       }
@@ -4761,6 +4924,9 @@ public final class Messages {
         }
         if (other.getIdorder() != 0L) {
           setIdorder(other.getIdorder());
+        }
+        if (other.state_ != 0) {
+          setStateValue(other.getStateValue());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -5059,6 +5225,58 @@ public final class Messages {
       public Builder clearIdorder() {
         
         idorder_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private int state_ = 0;
+      /**
+       * <code>.tp.ImporterOffer.State state = 7;</code>
+       * @return The enum numeric value on the wire for state.
+       */
+      public int getStateValue() {
+        return state_;
+      }
+      /**
+       * <code>.tp.ImporterOffer.State state = 7;</code>
+       * @param value The enum numeric value on the wire for state to set.
+       * @return This builder for chaining.
+       */
+      public Builder setStateValue(int value) {
+        state_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.tp.ImporterOffer.State state = 7;</code>
+       * @return The state.
+       */
+      public tp.Messages.ImporterOffer.State getState() {
+        @SuppressWarnings("deprecation")
+        tp.Messages.ImporterOffer.State result = tp.Messages.ImporterOffer.State.valueOf(state_);
+        return result == null ? tp.Messages.ImporterOffer.State.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.tp.ImporterOffer.State state = 7;</code>
+       * @param value The state to set.
+       * @return This builder for chaining.
+       */
+      public Builder setState(tp.Messages.ImporterOffer.State value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        state_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.tp.ImporterOffer.State state = 7;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearState() {
+        
+        state_ = 0;
         onChanged();
         return this;
       }
@@ -6597,15 +6815,17 @@ public final class Messages {
       "\n\014manufacturer\030\002 \001(\t\022\017\n\007product\030\003 \001(\t\022\023\n" +
       "\013minQuantity\030\004 \001(\003\022\023\n\013maxQuantity\030\005 \001(\003\022" +
       "\021\n\tunitPrice\030\006 \001(\001\022\016\n\006active\030\007 \001(\005\022\023\n\013ne" +
-      "gotiation\030\010 \001(\003\"t\n\rImporterOffer\022\n\n\002id\030\001" +
-      " \001(\003\022\020\n\010importer\030\002 \001(\t\022\017\n\007product\030\003 \001(\t\022" +
-      "\020\n\010quantity\030\004 \001(\003\022\021\n\tunitPrice\030\005 \001(\001\022\017\n\007" +
-      "idorder\030\006 \001(\003\"\262\001\n\005Reply\022\n\n\002id\030\001 \001(\003\022\017\n\007p" +
-      "roduct\030\002 \001(\t\022\024\n\014manufacturer\030\003 \001(\t\022\035\n\003re" +
-      "s\030\004 \001(\0162\020.tp.Reply.Result\022!\n\006offers\030\005 \003(" +
-      "\0132\021.tp.ImporterOffer\022\016\n\006profit\030\006 \001(\003\"$\n\006" +
-      "Result\022\014\n\010CANCELED\020\000\022\014\n\010FINISHED\020\001b\006prot" +
-      "o3"
+      "gotiation\030\010 \001(\003\"\316\001\n\rImporterOffer\022\n\n\002id\030" +
+      "\001 \001(\003\022\020\n\010importer\030\002 \001(\t\022\017\n\007product\030\003 \001(\t" +
+      "\022\020\n\010quantity\030\004 \001(\003\022\021\n\tunitPrice\030\005 \001(\001\022\017\n" +
+      "\007idorder\030\006 \001(\003\022&\n\005state\030\007 \001(\0162\027.tp.Impor" +
+      "terOffer.State\"0\n\005State\022\013\n\007EMITTED\020\000\022\014\n\010" +
+      "ACCEPTED\020\001\022\014\n\010DECLINED\020\002\"\262\001\n\005Reply\022\n\n\002id" +
+      "\030\001 \001(\003\022\017\n\007product\030\002 \001(\t\022\024\n\014manufacturer\030" +
+      "\003 \001(\t\022\035\n\003res\030\004 \001(\0162\020.tp.Reply.Result\022!\n\006" +
+      "offers\030\005 \003(\0132\021.tp.ImporterOffer\022\016\n\006profi" +
+      "t\030\006 \001(\003\"$\n\006Result\022\014\n\010CANCELED\020\000\022\014\n\010FINIS" +
+      "HED\020\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -6640,7 +6860,7 @@ public final class Messages {
     internal_static_tp_ImporterOffer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_tp_ImporterOffer_descriptor,
-        new java.lang.String[] { "Id", "Importer", "Product", "Quantity", "UnitPrice", "Idorder", });
+        new java.lang.String[] { "Id", "Importer", "Product", "Quantity", "UnitPrice", "Idorder", "State", });
     internal_static_tp_Reply_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_tp_Reply_fieldAccessorTable = new

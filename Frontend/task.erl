@@ -34,9 +34,10 @@ handleRequest(SockPush,SockPub,Context,N,Key,Order) ->
             Offer = maps:get(importerOffer,Msg),
             Prod = maps:get(product,Order),
             Offer2 = maps:put(product,Prod,Offer),
+            Offer3 = maps:put(state,'EMITTED',Offer),
             case verifyprice(Order,Offer) of
                 true ->
-                    OfferReady = maps:update(id,N,Offer2),
+                    OfferReady = maps:update(id,N,Offer3),
                     MsgN = maps:update(importerOffer,OfferReady,Msg),
                     Env = build_envelope(Key,messages:encode_msg(MsgN,'Message')),
                     erlzmq:send(SockPub,Env),
