@@ -240,6 +240,7 @@ public class PullManufacturer extends Thread {
     }
 
 
+
     private Comparator<Messages.ImporterOffer> comparePrice = Comparator.comparingDouble((ImporterOffer o) -> o.getUnitPrice() * o.getQuantity());
 
 
