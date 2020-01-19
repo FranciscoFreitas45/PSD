@@ -7,87 +7,106 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import org.zeromq.ZMQ;
 
+import java.nio.file.LinkOption;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public class Worker {
+public class Worker extends Thread {
 
-    private Queue<Messages.ImporterOffer> offers;
-    private Messages.ManufacturerOrder order;
-    private ArrayList<Transaction> deliveries; //resultado
+    private Queue<ImporterOffer> offers;
+    private ManufacturerOrder order;
     ZMQ.Socket pull;
-    ZMQ.Socket push;
     ZMQ.Socket sub;
+    private Timer timer;
+    private int len_Key;
 
     // este amigo tem um socket PULL, e SUB do frontend para ele, e um push dele para o frontend
     // recebe pelo sub :
     // recebe pelo pull : ordens do frontend
     // envia pelo push os resultados das ordens em curso
 
-    public Worker(ZMQ.Socket pull, ZMQ.Socket push, ZMQ.Socket sub, Queue<Messages.ImporterOffer> offers, Messages.ManufacturerOrder order){
+    public Worker(ZMQ.Socket pull, ZMQ.Socket sub) {
         this.pull = pull;
-        this.push = push;
         this.sub = sub;
-        this.offers = new PriorityQueue<Messages.ImporterOffer>(comparePrice);
-        this.order = order;
-        this.deliveries = new ArrayList<>();
+        this.offers = new PriorityQueue<>(comparePrice);
+        this.order = null;
+        this.timer = new Timer();
+        this.len_Key = 0;
+
+
     }
 
-    public void main(String[] args) throws InvalidProtocolBufferException {
-        ZMQ.Context context = ZMQ.context(1);
-        ZMQ.Socket pull = context.socket(SocketType.PULL);
-        ZMQ.Socket push = context.socket(SocketType.PUSH);
-        ZMQ.Socket subSocket = context.socket(SocketType.SUB);
-        pull.connect("tcp://localhost:" + 12347);
-        push.connect("tcp://localhost:" + 12348);
-        subSocket.connect("tcp://localhost:"+12346);
 
-        Timer timer = new Timer();
+    public synchronized void addOffers(byte[] offer) throws InvalidProtocolBufferException {
+        Messages.Message m;
+        byte[] recv_real = new byte[offer.length - len_Key];
+        System.arraycopy(offer, len_Key, recv_real, 0, offer.length - len_Key);
+        m = tp.Messages.Message.parseFrom(recv_real);
+        tp.Messages.ImporterOffer off = m.getImporterOffer();
+        this.offers.add(off);
 
-        while (true) {
+    }
 
-            byte[] order_received = pull.recv();
-            Message m_order = Messages.Message.parseFrom(order_received);
-            String key_send = "" + ((Messages.Message) m_order).getManufacturerOrder().getId() + "-" + ((Messages.Message) m_order).getManufacturerOrder().getProduct();
-            subSocket.subscribe(key_send.getBytes());
-            order = ((Messages.Message) m_order).getManufacturerOrder();
 
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    // cancelar order
-                    order = null;
-                    order.newBuilderForType().setActive(0);
-                    subSocket.unsubscribe(key_send.getBytes());
-                    // enviar para historico de orders do catálogo
-                    //Message m = createOrderCancelledResponse(order);
-                    //push.send(m.toByteArray());
-                    // notificar ?
+    public void run() {
+        byte[] recv;
+        Messages.Message m = null;
+        try {
+            while ((recv = pull.recv()) == null) {
+                m = Messages.Message.parseFrom(recv);
+                Messages.ManufacturerOrder manu = m.getManufacturerOrder();
+                System.out.println(manu.toString());
+                String key = String.valueOf(manu.getId()) + ":";
+                sub.subscribe(key.getBytes());
+                this.len_Key = key.getBytes().length;
+                //bloquear isto
+                sleep(this.order.getNegotiation() * 1000);
+                satisfyOffer();
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void satisfyOffer(){
+         //filtro por unitPrice;
+        Queue<ImporterOffer> importerOffers = new PriorityQueue<>();
+         this.offers.stream().filter(c->c.getUnitPrice() >this.order.getUnitPrice()).forEach(importerOffers::add);
+
+        if(isQuantityEnough(importerOffers)){
+            long MaxquantityOrder = order.getMaxQuantity();
+            long sumQuantity=0;
+            while(MaxquantityOrder > sumQuantity && importerOffers.size()>0){
+                ImporterOffer offer = importerOffers.poll();
+                if(offer!= null) {
+                    sumQuantity = offer.getQuantity();
+                    // notificar gajo
                 }
-            }, 2000);
+            }
 
-            String key_receive = subSocket.recvStr();
-            byte[] offer_received = subSocket.recv();
-            Message m_offer = Messages.Message.parseFrom(offer_received);
-            //Offer offer = createOffer(m_offer);
-            //this.offers.add(offer);
-            /*
-            for(Offer off: this.offers){
-                if(off != null){
-                    // enviar para o catalogo
-
-
-                }
-            }*/
-
-            push.send("resultadinhos");
+        }
+        else {
+            // cancelar order e offers
         }
 
+
+    }
+
+    public boolean isQuantityEnough(Queue<ImporterOffer> offers){
+        Long MinquantityOrder = order.getMinQuantity();
+        Long quantity = offers.stream().mapToLong(ImporterOffer::getQuantity).sum();
+
+        return MinquantityOrder < quantity;
     }
 
 
-    private Comparator<Messages.ImporterOffer> comparePrice = (Messages.ImporterOffer o1, Messages.ImporterOffer o2) -> Double.compare(o1.getUnitPrice(), o2.getUnitPrice());
+
+    private Comparator<Messages.ImporterOffer> comparePrice = Comparator.comparingDouble((ImporterOffer o) -> o.getUnitPrice() * o.getQuantity());
+
 
 }
