@@ -56,6 +56,7 @@ public class PullManufacturer extends Thread {
         String jsonInputString = createJsonOffer(off,"0");
         postAPI("http://localhost:8080/importer/offer/"+off.getImporter(),jsonInputString);
         note.notify(off);
+        System.out.println("Recebi oferta para id : "+off.getIdorder());
     }
 
 
@@ -203,10 +204,10 @@ public class PullManufacturer extends Thread {
     private void putAPI(String path,String name,String idOffer, String idOrder,String state) throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         String pathPut;
-        if(idOffer!=null)
+        if(idOrder!=null)
         pathPut = path+name+"/"+idOffer+"/"+idOrder+"/"+state;
         else
-        pathPut = path+name+"/"+idOrder;
+        pathPut = path+name+"/"+idOffer;
 
         System.out.println(pathPut);
 
