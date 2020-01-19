@@ -107,15 +107,17 @@ public class Stub extends Thread {
                 menu_Order();
                 break;
             case 1:
-            case 2:
                 showManufacturer();
+                break;
+            case 2:
+                showManufacturerOrders();
                 break;
             case 3:
                 showHistoricManufacturer();
                 break;
 
             case 4:
-    //            showHistoricImporter();
+               showHistoricImporter();
                 break;
 
             case 5:
@@ -133,15 +135,17 @@ public class Stub extends Thread {
                       menu_Offer();
                     break;
                 case 1:
-                case 2:
                     showManufacturer();
+                    break;
+                case 2:
+                    showManufacturerOrders();
                     break;
                 case 3:
                     showHistoricManufacturer();
                     break;
 
                 case 4:
-                    //            showHistoricImporter();
+                    showHistoricImporter();
                     break;
 
                 case 5:
@@ -169,12 +173,13 @@ public class Stub extends Thread {
     private void menu_register() throws IOException{
         String username = menu.readString("Username: ");
         String password = menu.readString("Password: ");
-        Integer type = menu.readInt("1 - manufacturer\n2 - Importer ");
+        Integer type = menu.readInt("1 - manufacturer | 2 - Importer ");
 
         Messages.User c = Messages.User.newBuilder().setUsername(username).setPassword(password).setType(type).build();
         Message req = Messages.Message.newBuilder().setType("REGISTER").setUser(c).build();
         byte[] result = req.toByteArray();
         os.write(result);
+        this.client.waitReply();
 
     }
 
@@ -211,11 +216,16 @@ public class Stub extends Thread {
 
 
 
+    private void showManufacturerOrders() throws IOException {
+        String nameManufacturer = menu.readString("Manufacturer: ");
+        String path= "http://localhost:8080/manufacturer/"+nameManufacturer+"/orders";
+        consumeApiRest(path);
+    }
 
 
     private void showHistoricImporter() throws IOException {
         String nameImporter = menu.readString("Importer: ");
-        String path="http://localhost:8080/importer/"+ nameImporter +"/historic";
+        String path="http://localhost:8080/importer/"+nameImporter+"/historic";
         consumeApiRest(path);
     }
 

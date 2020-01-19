@@ -6,8 +6,8 @@ import java.util.*;
 
 public class Importer {
     private String name;
-    private Map<Long,Offer> offers;
-    private Map<Long,Offer> historic;
+    private Map<String, Offer> offers;
+    private Map<String,Offer> historic;
 
     public Importer(String name) {
         this.name = name;
@@ -23,30 +23,31 @@ public class Importer {
     }
 
     @JsonProperty
-    public Map<Long,Offer> getOffers() {
+    public Map<String, Offer> getOffers() {
         return offers;
     }
 
     @JsonProperty
-    public Map<Long,Offer> getHistoric() {
+    public Map<String,Offer> getHistoric() {
         return historic;
     }
 
 
 
     public void addOffer(Offer o){
-        this.offers.put(o.getId(),o);
+
+        Long idOrder = o.getIdOrder();
+        Long idOffer = o.getId();
+        Tuple<Long, Long> tuple = new Tuple<>(idOrder,idOffer);
+        this.offers.put(tuple.toString(),o);
     }
 
-    public Offer getOffer(Long id){
-        return this.offers.get(id);
 
-    }
-
-    public void addOfferHistoric(Long id){
-        Offer offer = this.offers.get(id);
-        this.historic.put(offer.getId(),offer);
-        this.offers.remove(id);
+    public void addOfferHistoric(Long idOffer,Long idOrder){
+        Tuple<Long, Long> tuple = new Tuple<>(idOrder,idOffer);
+        Offer offer = this.offers.get(tuple.toString());
+        this.historic.put(tuple.toString(),offer);
+        this.offers.remove(tuple.toString());
 
     }
 }

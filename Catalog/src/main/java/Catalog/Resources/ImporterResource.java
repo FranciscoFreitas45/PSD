@@ -49,6 +49,17 @@ public class ImporterResource {
         return Response.ok(i).build();
     }
 
+    @GET
+    @Timed
+    @Path("/{nameFab}/historic")
+    public Response getHistoric(@PathParam("nameFab") String name){
+        Importer i = this.importers.get(name);
+        if (i == null)
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        return Response.ok(i.getHistoric()).build();
+    }
+
+
     @POST
     public Response postImporter(@NotNull @Valid Importer imp){
         String name = imp.getName();
@@ -75,15 +86,17 @@ public class ImporterResource {
     }
 
     @PUT
-    @Path("/historic/{nameFab}/{idOffer}")
-    public Response postOrderHistoric(@PathParam("nameFab") String name,@PathParam("idOffer") String idOrder){
+    @Path("/historic/{nameFab}/{idOffer}/{idOrder}")
+    public Response postOrderHistoric(@PathParam("nameFab") String name,@PathParam("idOffer") String idOffer,
+                                      @PathParam("idOrder") String idOrder){
         Importer i = this.importers.get(name);
         if (i == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         else{
-            Long id= Long.parseLong(idOrder);
-            i.addOfferHistoric(id);
+            Long id_order= Long.parseLong(idOrder);
+            Long id_offer= Long.parseLong(idOffer);
+            i.addOfferHistoric(id_offer,id_order);
         }
         return Response.ok().build();
     }
