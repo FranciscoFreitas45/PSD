@@ -6,11 +6,11 @@ import tp.Messages;
 
 public class SubImporters extends Thread {
 
-    private Worker worker;
+    private PullManufacturer pull;
     private  ZMQ.Socket sub;
 
-    public SubImporters(Worker worker,ZMQ.Socket sub){
-        this.worker= worker;
+    public SubImporters(PullManufacturer worker,ZMQ.Socket sub){
+        this.pull= worker;
         this.sub=sub;
     }
 
@@ -20,7 +20,7 @@ public class SubImporters extends Thread {
         try {
         while(true){
             recv = sub.recv();
-            worker.addOffers(recv);
+            pull.addOffers(recv);
         }
 
         } catch (InvalidProtocolBufferException e) {
