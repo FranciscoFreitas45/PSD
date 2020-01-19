@@ -1,12 +1,24 @@
 package Worker;
 
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.json.simple.JSONObject;
 import tp.Messages;
 import tp.Messages.*;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.zeromq.ZMQ;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.*;
 
 
@@ -32,13 +44,15 @@ public class PullManufacturer extends Thread {
 
     }
 
-    public synchronized void addOffers(byte[] offer) throws InvalidProtocolBufferException {
+    public synchronized void addOffers(byte[] offer) throws IOException {
         Messages.Message m;
         byte[] recv_real = new byte[offer.length - len_Key];
         System.arraycopy(offer, len_Key, recv_real, 0, offer.length - len_Key);
         m = tp.Messages.Message.parseFrom(recv_real);
         tp.Messages.ImporterOffer off = m.getImporterOffer();
         this.offers.add(off);
+        String jsonInputString = createJsonOffer(off,"0");
+        postAPI("http://localhost:8080/importer/offer/"+off.getImporter(),jsonInputString);
 
     }
 
@@ -48,7 +62,7 @@ public class PullManufacturer extends Thread {
         Messages.Message m = null;
         try {
             while ((recv = pull.recv()) != null) {
-                    System.out.println("RECEBI ORDEM");
+                System.out.println("RECEBI ORDEM");
                 m = Messages.Message.parseFrom(recv);
                 Messages.ManufacturerOrder manu = m.getManufacturerOrder();
                 System.out.println(manu.toString());
@@ -56,9 +70,15 @@ public class PullManufacturer extends Thread {
                 sub.subscribe(key.getBytes());
                 this.len_Key = key.getBytes().length;
                 this.order = manu;
-                //FAZER POST
+                String jsonInputString = createJsonOrder("1");
+                postAPI("http://localhost:8080/manufacturer/order/"+order.getManufacturer(),jsonInputString);
                 sleep(this.order.getNegotiation() * 1000);
-                satisfyOffer();
+                Reply r = satisfyOffer();
+                sub.unsubscribe(key.getBytes());
+                Messages.Message reply = Messages.Message.newBuilder().setReply(r).build();
+                push.send(reply.toByteArray());
+                putAPI("http://localhost:8080/manufacturer/historic/",order.getManufacturer(),Long.toString(order.getId()),null,null);
+
 
 
             }
@@ -67,53 +87,66 @@ public class PullManufacturer extends Thread {
         }
     }
 
-    public void satisfyOffer(){
+    public Reply satisfyOffer() throws IOException {
         Messages.Reply.Builder message = createReply();
         Messages.ImporterOffer offerImporter;
-        //filtro por unitPrice;
-        Queue<ImporterOffer> importerOffers = new PriorityQueue<>();
-        this.offers.stream().filter(c->c.getUnitPrice() >this.order.getUnitPrice()).forEach(importerOffers::add);
-
-        if(isQuantityEnough(importerOffers)){
+        if(isQuantityEnough(this.offers)){
+            System.out.println("passei no enough");
             long MaxquantityOrder = order.getMaxQuantity();
             long sumQuantity=0;
-            while(MaxquantityOrder > sumQuantity && !importerOffers.isEmpty()){
-                ImporterOffer offer = importerOffers.poll();
+            System.out.println(MaxquantityOrder);
+            System.out.println(this.offers.toString());
+            while(MaxquantityOrder > sumQuantity && !this.offers.isEmpty()){
+                ImporterOffer offer = this.offers.poll();
+
                 if(offer!= null) {
                     sumQuantity += offer.getQuantity();
+
                     if(sumQuantity > MaxquantityOrder){//caso ultrapassa o maximo ignora
+
                         sumQuantity -=offer.getQuantity();
+                        System.out.println("ENTREI NO CASO DE MAXquantity > sumQuantity  no loop");
                         offerImporter=setState(offer,2);
+                        putAPI("http://localhost:8080/importer/historic/",offer.getImporter(),Long.toString(offer.getId()),Long.toString(order.getId()),"2");
+
                         message.addOffers(offerImporter);
                     }
                     else{
                         offerImporter =setState(offer,1);
+                        putAPI("http://localhost:8080/importer/historic/",offer.getImporter(),Long.toString(offer.getId()),Long.toString(order.getId()),"1");
+
                         message.addOffers(offerImporter);
+                        message.setResValue(1);
                     }
-                                 }
+                }
             }
-            while(!importerOffers.isEmpty()){
-                ImporterOffer offer = importerOffers.poll();
+            while(!this.offers.isEmpty()){
+                ImporterOffer offer = this.offers.poll();
                 if(offer!= null) {
+                    System.out.println("ENTREI NO CASO DE MAXquantity > sumQuantity ");
                     offerImporter=setState(offer,2);
+                    putAPI("http://localhost:8080/importer/historic/",offer.getImporter(),Long.toString(offer.getId()),Long.toString(order.getId()),"2");
+
                     message.addOffers(offerImporter);
                 }
             }
 
         }
         else {
-            while(!importerOffers.isEmpty()){
-                ImporterOffer offer = importerOffers.poll();
+            while(!this.offers.isEmpty()){
+                ImporterOffer offer = this.offers.poll();
                 if(offer!= null) {
+                    System.out.println("ENTREI NO CASO DE falha o enough ");
                     offerImporter =setState(offer,2);
+                    putAPI("http://localhost:8080/importer/historic/",offer.getImporter(),Long.toString(offer.getId()),Long.toString(order.getId()),"2");
                     message.addOffers(offerImporter);
+                    message.setResValue(0);
                 }
             }
         }
 
         Reply r = message.build();
-        Messages.Message reply = Messages.Message.newBuilder().setReply(r).build();
-        push.send(reply.toByteArray());
+        return r;
 
     }
 
@@ -149,12 +182,63 @@ public class PullManufacturer extends Thread {
     }
 
 
-    private void PostOrder() throws MalformedURLException {
-        URL url = new URL ("https://localhost:8080/manufacturer/order/"+order.getManufacturer());
-        con.setRequestMethod("POST");
+    private void postAPI(String path,String json) throws IOException {
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        try {
+            HttpPost request = new HttpPost(path);
+            StringEntity params = new StringEntity(json);
+            request.addHeader("content-type", "application/json");
+            request.setEntity(params);
+            httpClient.execute(request);
 
+        } catch (Exception ex) {
+        } finally {
+            httpClient.close();
+        }
 
     }
+    private void putAPI(String path,String name,String idOffer, String idOrder,String state) throws IOException {
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        String pathPut;
+        if(idOffer!=null)
+        pathPut = path+name+"/"+idOffer+"/"+idOrder+"/"+state;
+        else
+        pathPut = path+name+"/"+idOrder;
+
+        System.out.println(pathPut);
+
+        HttpPut request = new HttpPut(pathPut);
+        httpClient.execute(request);
+    }
+
+
+
+    private String  createJsonOrder(String  state){
+        JSONObject json = new JSONObject();
+        json.put("id",""+this.order.getId());
+        json.put("manufacturer",this.order.getManufacturer());
+        json.put("Product",this.order.getProduct());
+        json.put("minQuantity",""+this.order.getMinQuantity());
+        json.put("maxQuantity",""+this.order.getMaxQuantity());
+        json.put("unitPrice",""+this.order.getUnitPrice());
+        json.put("negotiation",""+this.order.getNegotiation());
+        json.put("state",state);
+
+    return json.toString();
+    }
+
+    private String createJsonOffer(ImporterOffer offer, String state){
+        JSONObject json = new JSONObject();
+        json.put("id",""+offer.getId());
+        json.put("importer",offer.getImporter());
+        json.put("product",offer.getProduct());
+        json.put("quantity",""+offer.getQuantity());
+        json.put("unitPrice",""+offer.getUnitPrice());
+        json.put("idOrder",""+offer.getIdorder());
+        json.put("state",state);
+        return json.toString();
+    }
+
 
     private Comparator<Messages.ImporterOffer> comparePrice = Comparator.comparingDouble((ImporterOffer o) -> o.getUnitPrice() * o.getQuantity());
 
