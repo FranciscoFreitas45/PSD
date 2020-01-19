@@ -1,7 +1,7 @@
 package Catalog;
 
-import Catalog.Resources.ManufacterResource;
 import Catalog.Resources.ImporterResource;
+import Catalog.Resources.ManufacturerResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -24,7 +24,7 @@ public class CompanyApplication extends Application<CompanyConfiguration> {
     @Override
     public void run(CompanyConfiguration configuration,
                     Environment environment) {
-        final ManufacterResource resource = new ManufacterResource(
+        final ManufacturerResource resource = new ManufacturerResource(
                 configuration.getTemplate(),
                 configuration.getDefaultName()
         );

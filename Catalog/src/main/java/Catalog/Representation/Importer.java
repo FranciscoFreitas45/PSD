@@ -2,20 +2,20 @@ package Catalog.Representation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
-public class Importader {
+public class Importer {
     private String name;
-    private Set<Offer> historic;
+    private Map<String, Offer> offers;
+    private Map<String,Offer> historic;
 
-    public Importader(String name) {
+    public Importer(String name) {
         this.name = name;
-        this.historic = new HashSet<>();
+        this.historic = new HashMap<>();
+        this.offers = new HashMap<>();
     }
 
-    public Importader(){}
+    public Importer(){}
 
     @JsonProperty
     public String getName() {
@@ -23,21 +23,31 @@ public class Importader {
     }
 
     @JsonProperty
-    public Set<Offer> getOffers() {
+    public Map<String, Offer> getOffers() {
+        return offers;
+    }
+
+    @JsonProperty
+    public Map<String,Offer> getHistoric() {
         return historic;
     }
 
+
+
     public void addOffer(Offer o){
-        this.historic.add(o);
+
+        Long idOrder = o.getIdOrder();
+        Long idOffer = o.getId();
+        Tuple<Long, Long> tuple = new Tuple<>(idOrder,idOffer);
+        this.offers.put(tuple.toString(),o);
     }
 
-    public Offer getOrder(Long id){
-        Offer offer = null;
-        Iterator<Offer> it = this.historic.iterator();
-        while(it.hasNext()){
-            if(it.next().getId()==id)
-                offer=it.next();
-        }
-        return offer;
+
+    public void addOfferHistoric(Long idOffer,Long idOrder){
+        Tuple<Long, Long> tuple = new Tuple<>(idOrder,idOffer);
+        Offer offer = this.offers.get(tuple.toString());
+        this.historic.put(tuple.toString(),offer);
+        this.offers.remove(tuple.toString());
+
     }
 }

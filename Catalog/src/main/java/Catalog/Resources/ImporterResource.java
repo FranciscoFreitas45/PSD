@@ -1,7 +1,8 @@
 package Catalog.Resources;
 
 
-import Catalog.Representation.Importader;
+import Catalog.Representation.Importer;
+import Catalog.Representation.Importer;
 import Catalog.Representation.Offer;
 import com.codahale.metrics.annotation.Timed;
 import javax.validation.Valid;
@@ -21,17 +22,15 @@ import java.util.stream.Collectors;
 public class ImporterResource {
     private final String template;
     private volatile String defaultName;
-    private final Map<String, Importader> importers;
-    private final AtomicLong counter;
+    private final Map<String, Importer> importers;
 
     public ImporterResource(String template, String defaultName){
         this.template = template;
         this.defaultName = defaultName;
         this.importers = new ConcurrentHashMap<>();
-        this.counter =  new AtomicLong();
 
-        this.importers.put("Golias",new Importader("Golias"));
-        this.importers.put("MEGAMIND",new Importader("MEGAMIND"));
+        this.importers.put("Golias",new Importer("Golias"));
+        this.importers.put("MEGAMIND",new Importer("MEGAMIND"));
 
     }
     @GET
@@ -44,16 +43,27 @@ public class ImporterResource {
     @Timed
     @Path("/{nameFab}")
     public Response get(@PathParam("nameFab") String name) {
-        Importader i = this.importers.get(name);
+        Importer i = this.importers.get(name);
         if (i == null)
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         return Response.ok(i).build();
     }
 
+    @GET
+    @Timed
+    @Path("/{nameFab}/historic")
+    public Response getHistoric(@PathParam("nameFab") String name){
+        Importer i = this.importers.get(name);
+        if (i == null)
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        return Response.ok(i.getHistoric()).build();
+    }
+
+
     @POST
-    public Response postImporter(@NotNull @Valid Importader imp){
+    public Response postImporter(@NotNull @Valid Importer imp){
         String name = imp.getName();
-        Importader i = this.importers.get(name);
+        Importer i = this.importers.get(name);
         if(i==null)
         this.importers.put(name,imp);
         else{
@@ -65,16 +75,30 @@ public class ImporterResource {
     @POST
     @Path("/offer/{name}")
     public Response postOrder(@PathParam("name") String name,@NotNull @Valid Offer offer){
-        Importader i = this.importers.get(name);
+        Importer i = this.importers.get(name);
         if (i == null){
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         else{
-            long id = counter.incrementAndGet();
-            offer.setId(id);
             i.addOffer(offer);
         }
         return Response.ok(offer).build();
+    }
+
+    @PUT
+    @Path("/historic/{nameFab}/{idOffer}/{idOrder}")
+    public Response postOrderHistoric(@PathParam("nameFab") String name,@PathParam("idOffer") String idOffer,
+                                      @PathParam("idOrder") String idOrder){
+        Importer i = this.importers.get(name);
+        if (i == null){
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        else{
+            Long id_order= Long.parseLong(idOrder);
+            Long id_offer= Long.parseLong(idOffer);
+            i.addOfferHistoric(id_offer,id_order);
+        }
+        return Response.ok().build();
     }
 
 

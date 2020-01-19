@@ -1,56 +1,55 @@
 package Catalog.Representation;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
-public class Manufacter {
+public class Manufacturer {
     private String name;
-    private Set<Order> orders;
-    private Set<Order> historic;
+    private Map<Long,Order> orders;
+    private Map<Long,Order> historic;
 
-    public Manufacter(String name) {
+    @JsonCreator
+    public Manufacturer(String name) {
         this.name = name;
-        this.orders = new HashSet<>();
-        this.historic=new HashSet<>();
+        this.orders = new HashMap<>();
+        this.historic=new HashMap<>();
     }
 
-    public Manufacter(){
+    public Manufacturer(){
 
     }
     @JsonProperty
-    public String getNome() {
+    public String getName() {
         return name;
     }
     @JsonProperty
-    public Set<Order> getOrdens() {
-        return  new HashSet<>(orders);
+    public Map<Long, Order> getOrders() {
+        return  new HashMap<>(orders);
     }
     @JsonProperty
-    public Set<Order> getHistorico() {
-        return  new HashSet<>(historic);
+    public Map<Long,Order> getHistoric() {
+        return  new HashMap<>(historic);
     }
 
     public void addOrder(Order o){
-        this.orders.add(o);
+        this.orders.put(o.getid(),o);
     }
 
-    public void addOrderHistoric(Order o){
-        this.historic.add(o);
-    }
 
     public Order getOrder(Long id){
-        Order order = null;
-        Iterator<Order> it = this.orders.iterator();
-        while(it.hasNext()){
-             Order o = (Order)it.next();
-            if(o.getid()==id)
-                    return o;
-        }
-        return order;
+        return this.orders.get(id);
+
     }
+
+    public void addOrderHistoric(Long id){
+        Order order = this.orders.get(id);
+        this.historic.put(order.getid(),order);
+        this.orders.remove(id);
+
+    }
+
 }
 
 

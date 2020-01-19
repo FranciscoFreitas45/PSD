@@ -8,15 +8,19 @@ public class Offer {
     private String product;
     private Long quantity;
     private double unitPrice;
+    private Long idOrder;
+    private int  state;
 
     public Offer(){}
 
-    public Offer(Long id,String manufacter, String product, Long quantity, double unitPrice) {
+    public Offer(Long id,String manufacter, String product, Long quantity, double unitPrice,Long idOrder) {
         this.id=id;
         this.manufacter = manufacter;
         this.product = product;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
+        this.idOrder=idOrder;
+        this.state = 0;
     }
     @JsonProperty
     public Long getId() {return id; }
@@ -36,6 +40,13 @@ public class Offer {
     public double getUnitPrice() {
         return unitPrice;
     }
+
+    @JsonProperty
+    public Long getIdOrder() { return idOrder; }
+
+    @JsonProperty
+    public Integer getState(){ return state; }
+
 
     public void setId(Long id) {
         this.id = id;

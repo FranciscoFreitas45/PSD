@@ -22,30 +22,35 @@ public class Reader extends Thread {
     }
 
     public void run() {
-        String  response;
         Messages.Message m;
-        Integer status;
         while(((m = readMessage()) != null)) {
-            response = readResponse(m);
-            status= readStatus(m);
-
-            System.out.println(m.getResponse().toString());
-
-            if(status==1){
-                info.setLogged(true);
-            }
-            if(response.equals("2")){
-                info.setType(IMPORTER);
-            }
-            else info.setType(MANUFACTURER);
-
+            handler_Reply(m);
             info.awake();
-
-
         }
 
         System.out.println("\nConnection ended by the server.");
         System.exit(1);
+    }
+
+    public void handler_Reply(Messages.Message m){
+       int status= readStatus(m);
+       String response = readResponse(m);
+        if(status==1) {
+                switch (response) {
+                    case "1":
+                        info.setType(MANUFACTURER);
+                        info.setLogged(true);
+                        break;
+                    case "2":
+                        info.setType(IMPORTER);
+                        info.setLogged(true);
+                        break;
+                    case "REGISTED":
+                        break;
+
+                }
+            }
+
     }
 
 
