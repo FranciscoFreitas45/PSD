@@ -1,5 +1,5 @@
 -module(loginManager).
--export([start/0,reply/0,createAccount/3,logIn/2,logOut/1]).
+-export([start/0,reply/0,createAccount/3,logIn/2,logOut/1,lookUp/1]).
 
 
 start() ->
@@ -16,6 +16,13 @@ logIn(User,Pass) ->
 
 logOut(User) ->
     ?MODULE ! {logout,User,self()}.
+
+lookUp(User) ->
+    ?MODULE ! {lookup,User,self()},
+    receive
+        {lookup,PidResult,_} -> 
+            PidResult
+    end.
 
 manage(Map) ->
     receive
@@ -45,7 +52,10 @@ manage(Map) ->
                     manage(maps:put(User,{Pass,false,Type},Map));
                 _ ->
                     manage(Map)
-            end
+            end;
+        {lookup,User,Pid} ->
+            {_,Upid,_} = maps:get(User,Map),
+            Pid ! {lookup,Upid,self()}
     end.
 
 reply()->

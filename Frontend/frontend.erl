@@ -5,6 +5,7 @@
 server(Port) ->
     loginManager:start(),
     taskManager:start(),
+    finalizer:start(),
     {ok, LSock} = gen_tcp:listen(Port, [binary,{packet, 0}, {reuseaddr, true}, {active, true}]),
     acceptor(LSock).
 

@@ -196,13 +196,13 @@ public class Stub extends Thread {
 
 
     private void menu_Offer() throws IOException {
-        String manufacturer = menu.readString("Manufacturer: ");
+        //String manufacturer = menu.readString("Manufacturer: ");
         String product=menu.readString("Product: ");
         Integer quantity = menu.readInt("Quantity: ");
         double unitPrice =  (double) menu.readFloat(" Unit Price: ");
         Integer idOrder =  menu.readInt("Id Order :");
 
-        Messages.ImporterOffer c = Messages.ImporterOffer.newBuilder().setManufacturer(manufacturer).setProduct(product).setQuantity(quantity)
+        Messages.ImporterOffer c = Messages.ImporterOffer.newBuilder().setImporter("Ola").setProduct(product).setQuantity(quantity)
                                    .setUnitPrice(unitPrice).setIdorder(idOrder).build();
         Message req = Messages.Message.newBuilder().setType("OFFER").setImporterOffer(c).build();
         byte[] result = req.toByteArray();

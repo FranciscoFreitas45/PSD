@@ -8,6 +8,7 @@ message Message{
      Response response = 3;
      ManufacturerOrder manufacturerOrder = 4;
      ImporterOffer importerOffer = 5;
+     Reply reply = 6;
 }
 
 message User {
@@ -34,9 +35,22 @@ message ManufacturerOrder {
 
 message ImporterOffer {
      int64 id = 1;
-     string manufacturer = 2;
+     string importer = 2;
      string product = 3;
      int64 quantity = 4;
      double unitPrice = 5;
      int64 idorder = 6;
+}
+
+message Reply {
+     int64 id = 1;
+     string product = 2;
+     string manufacturer = 3;
+     enum Result {
+          CANCELED = 0;
+          FINISHED = 1;
+     }
+     Result res = 4;
+     repeated ImporterOffer offers = 5;
+     int64 profit = 6;
 }

@@ -1,7 +1,8 @@
 package Worker;
 
-import protobuf.Messages;
-import protobuf.Messages.*;
+import org.zeromq.SocketType;
+import tp.Messages;
+import tp.Messages.*;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import org.zeromq.ZMQ;
@@ -36,9 +37,9 @@ public class Worker {
 
     public void main(String[] args) throws InvalidProtocolBufferException {
         ZMQ.Context context = ZMQ.context(1);
-        ZMQ.Socket pull = context.socket(ZMQ.PULL);
-        ZMQ.Socket push = context.socket(ZMQ.PUSH);
-        ZMQ.Socket subSocket = context.socket(ZMQ.SUB);
+        ZMQ.Socket pull = context.socket(SocketType.PULL);
+        ZMQ.Socket push = context.socket(SocketType.PUSH);
+        ZMQ.Socket subSocket = context.socket(SocketType.SUB);
         pull.connect("tcp://localhost:" + 12347);
         push.connect("tcp://localhost:" + 12348);
         subSocket.connect("tcp://localhost:"+12346);

@@ -20,20 +20,24 @@ public final class Messages {
 
     /**
      * <code>string type = 1;</code>
+     * @return The type.
      */
     java.lang.String getType();
     /**
      * <code>string type = 1;</code>
+     * @return The bytes for type.
      */
     com.google.protobuf.ByteString
         getTypeBytes();
 
     /**
      * <code>.tp.User user = 2;</code>
+     * @return Whether the user field is set.
      */
     boolean hasUser();
     /**
      * <code>.tp.User user = 2;</code>
+     * @return The user.
      */
     tp.Messages.User getUser();
     /**
@@ -43,10 +47,12 @@ public final class Messages {
 
     /**
      * <code>.tp.Response response = 3;</code>
+     * @return Whether the response field is set.
      */
     boolean hasResponse();
     /**
      * <code>.tp.Response response = 3;</code>
+     * @return The response.
      */
     tp.Messages.Response getResponse();
     /**
@@ -56,10 +62,12 @@ public final class Messages {
 
     /**
      * <code>.tp.ManufacturerOrder manufacturerOrder = 4;</code>
+     * @return Whether the manufacturerOrder field is set.
      */
     boolean hasManufacturerOrder();
     /**
      * <code>.tp.ManufacturerOrder manufacturerOrder = 4;</code>
+     * @return The manufacturerOrder.
      */
     tp.Messages.ManufacturerOrder getManufacturerOrder();
     /**
@@ -69,16 +77,33 @@ public final class Messages {
 
     /**
      * <code>.tp.ImporterOffer importerOffer = 5;</code>
+     * @return Whether the importerOffer field is set.
      */
     boolean hasImporterOffer();
     /**
      * <code>.tp.ImporterOffer importerOffer = 5;</code>
+     * @return The importerOffer.
      */
     tp.Messages.ImporterOffer getImporterOffer();
     /**
      * <code>.tp.ImporterOffer importerOffer = 5;</code>
      */
     tp.Messages.ImporterOfferOrBuilder getImporterOfferOrBuilder();
+
+    /**
+     * <code>.tp.Reply reply = 6;</code>
+     * @return Whether the reply field is set.
+     */
+    boolean hasReply();
+    /**
+     * <code>.tp.Reply reply = 6;</code>
+     * @return The reply.
+     */
+    tp.Messages.Reply getReply();
+    /**
+     * <code>.tp.Reply reply = 6;</code>
+     */
+    tp.Messages.ReplyOrBuilder getReplyOrBuilder();
   }
   /**
    * Protobuf type {@code tp.Message}
@@ -97,6 +122,13 @@ public final class Messages {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Message();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -109,7 +141,6 @@ public final class Messages {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
-      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -178,6 +209,19 @@ public final class Messages {
 
               break;
             }
+            case 50: {
+              tp.Messages.Reply.Builder subBuilder = null;
+              if (reply_ != null) {
+                subBuilder = reply_.toBuilder();
+              }
+              reply_ = input.readMessage(tp.Messages.Reply.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(reply_);
+                reply_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -214,6 +258,7 @@ public final class Messages {
     private volatile java.lang.Object type_;
     /**
      * <code>string type = 1;</code>
+     * @return The type.
      */
     public java.lang.String getType() {
       java.lang.Object ref = type_;
@@ -229,6 +274,7 @@ public final class Messages {
     }
     /**
      * <code>string type = 1;</code>
+     * @return The bytes for type.
      */
     public com.google.protobuf.ByteString
         getTypeBytes() {
@@ -248,12 +294,14 @@ public final class Messages {
     private tp.Messages.User user_;
     /**
      * <code>.tp.User user = 2;</code>
+     * @return Whether the user field is set.
      */
     public boolean hasUser() {
       return user_ != null;
     }
     /**
      * <code>.tp.User user = 2;</code>
+     * @return The user.
      */
     public tp.Messages.User getUser() {
       return user_ == null ? tp.Messages.User.getDefaultInstance() : user_;
@@ -269,12 +317,14 @@ public final class Messages {
     private tp.Messages.Response response_;
     /**
      * <code>.tp.Response response = 3;</code>
+     * @return Whether the response field is set.
      */
     public boolean hasResponse() {
       return response_ != null;
     }
     /**
      * <code>.tp.Response response = 3;</code>
+     * @return The response.
      */
     public tp.Messages.Response getResponse() {
       return response_ == null ? tp.Messages.Response.getDefaultInstance() : response_;
@@ -290,12 +340,14 @@ public final class Messages {
     private tp.Messages.ManufacturerOrder manufacturerOrder_;
     /**
      * <code>.tp.ManufacturerOrder manufacturerOrder = 4;</code>
+     * @return Whether the manufacturerOrder field is set.
      */
     public boolean hasManufacturerOrder() {
       return manufacturerOrder_ != null;
     }
     /**
      * <code>.tp.ManufacturerOrder manufacturerOrder = 4;</code>
+     * @return The manufacturerOrder.
      */
     public tp.Messages.ManufacturerOrder getManufacturerOrder() {
       return manufacturerOrder_ == null ? tp.Messages.ManufacturerOrder.getDefaultInstance() : manufacturerOrder_;
@@ -311,12 +363,14 @@ public final class Messages {
     private tp.Messages.ImporterOffer importerOffer_;
     /**
      * <code>.tp.ImporterOffer importerOffer = 5;</code>
+     * @return Whether the importerOffer field is set.
      */
     public boolean hasImporterOffer() {
       return importerOffer_ != null;
     }
     /**
      * <code>.tp.ImporterOffer importerOffer = 5;</code>
+     * @return The importerOffer.
      */
     public tp.Messages.ImporterOffer getImporterOffer() {
       return importerOffer_ == null ? tp.Messages.ImporterOffer.getDefaultInstance() : importerOffer_;
@@ -326,6 +380,29 @@ public final class Messages {
      */
     public tp.Messages.ImporterOfferOrBuilder getImporterOfferOrBuilder() {
       return getImporterOffer();
+    }
+
+    public static final int REPLY_FIELD_NUMBER = 6;
+    private tp.Messages.Reply reply_;
+    /**
+     * <code>.tp.Reply reply = 6;</code>
+     * @return Whether the reply field is set.
+     */
+    public boolean hasReply() {
+      return reply_ != null;
+    }
+    /**
+     * <code>.tp.Reply reply = 6;</code>
+     * @return The reply.
+     */
+    public tp.Messages.Reply getReply() {
+      return reply_ == null ? tp.Messages.Reply.getDefaultInstance() : reply_;
+    }
+    /**
+     * <code>.tp.Reply reply = 6;</code>
+     */
+    public tp.Messages.ReplyOrBuilder getReplyOrBuilder() {
+      return getReply();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -357,6 +434,9 @@ public final class Messages {
       if (importerOffer_ != null) {
         output.writeMessage(5, getImporterOffer());
       }
+      if (reply_ != null) {
+        output.writeMessage(6, getReply());
+      }
       unknownFields.writeTo(output);
     }
 
@@ -384,6 +464,10 @@ public final class Messages {
       if (importerOffer_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(5, getImporterOffer());
+      }
+      if (reply_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getReply());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -422,6 +506,11 @@ public final class Messages {
         if (!getImporterOffer()
             .equals(other.getImporterOffer())) return false;
       }
+      if (hasReply() != other.hasReply()) return false;
+      if (hasReply()) {
+        if (!getReply()
+            .equals(other.getReply())) return false;
+      }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -450,6 +539,10 @@ public final class Messages {
       if (hasImporterOffer()) {
         hash = (37 * hash) + IMPORTEROFFER_FIELD_NUMBER;
         hash = (53 * hash) + getImporterOffer().hashCode();
+      }
+      if (hasReply()) {
+        hash = (37 * hash) + REPLY_FIELD_NUMBER;
+        hash = (53 * hash) + getReply().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -610,6 +703,12 @@ public final class Messages {
           importerOffer_ = null;
           importerOfferBuilder_ = null;
         }
+        if (replyBuilder_ == null) {
+          reply_ = null;
+        } else {
+          reply_ = null;
+          replyBuilder_ = null;
+        }
         return this;
       }
 
@@ -656,6 +755,11 @@ public final class Messages {
           result.importerOffer_ = importerOffer_;
         } else {
           result.importerOffer_ = importerOfferBuilder_.build();
+        }
+        if (replyBuilder_ == null) {
+          result.reply_ = reply_;
+        } else {
+          result.reply_ = replyBuilder_.build();
         }
         onBuilt();
         return result;
@@ -721,6 +825,9 @@ public final class Messages {
         if (other.hasImporterOffer()) {
           mergeImporterOffer(other.getImporterOffer());
         }
+        if (other.hasReply()) {
+          mergeReply(other.getReply());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -753,6 +860,7 @@ public final class Messages {
       private java.lang.Object type_ = "";
       /**
        * <code>string type = 1;</code>
+       * @return The type.
        */
       public java.lang.String getType() {
         java.lang.Object ref = type_;
@@ -768,6 +876,7 @@ public final class Messages {
       }
       /**
        * <code>string type = 1;</code>
+       * @return The bytes for type.
        */
       public com.google.protobuf.ByteString
           getTypeBytes() {
@@ -784,6 +893,8 @@ public final class Messages {
       }
       /**
        * <code>string type = 1;</code>
+       * @param value The type to set.
+       * @return This builder for chaining.
        */
       public Builder setType(
           java.lang.String value) {
@@ -797,6 +908,7 @@ public final class Messages {
       }
       /**
        * <code>string type = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearType() {
         
@@ -806,6 +918,8 @@ public final class Messages {
       }
       /**
        * <code>string type = 1;</code>
+       * @param value The bytes for type to set.
+       * @return This builder for chaining.
        */
       public Builder setTypeBytes(
           com.google.protobuf.ByteString value) {
@@ -824,12 +938,14 @@ public final class Messages {
           tp.Messages.User, tp.Messages.User.Builder, tp.Messages.UserOrBuilder> userBuilder_;
       /**
        * <code>.tp.User user = 2;</code>
+       * @return Whether the user field is set.
        */
       public boolean hasUser() {
         return userBuilder_ != null || user_ != null;
       }
       /**
        * <code>.tp.User user = 2;</code>
+       * @return The user.
        */
       public tp.Messages.User getUser() {
         if (userBuilder_ == null) {
@@ -941,12 +1057,14 @@ public final class Messages {
           tp.Messages.Response, tp.Messages.Response.Builder, tp.Messages.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>.tp.Response response = 3;</code>
+       * @return Whether the response field is set.
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
       /**
        * <code>.tp.Response response = 3;</code>
+       * @return The response.
        */
       public tp.Messages.Response getResponse() {
         if (responseBuilder_ == null) {
@@ -1058,12 +1176,14 @@ public final class Messages {
           tp.Messages.ManufacturerOrder, tp.Messages.ManufacturerOrder.Builder, tp.Messages.ManufacturerOrderOrBuilder> manufacturerOrderBuilder_;
       /**
        * <code>.tp.ManufacturerOrder manufacturerOrder = 4;</code>
+       * @return Whether the manufacturerOrder field is set.
        */
       public boolean hasManufacturerOrder() {
         return manufacturerOrderBuilder_ != null || manufacturerOrder_ != null;
       }
       /**
        * <code>.tp.ManufacturerOrder manufacturerOrder = 4;</code>
+       * @return The manufacturerOrder.
        */
       public tp.Messages.ManufacturerOrder getManufacturerOrder() {
         if (manufacturerOrderBuilder_ == null) {
@@ -1175,12 +1295,14 @@ public final class Messages {
           tp.Messages.ImporterOffer, tp.Messages.ImporterOffer.Builder, tp.Messages.ImporterOfferOrBuilder> importerOfferBuilder_;
       /**
        * <code>.tp.ImporterOffer importerOffer = 5;</code>
+       * @return Whether the importerOffer field is set.
        */
       public boolean hasImporterOffer() {
         return importerOfferBuilder_ != null || importerOffer_ != null;
       }
       /**
        * <code>.tp.ImporterOffer importerOffer = 5;</code>
+       * @return The importerOffer.
        */
       public tp.Messages.ImporterOffer getImporterOffer() {
         if (importerOfferBuilder_ == null) {
@@ -1286,6 +1408,125 @@ public final class Messages {
         }
         return importerOfferBuilder_;
       }
+
+      private tp.Messages.Reply reply_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          tp.Messages.Reply, tp.Messages.Reply.Builder, tp.Messages.ReplyOrBuilder> replyBuilder_;
+      /**
+       * <code>.tp.Reply reply = 6;</code>
+       * @return Whether the reply field is set.
+       */
+      public boolean hasReply() {
+        return replyBuilder_ != null || reply_ != null;
+      }
+      /**
+       * <code>.tp.Reply reply = 6;</code>
+       * @return The reply.
+       */
+      public tp.Messages.Reply getReply() {
+        if (replyBuilder_ == null) {
+          return reply_ == null ? tp.Messages.Reply.getDefaultInstance() : reply_;
+        } else {
+          return replyBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.tp.Reply reply = 6;</code>
+       */
+      public Builder setReply(tp.Messages.Reply value) {
+        if (replyBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          reply_ = value;
+          onChanged();
+        } else {
+          replyBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.tp.Reply reply = 6;</code>
+       */
+      public Builder setReply(
+          tp.Messages.Reply.Builder builderForValue) {
+        if (replyBuilder_ == null) {
+          reply_ = builderForValue.build();
+          onChanged();
+        } else {
+          replyBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.tp.Reply reply = 6;</code>
+       */
+      public Builder mergeReply(tp.Messages.Reply value) {
+        if (replyBuilder_ == null) {
+          if (reply_ != null) {
+            reply_ =
+              tp.Messages.Reply.newBuilder(reply_).mergeFrom(value).buildPartial();
+          } else {
+            reply_ = value;
+          }
+          onChanged();
+        } else {
+          replyBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.tp.Reply reply = 6;</code>
+       */
+      public Builder clearReply() {
+        if (replyBuilder_ == null) {
+          reply_ = null;
+          onChanged();
+        } else {
+          reply_ = null;
+          replyBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.tp.Reply reply = 6;</code>
+       */
+      public tp.Messages.Reply.Builder getReplyBuilder() {
+        
+        onChanged();
+        return getReplyFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.tp.Reply reply = 6;</code>
+       */
+      public tp.Messages.ReplyOrBuilder getReplyOrBuilder() {
+        if (replyBuilder_ != null) {
+          return replyBuilder_.getMessageOrBuilder();
+        } else {
+          return reply_ == null ?
+              tp.Messages.Reply.getDefaultInstance() : reply_;
+        }
+      }
+      /**
+       * <code>.tp.Reply reply = 6;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          tp.Messages.Reply, tp.Messages.Reply.Builder, tp.Messages.ReplyOrBuilder> 
+          getReplyFieldBuilder() {
+        if (replyBuilder_ == null) {
+          replyBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              tp.Messages.Reply, tp.Messages.Reply.Builder, tp.Messages.ReplyOrBuilder>(
+                  getReply(),
+                  getParentForChildren(),
+                  isClean());
+          reply_ = null;
+        }
+        return replyBuilder_;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1345,26 +1586,31 @@ public final class Messages {
 
     /**
      * <code>string username = 1;</code>
+     * @return The username.
      */
     java.lang.String getUsername();
     /**
      * <code>string username = 1;</code>
+     * @return The bytes for username.
      */
     com.google.protobuf.ByteString
         getUsernameBytes();
 
     /**
      * <code>string password = 2;</code>
+     * @return The password.
      */
     java.lang.String getPassword();
     /**
      * <code>string password = 2;</code>
+     * @return The bytes for password.
      */
     com.google.protobuf.ByteString
         getPasswordBytes();
 
     /**
      * <code>int32 type = 3;</code>
+     * @return The type.
      */
     int getType();
   }
@@ -1386,6 +1632,13 @@ public final class Messages {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new User();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -1398,7 +1651,6 @@ public final class Messages {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
-      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -1462,6 +1714,7 @@ public final class Messages {
     private volatile java.lang.Object username_;
     /**
      * <code>string username = 1;</code>
+     * @return The username.
      */
     public java.lang.String getUsername() {
       java.lang.Object ref = username_;
@@ -1477,6 +1730,7 @@ public final class Messages {
     }
     /**
      * <code>string username = 1;</code>
+     * @return The bytes for username.
      */
     public com.google.protobuf.ByteString
         getUsernameBytes() {
@@ -1496,6 +1750,7 @@ public final class Messages {
     private volatile java.lang.Object password_;
     /**
      * <code>string password = 2;</code>
+     * @return The password.
      */
     public java.lang.String getPassword() {
       java.lang.Object ref = password_;
@@ -1511,6 +1766,7 @@ public final class Messages {
     }
     /**
      * <code>string password = 2;</code>
+     * @return The bytes for password.
      */
     public com.google.protobuf.ByteString
         getPasswordBytes() {
@@ -1530,6 +1786,7 @@ public final class Messages {
     private int type_;
     /**
      * <code>int32 type = 3;</code>
+     * @return The type.
      */
     public int getType() {
       return type_;
@@ -1874,6 +2131,7 @@ public final class Messages {
       private java.lang.Object username_ = "";
       /**
        * <code>string username = 1;</code>
+       * @return The username.
        */
       public java.lang.String getUsername() {
         java.lang.Object ref = username_;
@@ -1889,6 +2147,7 @@ public final class Messages {
       }
       /**
        * <code>string username = 1;</code>
+       * @return The bytes for username.
        */
       public com.google.protobuf.ByteString
           getUsernameBytes() {
@@ -1905,6 +2164,8 @@ public final class Messages {
       }
       /**
        * <code>string username = 1;</code>
+       * @param value The username to set.
+       * @return This builder for chaining.
        */
       public Builder setUsername(
           java.lang.String value) {
@@ -1918,6 +2179,7 @@ public final class Messages {
       }
       /**
        * <code>string username = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearUsername() {
         
@@ -1927,6 +2189,8 @@ public final class Messages {
       }
       /**
        * <code>string username = 1;</code>
+       * @param value The bytes for username to set.
+       * @return This builder for chaining.
        */
       public Builder setUsernameBytes(
           com.google.protobuf.ByteString value) {
@@ -1943,6 +2207,7 @@ public final class Messages {
       private java.lang.Object password_ = "";
       /**
        * <code>string password = 2;</code>
+       * @return The password.
        */
       public java.lang.String getPassword() {
         java.lang.Object ref = password_;
@@ -1958,6 +2223,7 @@ public final class Messages {
       }
       /**
        * <code>string password = 2;</code>
+       * @return The bytes for password.
        */
       public com.google.protobuf.ByteString
           getPasswordBytes() {
@@ -1974,6 +2240,8 @@ public final class Messages {
       }
       /**
        * <code>string password = 2;</code>
+       * @param value The password to set.
+       * @return This builder for chaining.
        */
       public Builder setPassword(
           java.lang.String value) {
@@ -1987,6 +2255,7 @@ public final class Messages {
       }
       /**
        * <code>string password = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearPassword() {
         
@@ -1996,6 +2265,8 @@ public final class Messages {
       }
       /**
        * <code>string password = 2;</code>
+       * @param value The bytes for password to set.
+       * @return This builder for chaining.
        */
       public Builder setPasswordBytes(
           com.google.protobuf.ByteString value) {
@@ -2012,12 +2283,15 @@ public final class Messages {
       private int type_ ;
       /**
        * <code>int32 type = 3;</code>
+       * @return The type.
        */
       public int getType() {
         return type_;
       }
       /**
        * <code>int32 type = 3;</code>
+       * @param value The type to set.
+       * @return This builder for chaining.
        */
       public Builder setType(int value) {
         
@@ -2027,6 +2301,7 @@ public final class Messages {
       }
       /**
        * <code>int32 type = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearType() {
         
@@ -2093,15 +2368,18 @@ public final class Messages {
 
     /**
      * <code>int32 status = 1;</code>
+     * @return The status.
      */
     int getStatus();
 
     /**
      * <code>string response = 2;</code>
+     * @return The response.
      */
     java.lang.String getResponse();
     /**
      * <code>string response = 2;</code>
+     * @return The bytes for response.
      */
     com.google.protobuf.ByteString
         getResponseBytes();
@@ -2123,6 +2401,13 @@ public final class Messages {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Response();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -2135,7 +2420,6 @@ public final class Messages {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
-      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -2193,6 +2477,7 @@ public final class Messages {
     private int status_;
     /**
      * <code>int32 status = 1;</code>
+     * @return The status.
      */
     public int getStatus() {
       return status_;
@@ -2202,6 +2487,7 @@ public final class Messages {
     private volatile java.lang.Object response_;
     /**
      * <code>string response = 2;</code>
+     * @return The response.
      */
     public java.lang.String getResponse() {
       java.lang.Object ref = response_;
@@ -2217,6 +2503,7 @@ public final class Messages {
     }
     /**
      * <code>string response = 2;</code>
+     * @return The bytes for response.
      */
     public com.google.protobuf.ByteString
         getResponseBytes() {
@@ -2554,12 +2841,15 @@ public final class Messages {
       private int status_ ;
       /**
        * <code>int32 status = 1;</code>
+       * @return The status.
        */
       public int getStatus() {
         return status_;
       }
       /**
        * <code>int32 status = 1;</code>
+       * @param value The status to set.
+       * @return This builder for chaining.
        */
       public Builder setStatus(int value) {
         
@@ -2569,6 +2859,7 @@ public final class Messages {
       }
       /**
        * <code>int32 status = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearStatus() {
         
@@ -2580,6 +2871,7 @@ public final class Messages {
       private java.lang.Object response_ = "";
       /**
        * <code>string response = 2;</code>
+       * @return The response.
        */
       public java.lang.String getResponse() {
         java.lang.Object ref = response_;
@@ -2595,6 +2887,7 @@ public final class Messages {
       }
       /**
        * <code>string response = 2;</code>
+       * @return The bytes for response.
        */
       public com.google.protobuf.ByteString
           getResponseBytes() {
@@ -2611,6 +2904,8 @@ public final class Messages {
       }
       /**
        * <code>string response = 2;</code>
+       * @param value The response to set.
+       * @return This builder for chaining.
        */
       public Builder setResponse(
           java.lang.String value) {
@@ -2624,6 +2919,7 @@ public final class Messages {
       }
       /**
        * <code>string response = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearResponse() {
         
@@ -2633,6 +2929,8 @@ public final class Messages {
       }
       /**
        * <code>string response = 2;</code>
+       * @param value The bytes for response to set.
+       * @return This builder for chaining.
        */
       public Builder setResponseBytes(
           com.google.protobuf.ByteString value) {
@@ -2704,51 +3002,61 @@ public final class Messages {
 
     /**
      * <code>int64 id = 1;</code>
+     * @return The id.
      */
     long getId();
 
     /**
      * <code>string manufacturer = 2;</code>
+     * @return The manufacturer.
      */
     java.lang.String getManufacturer();
     /**
      * <code>string manufacturer = 2;</code>
+     * @return The bytes for manufacturer.
      */
     com.google.protobuf.ByteString
         getManufacturerBytes();
 
     /**
      * <code>string product = 3;</code>
+     * @return The product.
      */
     java.lang.String getProduct();
     /**
      * <code>string product = 3;</code>
+     * @return The bytes for product.
      */
     com.google.protobuf.ByteString
         getProductBytes();
 
     /**
      * <code>int64 minQuantity = 4;</code>
+     * @return The minQuantity.
      */
     long getMinQuantity();
 
     /**
      * <code>int64 maxQuantity = 5;</code>
+     * @return The maxQuantity.
      */
     long getMaxQuantity();
 
     /**
      * <code>double unitPrice = 6;</code>
+     * @return The unitPrice.
      */
     double getUnitPrice();
 
     /**
      * <code>int32 active = 7;</code>
+     * @return The active.
      */
     int getActive();
 
     /**
      * <code>int64 negotiation = 8;</code>
+     * @return The negotiation.
      */
     long getNegotiation();
   }
@@ -2770,6 +3078,13 @@ public final class Messages {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ManufacturerOrder();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -2782,7 +3097,6 @@ public final class Messages {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
-      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -2871,6 +3185,7 @@ public final class Messages {
     private long id_;
     /**
      * <code>int64 id = 1;</code>
+     * @return The id.
      */
     public long getId() {
       return id_;
@@ -2880,6 +3195,7 @@ public final class Messages {
     private volatile java.lang.Object manufacturer_;
     /**
      * <code>string manufacturer = 2;</code>
+     * @return The manufacturer.
      */
     public java.lang.String getManufacturer() {
       java.lang.Object ref = manufacturer_;
@@ -2895,6 +3211,7 @@ public final class Messages {
     }
     /**
      * <code>string manufacturer = 2;</code>
+     * @return The bytes for manufacturer.
      */
     public com.google.protobuf.ByteString
         getManufacturerBytes() {
@@ -2914,6 +3231,7 @@ public final class Messages {
     private volatile java.lang.Object product_;
     /**
      * <code>string product = 3;</code>
+     * @return The product.
      */
     public java.lang.String getProduct() {
       java.lang.Object ref = product_;
@@ -2929,6 +3247,7 @@ public final class Messages {
     }
     /**
      * <code>string product = 3;</code>
+     * @return The bytes for product.
      */
     public com.google.protobuf.ByteString
         getProductBytes() {
@@ -2948,6 +3267,7 @@ public final class Messages {
     private long minQuantity_;
     /**
      * <code>int64 minQuantity = 4;</code>
+     * @return The minQuantity.
      */
     public long getMinQuantity() {
       return minQuantity_;
@@ -2957,6 +3277,7 @@ public final class Messages {
     private long maxQuantity_;
     /**
      * <code>int64 maxQuantity = 5;</code>
+     * @return The maxQuantity.
      */
     public long getMaxQuantity() {
       return maxQuantity_;
@@ -2966,6 +3287,7 @@ public final class Messages {
     private double unitPrice_;
     /**
      * <code>double unitPrice = 6;</code>
+     * @return The unitPrice.
      */
     public double getUnitPrice() {
       return unitPrice_;
@@ -2975,6 +3297,7 @@ public final class Messages {
     private int active_;
     /**
      * <code>int32 active = 7;</code>
+     * @return The active.
      */
     public int getActive() {
       return active_;
@@ -2984,6 +3307,7 @@ public final class Messages {
     private long negotiation_;
     /**
      * <code>int64 negotiation = 8;</code>
+     * @return The negotiation.
      */
     public long getNegotiation() {
       return negotiation_;
@@ -3419,12 +3743,15 @@ public final class Messages {
       private long id_ ;
       /**
        * <code>int64 id = 1;</code>
+       * @return The id.
        */
       public long getId() {
         return id_;
       }
       /**
        * <code>int64 id = 1;</code>
+       * @param value The id to set.
+       * @return This builder for chaining.
        */
       public Builder setId(long value) {
         
@@ -3434,6 +3761,7 @@ public final class Messages {
       }
       /**
        * <code>int64 id = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearId() {
         
@@ -3445,6 +3773,7 @@ public final class Messages {
       private java.lang.Object manufacturer_ = "";
       /**
        * <code>string manufacturer = 2;</code>
+       * @return The manufacturer.
        */
       public java.lang.String getManufacturer() {
         java.lang.Object ref = manufacturer_;
@@ -3460,6 +3789,7 @@ public final class Messages {
       }
       /**
        * <code>string manufacturer = 2;</code>
+       * @return The bytes for manufacturer.
        */
       public com.google.protobuf.ByteString
           getManufacturerBytes() {
@@ -3476,6 +3806,8 @@ public final class Messages {
       }
       /**
        * <code>string manufacturer = 2;</code>
+       * @param value The manufacturer to set.
+       * @return This builder for chaining.
        */
       public Builder setManufacturer(
           java.lang.String value) {
@@ -3489,6 +3821,7 @@ public final class Messages {
       }
       /**
        * <code>string manufacturer = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearManufacturer() {
         
@@ -3498,6 +3831,8 @@ public final class Messages {
       }
       /**
        * <code>string manufacturer = 2;</code>
+       * @param value The bytes for manufacturer to set.
+       * @return This builder for chaining.
        */
       public Builder setManufacturerBytes(
           com.google.protobuf.ByteString value) {
@@ -3514,6 +3849,7 @@ public final class Messages {
       private java.lang.Object product_ = "";
       /**
        * <code>string product = 3;</code>
+       * @return The product.
        */
       public java.lang.String getProduct() {
         java.lang.Object ref = product_;
@@ -3529,6 +3865,7 @@ public final class Messages {
       }
       /**
        * <code>string product = 3;</code>
+       * @return The bytes for product.
        */
       public com.google.protobuf.ByteString
           getProductBytes() {
@@ -3545,6 +3882,8 @@ public final class Messages {
       }
       /**
        * <code>string product = 3;</code>
+       * @param value The product to set.
+       * @return This builder for chaining.
        */
       public Builder setProduct(
           java.lang.String value) {
@@ -3558,6 +3897,7 @@ public final class Messages {
       }
       /**
        * <code>string product = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearProduct() {
         
@@ -3567,6 +3907,8 @@ public final class Messages {
       }
       /**
        * <code>string product = 3;</code>
+       * @param value The bytes for product to set.
+       * @return This builder for chaining.
        */
       public Builder setProductBytes(
           com.google.protobuf.ByteString value) {
@@ -3583,12 +3925,15 @@ public final class Messages {
       private long minQuantity_ ;
       /**
        * <code>int64 minQuantity = 4;</code>
+       * @return The minQuantity.
        */
       public long getMinQuantity() {
         return minQuantity_;
       }
       /**
        * <code>int64 minQuantity = 4;</code>
+       * @param value The minQuantity to set.
+       * @return This builder for chaining.
        */
       public Builder setMinQuantity(long value) {
         
@@ -3598,6 +3943,7 @@ public final class Messages {
       }
       /**
        * <code>int64 minQuantity = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearMinQuantity() {
         
@@ -3609,12 +3955,15 @@ public final class Messages {
       private long maxQuantity_ ;
       /**
        * <code>int64 maxQuantity = 5;</code>
+       * @return The maxQuantity.
        */
       public long getMaxQuantity() {
         return maxQuantity_;
       }
       /**
        * <code>int64 maxQuantity = 5;</code>
+       * @param value The maxQuantity to set.
+       * @return This builder for chaining.
        */
       public Builder setMaxQuantity(long value) {
         
@@ -3624,6 +3973,7 @@ public final class Messages {
       }
       /**
        * <code>int64 maxQuantity = 5;</code>
+       * @return This builder for chaining.
        */
       public Builder clearMaxQuantity() {
         
@@ -3635,12 +3985,15 @@ public final class Messages {
       private double unitPrice_ ;
       /**
        * <code>double unitPrice = 6;</code>
+       * @return The unitPrice.
        */
       public double getUnitPrice() {
         return unitPrice_;
       }
       /**
        * <code>double unitPrice = 6;</code>
+       * @param value The unitPrice to set.
+       * @return This builder for chaining.
        */
       public Builder setUnitPrice(double value) {
         
@@ -3650,6 +4003,7 @@ public final class Messages {
       }
       /**
        * <code>double unitPrice = 6;</code>
+       * @return This builder for chaining.
        */
       public Builder clearUnitPrice() {
         
@@ -3661,12 +4015,15 @@ public final class Messages {
       private int active_ ;
       /**
        * <code>int32 active = 7;</code>
+       * @return The active.
        */
       public int getActive() {
         return active_;
       }
       /**
        * <code>int32 active = 7;</code>
+       * @param value The active to set.
+       * @return This builder for chaining.
        */
       public Builder setActive(int value) {
         
@@ -3676,6 +4033,7 @@ public final class Messages {
       }
       /**
        * <code>int32 active = 7;</code>
+       * @return This builder for chaining.
        */
       public Builder clearActive() {
         
@@ -3687,12 +4045,15 @@ public final class Messages {
       private long negotiation_ ;
       /**
        * <code>int64 negotiation = 8;</code>
+       * @return The negotiation.
        */
       public long getNegotiation() {
         return negotiation_;
       }
       /**
        * <code>int64 negotiation = 8;</code>
+       * @param value The negotiation to set.
+       * @return This builder for chaining.
        */
       public Builder setNegotiation(long value) {
         
@@ -3702,6 +4063,7 @@ public final class Messages {
       }
       /**
        * <code>int64 negotiation = 8;</code>
+       * @return This builder for chaining.
        */
       public Builder clearNegotiation() {
         
@@ -3768,41 +4130,49 @@ public final class Messages {
 
     /**
      * <code>int64 id = 1;</code>
+     * @return The id.
      */
     long getId();
 
     /**
-     * <code>string manufacturer = 2;</code>
+     * <code>string importer = 2;</code>
+     * @return The importer.
      */
-    java.lang.String getManufacturer();
+    java.lang.String getImporter();
     /**
-     * <code>string manufacturer = 2;</code>
+     * <code>string importer = 2;</code>
+     * @return The bytes for importer.
      */
     com.google.protobuf.ByteString
-        getManufacturerBytes();
+        getImporterBytes();
 
     /**
      * <code>string product = 3;</code>
+     * @return The product.
      */
     java.lang.String getProduct();
     /**
      * <code>string product = 3;</code>
+     * @return The bytes for product.
      */
     com.google.protobuf.ByteString
         getProductBytes();
 
     /**
      * <code>int64 quantity = 4;</code>
+     * @return The quantity.
      */
     long getQuantity();
 
     /**
      * <code>double unitPrice = 5;</code>
+     * @return The unitPrice.
      */
     double getUnitPrice();
 
     /**
      * <code>int64 idorder = 6;</code>
+     * @return The idorder.
      */
     long getIdorder();
   }
@@ -3819,8 +4189,15 @@ public final class Messages {
       super(builder);
     }
     private ImporterOffer() {
-      manufacturer_ = "";
+      importer_ = "";
       product_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ImporterOffer();
     }
 
     @java.lang.Override
@@ -3836,7 +4213,6 @@ public final class Messages {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
-      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -3855,7 +4231,7 @@ public final class Messages {
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              manufacturer_ = s;
+              importer_ = s;
               break;
             }
             case 26: {
@@ -3915,39 +4291,42 @@ public final class Messages {
     private long id_;
     /**
      * <code>int64 id = 1;</code>
+     * @return The id.
      */
     public long getId() {
       return id_;
     }
 
-    public static final int MANUFACTURER_FIELD_NUMBER = 2;
-    private volatile java.lang.Object manufacturer_;
+    public static final int IMPORTER_FIELD_NUMBER = 2;
+    private volatile java.lang.Object importer_;
     /**
-     * <code>string manufacturer = 2;</code>
+     * <code>string importer = 2;</code>
+     * @return The importer.
      */
-    public java.lang.String getManufacturer() {
-      java.lang.Object ref = manufacturer_;
+    public java.lang.String getImporter() {
+      java.lang.Object ref = importer_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        manufacturer_ = s;
+        importer_ = s;
         return s;
       }
     }
     /**
-     * <code>string manufacturer = 2;</code>
+     * <code>string importer = 2;</code>
+     * @return The bytes for importer.
      */
     public com.google.protobuf.ByteString
-        getManufacturerBytes() {
-      java.lang.Object ref = manufacturer_;
+        getImporterBytes() {
+      java.lang.Object ref = importer_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        manufacturer_ = b;
+        importer_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -3958,6 +4337,7 @@ public final class Messages {
     private volatile java.lang.Object product_;
     /**
      * <code>string product = 3;</code>
+     * @return The product.
      */
     public java.lang.String getProduct() {
       java.lang.Object ref = product_;
@@ -3973,6 +4353,7 @@ public final class Messages {
     }
     /**
      * <code>string product = 3;</code>
+     * @return The bytes for product.
      */
     public com.google.protobuf.ByteString
         getProductBytes() {
@@ -3992,6 +4373,7 @@ public final class Messages {
     private long quantity_;
     /**
      * <code>int64 quantity = 4;</code>
+     * @return The quantity.
      */
     public long getQuantity() {
       return quantity_;
@@ -4001,6 +4383,7 @@ public final class Messages {
     private double unitPrice_;
     /**
      * <code>double unitPrice = 5;</code>
+     * @return The unitPrice.
      */
     public double getUnitPrice() {
       return unitPrice_;
@@ -4010,6 +4393,7 @@ public final class Messages {
     private long idorder_;
     /**
      * <code>int64 idorder = 6;</code>
+     * @return The idorder.
      */
     public long getIdorder() {
       return idorder_;
@@ -4032,8 +4416,8 @@ public final class Messages {
       if (id_ != 0L) {
         output.writeInt64(1, id_);
       }
-      if (!getManufacturerBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, manufacturer_);
+      if (!getImporterBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, importer_);
       }
       if (!getProductBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, product_);
@@ -4060,8 +4444,8 @@ public final class Messages {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, id_);
       }
-      if (!getManufacturerBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, manufacturer_);
+      if (!getImporterBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, importer_);
       }
       if (!getProductBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, product_);
@@ -4095,8 +4479,8 @@ public final class Messages {
 
       if (getId()
           != other.getId()) return false;
-      if (!getManufacturer()
-          .equals(other.getManufacturer())) return false;
+      if (!getImporter()
+          .equals(other.getImporter())) return false;
       if (!getProduct()
           .equals(other.getProduct())) return false;
       if (getQuantity()
@@ -4120,8 +4504,8 @@ public final class Messages {
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getId());
-      hash = (37 * hash) + MANUFACTURER_FIELD_NUMBER;
-      hash = (53 * hash) + getManufacturer().hashCode();
+      hash = (37 * hash) + IMPORTER_FIELD_NUMBER;
+      hash = (53 * hash) + getImporter().hashCode();
       hash = (37 * hash) + PRODUCT_FIELD_NUMBER;
       hash = (53 * hash) + getProduct().hashCode();
       hash = (37 * hash) + QUANTITY_FIELD_NUMBER;
@@ -4268,7 +4652,7 @@ public final class Messages {
         super.clear();
         id_ = 0L;
 
-        manufacturer_ = "";
+        importer_ = "";
 
         product_ = "";
 
@@ -4305,7 +4689,7 @@ public final class Messages {
       public tp.Messages.ImporterOffer buildPartial() {
         tp.Messages.ImporterOffer result = new tp.Messages.ImporterOffer(this);
         result.id_ = id_;
-        result.manufacturer_ = manufacturer_;
+        result.importer_ = importer_;
         result.product_ = product_;
         result.quantity_ = quantity_;
         result.unitPrice_ = unitPrice_;
@@ -4361,8 +4745,8 @@ public final class Messages {
         if (other.getId() != 0L) {
           setId(other.getId());
         }
-        if (!other.getManufacturer().isEmpty()) {
-          manufacturer_ = other.manufacturer_;
+        if (!other.getImporter().isEmpty()) {
+          importer_ = other.importer_;
           onChanged();
         }
         if (!other.getProduct().isEmpty()) {
@@ -4410,12 +4794,15 @@ public final class Messages {
       private long id_ ;
       /**
        * <code>int64 id = 1;</code>
+       * @return The id.
        */
       public long getId() {
         return id_;
       }
       /**
        * <code>int64 id = 1;</code>
+       * @param value The id to set.
+       * @return This builder for chaining.
        */
       public Builder setId(long value) {
         
@@ -4425,6 +4812,7 @@ public final class Messages {
       }
       /**
        * <code>int64 id = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearId() {
         
@@ -4433,71 +4821,78 @@ public final class Messages {
         return this;
       }
 
-      private java.lang.Object manufacturer_ = "";
+      private java.lang.Object importer_ = "";
       /**
-       * <code>string manufacturer = 2;</code>
+       * <code>string importer = 2;</code>
+       * @return The importer.
        */
-      public java.lang.String getManufacturer() {
-        java.lang.Object ref = manufacturer_;
+      public java.lang.String getImporter() {
+        java.lang.Object ref = importer_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          manufacturer_ = s;
+          importer_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>string manufacturer = 2;</code>
+       * <code>string importer = 2;</code>
+       * @return The bytes for importer.
        */
       public com.google.protobuf.ByteString
-          getManufacturerBytes() {
-        java.lang.Object ref = manufacturer_;
+          getImporterBytes() {
+        java.lang.Object ref = importer_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          manufacturer_ = b;
+          importer_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>string manufacturer = 2;</code>
+       * <code>string importer = 2;</code>
+       * @param value The importer to set.
+       * @return This builder for chaining.
        */
-      public Builder setManufacturer(
+      public Builder setImporter(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        manufacturer_ = value;
+        importer_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string manufacturer = 2;</code>
+       * <code>string importer = 2;</code>
+       * @return This builder for chaining.
        */
-      public Builder clearManufacturer() {
+      public Builder clearImporter() {
         
-        manufacturer_ = getDefaultInstance().getManufacturer();
+        importer_ = getDefaultInstance().getImporter();
         onChanged();
         return this;
       }
       /**
-       * <code>string manufacturer = 2;</code>
+       * <code>string importer = 2;</code>
+       * @param value The bytes for importer to set.
+       * @return This builder for chaining.
        */
-      public Builder setManufacturerBytes(
+      public Builder setImporterBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        manufacturer_ = value;
+        importer_ = value;
         onChanged();
         return this;
       }
@@ -4505,6 +4900,7 @@ public final class Messages {
       private java.lang.Object product_ = "";
       /**
        * <code>string product = 3;</code>
+       * @return The product.
        */
       public java.lang.String getProduct() {
         java.lang.Object ref = product_;
@@ -4520,6 +4916,7 @@ public final class Messages {
       }
       /**
        * <code>string product = 3;</code>
+       * @return The bytes for product.
        */
       public com.google.protobuf.ByteString
           getProductBytes() {
@@ -4536,6 +4933,8 @@ public final class Messages {
       }
       /**
        * <code>string product = 3;</code>
+       * @param value The product to set.
+       * @return This builder for chaining.
        */
       public Builder setProduct(
           java.lang.String value) {
@@ -4549,6 +4948,7 @@ public final class Messages {
       }
       /**
        * <code>string product = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearProduct() {
         
@@ -4558,6 +4958,8 @@ public final class Messages {
       }
       /**
        * <code>string product = 3;</code>
+       * @param value The bytes for product to set.
+       * @return This builder for chaining.
        */
       public Builder setProductBytes(
           com.google.protobuf.ByteString value) {
@@ -4574,12 +4976,15 @@ public final class Messages {
       private long quantity_ ;
       /**
        * <code>int64 quantity = 4;</code>
+       * @return The quantity.
        */
       public long getQuantity() {
         return quantity_;
       }
       /**
        * <code>int64 quantity = 4;</code>
+       * @param value The quantity to set.
+       * @return This builder for chaining.
        */
       public Builder setQuantity(long value) {
         
@@ -4589,6 +4994,7 @@ public final class Messages {
       }
       /**
        * <code>int64 quantity = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearQuantity() {
         
@@ -4600,12 +5006,15 @@ public final class Messages {
       private double unitPrice_ ;
       /**
        * <code>double unitPrice = 5;</code>
+       * @return The unitPrice.
        */
       public double getUnitPrice() {
         return unitPrice_;
       }
       /**
        * <code>double unitPrice = 5;</code>
+       * @param value The unitPrice to set.
+       * @return This builder for chaining.
        */
       public Builder setUnitPrice(double value) {
         
@@ -4615,6 +5024,7 @@ public final class Messages {
       }
       /**
        * <code>double unitPrice = 5;</code>
+       * @return This builder for chaining.
        */
       public Builder clearUnitPrice() {
         
@@ -4626,12 +5036,15 @@ public final class Messages {
       private long idorder_ ;
       /**
        * <code>int64 idorder = 6;</code>
+       * @return The idorder.
        */
       public long getIdorder() {
         return idorder_;
       }
       /**
        * <code>int64 idorder = 6;</code>
+       * @param value The idorder to set.
+       * @return This builder for chaining.
        */
       public Builder setIdorder(long value) {
         
@@ -4641,6 +5054,7 @@ public final class Messages {
       }
       /**
        * <code>int64 idorder = 6;</code>
+       * @return This builder for chaining.
        */
       public Builder clearIdorder() {
         
@@ -4701,6 +5115,1437 @@ public final class Messages {
 
   }
 
+  public interface ReplyOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:tp.Reply)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 id = 1;</code>
+     * @return The id.
+     */
+    long getId();
+
+    /**
+     * <code>string product = 2;</code>
+     * @return The product.
+     */
+    java.lang.String getProduct();
+    /**
+     * <code>string product = 2;</code>
+     * @return The bytes for product.
+     */
+    com.google.protobuf.ByteString
+        getProductBytes();
+
+    /**
+     * <code>string manufacturer = 3;</code>
+     * @return The manufacturer.
+     */
+    java.lang.String getManufacturer();
+    /**
+     * <code>string manufacturer = 3;</code>
+     * @return The bytes for manufacturer.
+     */
+    com.google.protobuf.ByteString
+        getManufacturerBytes();
+
+    /**
+     * <code>.tp.Reply.Result res = 4;</code>
+     * @return The enum numeric value on the wire for res.
+     */
+    int getResValue();
+    /**
+     * <code>.tp.Reply.Result res = 4;</code>
+     * @return The res.
+     */
+    tp.Messages.Reply.Result getRes();
+
+    /**
+     * <code>repeated .tp.ImporterOffer offers = 5;</code>
+     */
+    java.util.List<tp.Messages.ImporterOffer> 
+        getOffersList();
+    /**
+     * <code>repeated .tp.ImporterOffer offers = 5;</code>
+     */
+    tp.Messages.ImporterOffer getOffers(int index);
+    /**
+     * <code>repeated .tp.ImporterOffer offers = 5;</code>
+     */
+    int getOffersCount();
+    /**
+     * <code>repeated .tp.ImporterOffer offers = 5;</code>
+     */
+    java.util.List<? extends tp.Messages.ImporterOfferOrBuilder> 
+        getOffersOrBuilderList();
+    /**
+     * <code>repeated .tp.ImporterOffer offers = 5;</code>
+     */
+    tp.Messages.ImporterOfferOrBuilder getOffersOrBuilder(
+        int index);
+
+    /**
+     * <code>int64 profit = 6;</code>
+     * @return The profit.
+     */
+    long getProfit();
+  }
+  /**
+   * Protobuf type {@code tp.Reply}
+   */
+  public  static final class Reply extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:tp.Reply)
+      ReplyOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Reply.newBuilder() to construct.
+    private Reply(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Reply() {
+      product_ = "";
+      manufacturer_ = "";
+      res_ = 0;
+      offers_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Reply();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Reply(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              id_ = input.readInt64();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              product_ = s;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              manufacturer_ = s;
+              break;
+            }
+            case 32: {
+              int rawValue = input.readEnum();
+
+              res_ = rawValue;
+              break;
+            }
+            case 42: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                offers_ = new java.util.ArrayList<tp.Messages.ImporterOffer>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              offers_.add(
+                  input.readMessage(tp.Messages.ImporterOffer.parser(), extensionRegistry));
+              break;
+            }
+            case 48: {
+
+              profit_ = input.readInt64();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          offers_ = java.util.Collections.unmodifiableList(offers_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return tp.Messages.internal_static_tp_Reply_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return tp.Messages.internal_static_tp_Reply_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              tp.Messages.Reply.class, tp.Messages.Reply.Builder.class);
+    }
+
+    /**
+     * Protobuf enum {@code tp.Reply.Result}
+     */
+    public enum Result
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>CANCELED = 0;</code>
+       */
+      CANCELED(0),
+      /**
+       * <code>FINISHED = 1;</code>
+       */
+      FINISHED(1),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>CANCELED = 0;</code>
+       */
+      public static final int CANCELED_VALUE = 0;
+      /**
+       * <code>FINISHED = 1;</code>
+       */
+      public static final int FINISHED_VALUE = 1;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static Result valueOf(int value) {
+        return forNumber(value);
+      }
+
+      /**
+       * @param value The numeric wire value of the corresponding enum entry.
+       * @return The enum associated with the given numeric wire value.
+       */
+      public static Result forNumber(int value) {
+        switch (value) {
+          case 0: return CANCELED;
+          case 1: return FINISHED;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<Result>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          Result> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<Result>() {
+              public Result findValueByNumber(int number) {
+                return Result.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return tp.Messages.Reply.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final Result[] VALUES = values();
+
+      public static Result valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private Result(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:tp.Reply.Result)
+    }
+
+    public static final int ID_FIELD_NUMBER = 1;
+    private long id_;
+    /**
+     * <code>int64 id = 1;</code>
+     * @return The id.
+     */
+    public long getId() {
+      return id_;
+    }
+
+    public static final int PRODUCT_FIELD_NUMBER = 2;
+    private volatile java.lang.Object product_;
+    /**
+     * <code>string product = 2;</code>
+     * @return The product.
+     */
+    public java.lang.String getProduct() {
+      java.lang.Object ref = product_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        product_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string product = 2;</code>
+     * @return The bytes for product.
+     */
+    public com.google.protobuf.ByteString
+        getProductBytes() {
+      java.lang.Object ref = product_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        product_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int MANUFACTURER_FIELD_NUMBER = 3;
+    private volatile java.lang.Object manufacturer_;
+    /**
+     * <code>string manufacturer = 3;</code>
+     * @return The manufacturer.
+     */
+    public java.lang.String getManufacturer() {
+      java.lang.Object ref = manufacturer_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        manufacturer_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string manufacturer = 3;</code>
+     * @return The bytes for manufacturer.
+     */
+    public com.google.protobuf.ByteString
+        getManufacturerBytes() {
+      java.lang.Object ref = manufacturer_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        manufacturer_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int RES_FIELD_NUMBER = 4;
+    private int res_;
+    /**
+     * <code>.tp.Reply.Result res = 4;</code>
+     * @return The enum numeric value on the wire for res.
+     */
+    public int getResValue() {
+      return res_;
+    }
+    /**
+     * <code>.tp.Reply.Result res = 4;</code>
+     * @return The res.
+     */
+    public tp.Messages.Reply.Result getRes() {
+      @SuppressWarnings("deprecation")
+      tp.Messages.Reply.Result result = tp.Messages.Reply.Result.valueOf(res_);
+      return result == null ? tp.Messages.Reply.Result.UNRECOGNIZED : result;
+    }
+
+    public static final int OFFERS_FIELD_NUMBER = 5;
+    private java.util.List<tp.Messages.ImporterOffer> offers_;
+    /**
+     * <code>repeated .tp.ImporterOffer offers = 5;</code>
+     */
+    public java.util.List<tp.Messages.ImporterOffer> getOffersList() {
+      return offers_;
+    }
+    /**
+     * <code>repeated .tp.ImporterOffer offers = 5;</code>
+     */
+    public java.util.List<? extends tp.Messages.ImporterOfferOrBuilder> 
+        getOffersOrBuilderList() {
+      return offers_;
+    }
+    /**
+     * <code>repeated .tp.ImporterOffer offers = 5;</code>
+     */
+    public int getOffersCount() {
+      return offers_.size();
+    }
+    /**
+     * <code>repeated .tp.ImporterOffer offers = 5;</code>
+     */
+    public tp.Messages.ImporterOffer getOffers(int index) {
+      return offers_.get(index);
+    }
+    /**
+     * <code>repeated .tp.ImporterOffer offers = 5;</code>
+     */
+    public tp.Messages.ImporterOfferOrBuilder getOffersOrBuilder(
+        int index) {
+      return offers_.get(index);
+    }
+
+    public static final int PROFIT_FIELD_NUMBER = 6;
+    private long profit_;
+    /**
+     * <code>int64 profit = 6;</code>
+     * @return The profit.
+     */
+    public long getProfit() {
+      return profit_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (id_ != 0L) {
+        output.writeInt64(1, id_);
+      }
+      if (!getProductBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, product_);
+      }
+      if (!getManufacturerBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, manufacturer_);
+      }
+      if (res_ != tp.Messages.Reply.Result.CANCELED.getNumber()) {
+        output.writeEnum(4, res_);
+      }
+      for (int i = 0; i < offers_.size(); i++) {
+        output.writeMessage(5, offers_.get(i));
+      }
+      if (profit_ != 0L) {
+        output.writeInt64(6, profit_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (id_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, id_);
+      }
+      if (!getProductBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, product_);
+      }
+      if (!getManufacturerBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, manufacturer_);
+      }
+      if (res_ != tp.Messages.Reply.Result.CANCELED.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(4, res_);
+      }
+      for (int i = 0; i < offers_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, offers_.get(i));
+      }
+      if (profit_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(6, profit_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof tp.Messages.Reply)) {
+        return super.equals(obj);
+      }
+      tp.Messages.Reply other = (tp.Messages.Reply) obj;
+
+      if (getId()
+          != other.getId()) return false;
+      if (!getProduct()
+          .equals(other.getProduct())) return false;
+      if (!getManufacturer()
+          .equals(other.getManufacturer())) return false;
+      if (res_ != other.res_) return false;
+      if (!getOffersList()
+          .equals(other.getOffersList())) return false;
+      if (getProfit()
+          != other.getProfit()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getId());
+      hash = (37 * hash) + PRODUCT_FIELD_NUMBER;
+      hash = (53 * hash) + getProduct().hashCode();
+      hash = (37 * hash) + MANUFACTURER_FIELD_NUMBER;
+      hash = (53 * hash) + getManufacturer().hashCode();
+      hash = (37 * hash) + RES_FIELD_NUMBER;
+      hash = (53 * hash) + res_;
+      if (getOffersCount() > 0) {
+        hash = (37 * hash) + OFFERS_FIELD_NUMBER;
+        hash = (53 * hash) + getOffersList().hashCode();
+      }
+      hash = (37 * hash) + PROFIT_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getProfit());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static tp.Messages.Reply parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tp.Messages.Reply parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tp.Messages.Reply parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tp.Messages.Reply parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tp.Messages.Reply parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static tp.Messages.Reply parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static tp.Messages.Reply parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static tp.Messages.Reply parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static tp.Messages.Reply parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static tp.Messages.Reply parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static tp.Messages.Reply parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static tp.Messages.Reply parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(tp.Messages.Reply prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code tp.Reply}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:tp.Reply)
+        tp.Messages.ReplyOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return tp.Messages.internal_static_tp_Reply_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return tp.Messages.internal_static_tp_Reply_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                tp.Messages.Reply.class, tp.Messages.Reply.Builder.class);
+      }
+
+      // Construct using tp.Messages.Reply.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getOffersFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        id_ = 0L;
+
+        product_ = "";
+
+        manufacturer_ = "";
+
+        res_ = 0;
+
+        if (offersBuilder_ == null) {
+          offers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          offersBuilder_.clear();
+        }
+        profit_ = 0L;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return tp.Messages.internal_static_tp_Reply_descriptor;
+      }
+
+      @java.lang.Override
+      public tp.Messages.Reply getDefaultInstanceForType() {
+        return tp.Messages.Reply.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public tp.Messages.Reply build() {
+        tp.Messages.Reply result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public tp.Messages.Reply buildPartial() {
+        tp.Messages.Reply result = new tp.Messages.Reply(this);
+        int from_bitField0_ = bitField0_;
+        result.id_ = id_;
+        result.product_ = product_;
+        result.manufacturer_ = manufacturer_;
+        result.res_ = res_;
+        if (offersBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            offers_ = java.util.Collections.unmodifiableList(offers_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.offers_ = offers_;
+        } else {
+          result.offers_ = offersBuilder_.build();
+        }
+        result.profit_ = profit_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof tp.Messages.Reply) {
+          return mergeFrom((tp.Messages.Reply)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(tp.Messages.Reply other) {
+        if (other == tp.Messages.Reply.getDefaultInstance()) return this;
+        if (other.getId() != 0L) {
+          setId(other.getId());
+        }
+        if (!other.getProduct().isEmpty()) {
+          product_ = other.product_;
+          onChanged();
+        }
+        if (!other.getManufacturer().isEmpty()) {
+          manufacturer_ = other.manufacturer_;
+          onChanged();
+        }
+        if (other.res_ != 0) {
+          setResValue(other.getResValue());
+        }
+        if (offersBuilder_ == null) {
+          if (!other.offers_.isEmpty()) {
+            if (offers_.isEmpty()) {
+              offers_ = other.offers_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureOffersIsMutable();
+              offers_.addAll(other.offers_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.offers_.isEmpty()) {
+            if (offersBuilder_.isEmpty()) {
+              offersBuilder_.dispose();
+              offersBuilder_ = null;
+              offers_ = other.offers_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              offersBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getOffersFieldBuilder() : null;
+            } else {
+              offersBuilder_.addAllMessages(other.offers_);
+            }
+          }
+        }
+        if (other.getProfit() != 0L) {
+          setProfit(other.getProfit());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        tp.Messages.Reply parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (tp.Messages.Reply) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private long id_ ;
+      /**
+       * <code>int64 id = 1;</code>
+       * @return The id.
+       */
+      public long getId() {
+        return id_;
+      }
+      /**
+       * <code>int64 id = 1;</code>
+       * @param value The id to set.
+       * @return This builder for chaining.
+       */
+      public Builder setId(long value) {
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 id = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearId() {
+        
+        id_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object product_ = "";
+      /**
+       * <code>string product = 2;</code>
+       * @return The product.
+       */
+      public java.lang.String getProduct() {
+        java.lang.Object ref = product_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          product_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string product = 2;</code>
+       * @return The bytes for product.
+       */
+      public com.google.protobuf.ByteString
+          getProductBytes() {
+        java.lang.Object ref = product_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          product_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string product = 2;</code>
+       * @param value The product to set.
+       * @return This builder for chaining.
+       */
+      public Builder setProduct(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        product_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string product = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearProduct() {
+        
+        product_ = getDefaultInstance().getProduct();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string product = 2;</code>
+       * @param value The bytes for product to set.
+       * @return This builder for chaining.
+       */
+      public Builder setProductBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        product_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object manufacturer_ = "";
+      /**
+       * <code>string manufacturer = 3;</code>
+       * @return The manufacturer.
+       */
+      public java.lang.String getManufacturer() {
+        java.lang.Object ref = manufacturer_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          manufacturer_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string manufacturer = 3;</code>
+       * @return The bytes for manufacturer.
+       */
+      public com.google.protobuf.ByteString
+          getManufacturerBytes() {
+        java.lang.Object ref = manufacturer_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          manufacturer_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string manufacturer = 3;</code>
+       * @param value The manufacturer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setManufacturer(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        manufacturer_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string manufacturer = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearManufacturer() {
+        
+        manufacturer_ = getDefaultInstance().getManufacturer();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string manufacturer = 3;</code>
+       * @param value The bytes for manufacturer to set.
+       * @return This builder for chaining.
+       */
+      public Builder setManufacturerBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        manufacturer_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int res_ = 0;
+      /**
+       * <code>.tp.Reply.Result res = 4;</code>
+       * @return The enum numeric value on the wire for res.
+       */
+      public int getResValue() {
+        return res_;
+      }
+      /**
+       * <code>.tp.Reply.Result res = 4;</code>
+       * @param value The enum numeric value on the wire for res to set.
+       * @return This builder for chaining.
+       */
+      public Builder setResValue(int value) {
+        res_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.tp.Reply.Result res = 4;</code>
+       * @return The res.
+       */
+      public tp.Messages.Reply.Result getRes() {
+        @SuppressWarnings("deprecation")
+        tp.Messages.Reply.Result result = tp.Messages.Reply.Result.valueOf(res_);
+        return result == null ? tp.Messages.Reply.Result.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.tp.Reply.Result res = 4;</code>
+       * @param value The res to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRes(tp.Messages.Reply.Result value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        res_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.tp.Reply.Result res = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRes() {
+        
+        res_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<tp.Messages.ImporterOffer> offers_ =
+        java.util.Collections.emptyList();
+      private void ensureOffersIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          offers_ = new java.util.ArrayList<tp.Messages.ImporterOffer>(offers_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          tp.Messages.ImporterOffer, tp.Messages.ImporterOffer.Builder, tp.Messages.ImporterOfferOrBuilder> offersBuilder_;
+
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public java.util.List<tp.Messages.ImporterOffer> getOffersList() {
+        if (offersBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(offers_);
+        } else {
+          return offersBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public int getOffersCount() {
+        if (offersBuilder_ == null) {
+          return offers_.size();
+        } else {
+          return offersBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public tp.Messages.ImporterOffer getOffers(int index) {
+        if (offersBuilder_ == null) {
+          return offers_.get(index);
+        } else {
+          return offersBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public Builder setOffers(
+          int index, tp.Messages.ImporterOffer value) {
+        if (offersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureOffersIsMutable();
+          offers_.set(index, value);
+          onChanged();
+        } else {
+          offersBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public Builder setOffers(
+          int index, tp.Messages.ImporterOffer.Builder builderForValue) {
+        if (offersBuilder_ == null) {
+          ensureOffersIsMutable();
+          offers_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          offersBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public Builder addOffers(tp.Messages.ImporterOffer value) {
+        if (offersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureOffersIsMutable();
+          offers_.add(value);
+          onChanged();
+        } else {
+          offersBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public Builder addOffers(
+          int index, tp.Messages.ImporterOffer value) {
+        if (offersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureOffersIsMutable();
+          offers_.add(index, value);
+          onChanged();
+        } else {
+          offersBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public Builder addOffers(
+          tp.Messages.ImporterOffer.Builder builderForValue) {
+        if (offersBuilder_ == null) {
+          ensureOffersIsMutable();
+          offers_.add(builderForValue.build());
+          onChanged();
+        } else {
+          offersBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public Builder addOffers(
+          int index, tp.Messages.ImporterOffer.Builder builderForValue) {
+        if (offersBuilder_ == null) {
+          ensureOffersIsMutable();
+          offers_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          offersBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public Builder addAllOffers(
+          java.lang.Iterable<? extends tp.Messages.ImporterOffer> values) {
+        if (offersBuilder_ == null) {
+          ensureOffersIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, offers_);
+          onChanged();
+        } else {
+          offersBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public Builder clearOffers() {
+        if (offersBuilder_ == null) {
+          offers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          offersBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public Builder removeOffers(int index) {
+        if (offersBuilder_ == null) {
+          ensureOffersIsMutable();
+          offers_.remove(index);
+          onChanged();
+        } else {
+          offersBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public tp.Messages.ImporterOffer.Builder getOffersBuilder(
+          int index) {
+        return getOffersFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public tp.Messages.ImporterOfferOrBuilder getOffersOrBuilder(
+          int index) {
+        if (offersBuilder_ == null) {
+          return offers_.get(index);  } else {
+          return offersBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public java.util.List<? extends tp.Messages.ImporterOfferOrBuilder> 
+           getOffersOrBuilderList() {
+        if (offersBuilder_ != null) {
+          return offersBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(offers_);
+        }
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public tp.Messages.ImporterOffer.Builder addOffersBuilder() {
+        return getOffersFieldBuilder().addBuilder(
+            tp.Messages.ImporterOffer.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public tp.Messages.ImporterOffer.Builder addOffersBuilder(
+          int index) {
+        return getOffersFieldBuilder().addBuilder(
+            index, tp.Messages.ImporterOffer.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .tp.ImporterOffer offers = 5;</code>
+       */
+      public java.util.List<tp.Messages.ImporterOffer.Builder> 
+           getOffersBuilderList() {
+        return getOffersFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          tp.Messages.ImporterOffer, tp.Messages.ImporterOffer.Builder, tp.Messages.ImporterOfferOrBuilder> 
+          getOffersFieldBuilder() {
+        if (offersBuilder_ == null) {
+          offersBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              tp.Messages.ImporterOffer, tp.Messages.ImporterOffer.Builder, tp.Messages.ImporterOfferOrBuilder>(
+                  offers_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          offers_ = null;
+        }
+        return offersBuilder_;
+      }
+
+      private long profit_ ;
+      /**
+       * <code>int64 profit = 6;</code>
+       * @return The profit.
+       */
+      public long getProfit() {
+        return profit_;
+      }
+      /**
+       * <code>int64 profit = 6;</code>
+       * @param value The profit to set.
+       * @return This builder for chaining.
+       */
+      public Builder setProfit(long value) {
+        
+        profit_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 profit = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearProfit() {
+        
+        profit_ = 0L;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:tp.Reply)
+    }
+
+    // @@protoc_insertion_point(class_scope:tp.Reply)
+    private static final tp.Messages.Reply DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new tp.Messages.Reply();
+    }
+
+    public static tp.Messages.Reply getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Reply>
+        PARSER = new com.google.protobuf.AbstractParser<Reply>() {
+      @java.lang.Override
+      public Reply parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Reply(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Reply> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Reply> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public tp.Messages.Reply getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_tp_Message_descriptor;
   private static final 
@@ -4726,6 +6571,11 @@ public final class Messages {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_tp_ImporterOffer_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_tp_Reply_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_tp_Reply_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -4735,40 +6585,38 @@ public final class Messages {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016messages.proto\022\002tp\"\253\001\n\007Message\022\014\n\004type" +
+      "\n\016messages.proto\022\002tp\"\305\001\n\007Message\022\014\n\004type" +
       "\030\001 \001(\t\022\026\n\004user\030\002 \001(\0132\010.tp.User\022\036\n\010respon" +
       "se\030\003 \001(\0132\014.tp.Response\0220\n\021manufacturerOr" +
       "der\030\004 \001(\0132\025.tp.ManufacturerOrder\022(\n\rimpo" +
-      "rterOffer\030\005 \001(\0132\021.tp.ImporterOffer\"8\n\004Us" +
-      "er\022\020\n\010username\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\014" +
-      "\n\004type\030\003 \001(\005\",\n\010Response\022\016\n\006status\030\001 \001(\005" +
-      "\022\020\n\010response\030\002 \001(\t\"\250\001\n\021ManufacturerOrder" +
-      "\022\n\n\002id\030\001 \001(\003\022\024\n\014manufacturer\030\002 \001(\t\022\017\n\007pr" +
-      "oduct\030\003 \001(\t\022\023\n\013minQuantity\030\004 \001(\003\022\023\n\013maxQ" +
-      "uantity\030\005 \001(\003\022\021\n\tunitPrice\030\006 \001(\001\022\016\n\006acti" +
-      "ve\030\007 \001(\005\022\023\n\013negotiation\030\010 \001(\003\"x\n\rImporte" +
-      "rOffer\022\n\n\002id\030\001 \001(\003\022\024\n\014manufacturer\030\002 \001(\t" +
-      "\022\017\n\007product\030\003 \001(\t\022\020\n\010quantity\030\004 \001(\003\022\021\n\tu" +
-      "nitPrice\030\005 \001(\001\022\017\n\007idorder\030\006 \001(\003b\006proto3"
+      "rterOffer\030\005 \001(\0132\021.tp.ImporterOffer\022\030\n\005re" +
+      "ply\030\006 \001(\0132\t.tp.Reply\"8\n\004User\022\020\n\010username" +
+      "\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\014\n\004type\030\003 \001(\005\"," +
+      "\n\010Response\022\016\n\006status\030\001 \001(\005\022\020\n\010response\030\002" +
+      " \001(\t\"\250\001\n\021ManufacturerOrder\022\n\n\002id\030\001 \001(\003\022\024" +
+      "\n\014manufacturer\030\002 \001(\t\022\017\n\007product\030\003 \001(\t\022\023\n" +
+      "\013minQuantity\030\004 \001(\003\022\023\n\013maxQuantity\030\005 \001(\003\022" +
+      "\021\n\tunitPrice\030\006 \001(\001\022\016\n\006active\030\007 \001(\005\022\023\n\013ne" +
+      "gotiation\030\010 \001(\003\"t\n\rImporterOffer\022\n\n\002id\030\001" +
+      " \001(\003\022\020\n\010importer\030\002 \001(\t\022\017\n\007product\030\003 \001(\t\022" +
+      "\020\n\010quantity\030\004 \001(\003\022\021\n\tunitPrice\030\005 \001(\001\022\017\n\007" +
+      "idorder\030\006 \001(\003\"\262\001\n\005Reply\022\n\n\002id\030\001 \001(\003\022\017\n\007p" +
+      "roduct\030\002 \001(\t\022\024\n\014manufacturer\030\003 \001(\t\022\035\n\003re" +
+      "s\030\004 \001(\0162\020.tp.Reply.Result\022!\n\006offers\030\005 \003(" +
+      "\0132\021.tp.ImporterOffer\022\016\n\006profit\030\006 \001(\003\"$\n\006" +
+      "Result\022\014\n\010CANCELED\020\000\022\014\n\010FINISHED\020\001b\006prot" +
+      "o3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
-    com.google.protobuf.Descriptors.FileDescriptor
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        }, assigner);
+        });
     internal_static_tp_Message_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_tp_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_tp_Message_descriptor,
-        new java.lang.String[] { "Type", "User", "Response", "ManufacturerOrder", "ImporterOffer", });
+        new java.lang.String[] { "Type", "User", "Response", "ManufacturerOrder", "ImporterOffer", "Reply", });
     internal_static_tp_User_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_tp_User_fieldAccessorTable = new
@@ -4792,7 +6640,13 @@ public final class Messages {
     internal_static_tp_ImporterOffer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_tp_ImporterOffer_descriptor,
-        new java.lang.String[] { "Id", "Manufacturer", "Product", "Quantity", "UnitPrice", "Idorder", });
+        new java.lang.String[] { "Id", "Importer", "Product", "Quantity", "UnitPrice", "Idorder", });
+    internal_static_tp_Reply_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_tp_Reply_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_tp_Reply_descriptor,
+        new java.lang.String[] { "Id", "Product", "Manufacturer", "Res", "Offers", "Profit", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
