@@ -48,8 +48,16 @@ start(Sock,Name) ->
                     sendReply(Str,Sock,"Importer"),
                     start(Sock,Name);
                 'FINISHED' ->
-                    Str = "FINISHED ORDER:" ++ integer_to_list(IdOrder) ++ " PROD: " ++ Prod,
-                    sendReply(Str,Sock,"Importer"),
+                    case maps:get(state,H) of
+                        'ACCEPTED' ->
+                            Str = "FINISHED ORDER:" ++ integer_to_list(IdOrder) ++ " PROD: " ++ Prod,
+                            sendReply(Str,Sock,"Importer");
+                        'DECLINED' ->
+                            Str = "DENIED ORDER:" ++ integer_to_list(IdOrder) ++ " PROD: " ++ Prod,
+                            sendReply(Str,Sock,"Importer");
+                        'EMITTED' ->
+                            io:format("Reply emitted error ~n",[])
+                    end,
                     start(Sock,Name)
             end;
         {error,Offer,_} ->

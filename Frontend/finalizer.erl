@@ -29,12 +29,19 @@ finalize(Sock) ->
 
 sendReplyManu(Reply) ->
     Uname = maps:get(manufacturer,Reply),
-    Upid = loginManager:lookUp(Uname),
-    Upid ! {corder,Reply,self()}.
+    case loginManager:lookUp(Uname) of
+        {ok,PidResult} ->
+            PidResult ! {corder,Reply,self()}
+    end.
 
 sendReplies([],_) -> ok;
 sendReplies([H|T],Status) ->
     Uname = maps:get(importer,H),
-    Upid = loginManager:lookUp(Uname),
-    Upid ! {reply,Status,H,self()},
+    case loginManager:lookUp(Uname) of
+        {ok,PidResult} ->
+            PidResult ! {reply,Status,H,self()}
+%            sendReplies(T,Status);
+%        {error,_} ->
+%            sendReplies(T,Status)
+    end,
     sendReplies(T,Status).

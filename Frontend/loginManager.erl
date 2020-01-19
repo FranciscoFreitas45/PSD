@@ -20,8 +20,10 @@ logOut(User) ->
 lookUp(User) ->
     ?MODULE ! {lookup,User,self()},
     receive
-        {lookup,PidResult,_} -> 
-            PidResult
+        {ok,PidResult,_} -> 
+            {ok,PidResult};
+        {error,Pid} ->
+            {error,Pid}
     end.
 
 manage(Map) ->
@@ -55,8 +57,12 @@ manage(Map) ->
                     manage(Map)
             end;
         {lookup,User,Pid} ->
-            {_,Upid,_} = maps:get(User,Map),
-            Pid ! {lookup,Upid,self()},
+            case maps:find(User,Map) of
+                {ok,{_,false,_}} ->
+                    Pid ! {error,self()};
+                {ok,{_,Upid,_}} -> 
+                    Pid ! {ok,Upid,self()}
+            end,
             manage(Map)
     end.
 

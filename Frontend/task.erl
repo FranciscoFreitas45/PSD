@@ -34,7 +34,7 @@ handleRequest(SockPush,SockPub,Context,N,Key,Order) ->
             Offer = maps:get(importerOffer,Msg),
             Prod = maps:get(product,Order),
             Offer2 = maps:put(product,Prod,Offer),
-            Offer3 = maps:put(state,'EMITTED',Offer),
+            Offer3 = maps:put(state,'EMITTED',Offer2),
             case verifyprice(Order,Offer) of
                 true ->
                     OfferReady = maps:update(id,N,Offer3),

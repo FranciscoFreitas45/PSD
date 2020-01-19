@@ -39,6 +39,7 @@ public class WorkerTest {
             System.arraycopy(recv,len,recv_real,0,recv.length-len);
             m = Messages.Message.parseFrom(recv_real);
             Messages.ImporterOffer offer = m.getImporterOffer();
+            offer = offer.toBuilder().setStateValue(2).build();
             System.out.println(offer.toString());
 
             System.out.println("Message 2");
@@ -47,6 +48,7 @@ public class WorkerTest {
             System.arraycopy(recv,len,recv_real,0,recv.length-len);
             m = Messages.Message.parseFrom(recv_real);
             Messages.ImporterOffer offer1 = m.getImporterOffer();
+            offer1 = offer1.toBuilder().setStateValue(1).build();
             System.out.println(offer.toString());
 
             /**
@@ -65,7 +67,7 @@ public class WorkerTest {
                     .setId(manu.getId())
                     .setManufacturer(manu.getManufacturer())
                     .setProduct(manu.getProduct())
-                    .setResValue(0)
+                    .setResValue(1)
                     .setProfit((long)100.0)
                     .addOffers(offer)
                     .addOffers(offer1)
